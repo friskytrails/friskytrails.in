@@ -28,14 +28,12 @@ const ActivitiesForm = () => {
       };
 
       const response = await createActivity(payload);
-      console.log("form resp", response);
       if (response?.success) {
         alert(response.message || "Activity submitted successfully!");
       } else {
         alert(response?.message || "Failed to submit activity.");
       }
     } catch (error) {
-      console.error("Activity submit error:", error);
       const errorMessage = error?.message || error?.data?.message || error?.response?.data?.message;
       if (!user && !errorMessage) {
         alert("Please login first");

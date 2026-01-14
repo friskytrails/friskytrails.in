@@ -18,9 +18,6 @@ export const AuthProvider = ({ children }) => {
         // Token is in HTTP-only cookie, sent automatically with withCredentials: true
         const response = await axiosInstance.get('/api/v1/user/me');
         const userData = response?.data?.user;
-        console.log("admin:", response);
-        console.log("userdata", userData)
-        console.log("userdata admin", userData.admin)
 
         if (isMounted) {
           if (userData) {
@@ -35,9 +32,6 @@ export const AuthProvider = ({ children }) => {
         // Silently handle 401 errors (user not authenticated)
         // Only log other errors
         if (isMounted) {
-          if (error.response?.status !== 401) {
-            console.error('Auth check error', error?.response?.data || error.message);
-          }
           setUser(null);
           setIsAdmin(false);
         }
@@ -65,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axiosInstance.post('/api/v1/user/logout');
     } catch (error) {
-      console.error('Error during logout:', error);
+      // Logout error handled silently
     } finally {
       setUser(null);
       setIsAdmin(false);

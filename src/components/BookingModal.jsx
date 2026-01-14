@@ -34,11 +34,9 @@ const BookingModal = ({ productSlug, onClose }) => {
     e.preventDefault();
     try {
       const response = await bookProduct({ productSlug, ...formData });
-      console.log("Booking successful:", response);
       alert("Booking confirmed!");
       onClose();
     } catch (error) {
-      console.error("Booking failed:", error);
       alert(error.message || "Booking failed.");
     }
   };

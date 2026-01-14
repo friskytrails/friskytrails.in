@@ -22,9 +22,6 @@ const Jointeam = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("Form Data:", formData)
-    console.log("Resume File:", formData.resume)
-
     setFormData({
       name: "",
       email: "",

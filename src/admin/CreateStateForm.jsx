@@ -29,7 +29,6 @@ const CreateStateForm = () => {
             setIsAdmin(true);
           }
         } catch (err) {
-          console.error(err);
           alert("Failed to verify user");
           window.location.href = "/";
         } finally {
@@ -46,7 +45,7 @@ const CreateStateForm = () => {
         const res = await getCountries();
         setCountries(res.data);
       } catch (err) {
-        console.error("Failed to fetch countries", err);
+        // Error handled silently
       }
     };
     fetchCountries();
@@ -87,7 +86,6 @@ const CreateStateForm = () => {
     try {
       const res = await createState(data);
       setMessage(res.message || "✅ State created successfully!");
-      console.log(res.data);
 
       // Reset form
       setFormData({
@@ -97,7 +95,6 @@ const CreateStateForm = () => {
       });
       setImageFile(null);
     } catch (err) {
-      console.error(err);
       setMessage("❌ Failed to create state");
     }
   };

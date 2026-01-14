@@ -38,9 +38,7 @@ const EditCountryForm = ({ countryId, onClose, onUpdate }) => {
     const fetchCountry = async () => {
       try {
         const res = await getCountryById(countryId);
-        console.log('fuck',res)
         const country = res.data[0];
-        console.log('peter',country)
 
         setFormData({
           name: country?.name || "",
@@ -49,7 +47,7 @@ const EditCountryForm = ({ countryId, onClose, onUpdate }) => {
 
         setImagePreview(country.image || "");
       } catch (err) {
-        console.error("Failed to fetch country", err);
+        // Error handled silently
       } finally {
         setLoading(false);
       }
@@ -102,7 +100,6 @@ const EditCountryForm = ({ countryId, onClose, onUpdate }) => {
         if (onClose) onClose();
       }, 1500);
     } catch (err) {
-      console.error(err);
       setMessage(err.message || "Failed to update country ❌");
     } finally {
       setSubmitting(false);

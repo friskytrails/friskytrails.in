@@ -48,7 +48,6 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
     const fetchCity = async () => {
       try {
         const res = await getCityById(cityId);
-        console.log("City fetch response:", res);
         // API returns { status: true, data: city }, so we need res.data.data
         const city = res.data?.data || res.data;
 
@@ -62,7 +61,7 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
 
         setImagePreview(city.image || "");
       } catch (err) {
-        console.error("Failed to fetch city", err);
+        // Error handled silently
       } finally {
         setLoading(false);
       }
@@ -79,7 +78,6 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
         // API returns { status: true, data: countries }, so we need res.data.data
         setCountries(res.data?.data || res.data || []);
       } catch (err) {
-        console.error(err);
         setCountries([]);
       }
     };
@@ -98,7 +96,6 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
         // API returns { status: true, data: states } or similar
         setStates(res.data?.data || res.data || []);
       } catch (err) {
-        console.error(err);
         setStates([]);
       }
     };
@@ -157,7 +154,6 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
         if (onClose) onClose();
       }, 1500);
     } catch (err) {
-      console.error(err);
       setMessage(err.message || "Failed to update city ❌");
     } finally {
       setSubmitting(false);

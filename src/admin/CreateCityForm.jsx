@@ -50,7 +50,7 @@ const CreateCityForm = () => {
         const res = await getCountries();
         setCountries(res.data);
       } catch (err) {
-        console.error("Failed to fetch countries", err);
+        // Error handled silently
       }
     };
     fetchCountries();
@@ -64,7 +64,7 @@ const CreateCityForm = () => {
         const res = await getStates(formData.country);
         setStates(res.data);
       } catch (err) {
-        console.error("Failed to fetch states", err);
+        // Error handled silently
       }
     };
     fetchStates();
@@ -111,7 +111,6 @@ const CreateCityForm = () => {
       setImageFile(null);
       setStates([]);
     } catch (err) {
-      console.error(err);
       setMessage("❌ Failed to create city");
     }
   };

@@ -58,7 +58,6 @@ const StateData = async (slug) => {
       }
     };
   } catch (error) {
-    console.error('Error in StateData:', error);
     throw error;
   }
 };

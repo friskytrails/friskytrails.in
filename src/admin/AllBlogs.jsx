@@ -11,13 +11,10 @@ const AllBlogs = () => {
   const fetchBlogs = async () => {
   try {
     setLoading(true);
-    console.log("wait")
 
     const response = await getAllBlogs(); 
-    console.log("response:", response);
 
     const result = response;
-    console.log("result status", result.status)
 
     if (!result.status) {
       throw new Error(result.message || "Failed to fetch blogs");
@@ -25,7 +22,6 @@ const AllBlogs = () => {
 
     setBlogs(result.data || []);
   } catch (err) {
-    console.error("Error fetching blogs:", err);
     setError(err.message);
   } finally {
     setLoading(false);

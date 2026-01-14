@@ -64,11 +64,8 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        console.log("Fetching product with ID f:", productId);
         const res = await getProductById(productId);
-        console.log("Response:", res);
         const product = res.data;
-        console.log("Fetched product:", product);
         setFormData({
           name: product.name || "",
           slug: product.slug || "",
@@ -90,7 +87,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         
         setImages(product.images || []);
       } catch (err) {
-        console.error("Failed to fetch product:", err);
+        // Error handled silently
       } finally {
         setLoading(false);
       }
@@ -105,7 +102,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         const res = await getCountries();
         setCountries(res.data);
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       }
     };
     fetchCountries();
@@ -121,7 +118,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         setFormData(prev => ({ ...prev, state: "", city: "" }));
         setCities([]);
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       }
     };
     fetchStates();
@@ -136,7 +133,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         setCities(res.data);
         setFormData(prev => ({ ...prev, city: "" }));
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       }
     };
     fetchCities();
@@ -149,7 +146,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         const res = await getAllProductTypes();
         setProductTypes(res.data);
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       }
     };
     fetchProductTypes();
@@ -259,7 +256,6 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
       if (onUpdate) onUpdate();
       if (onClose) onClose();
     } catch (err) {
-      console.error(err);
       toast.error('❌ Failed to update product', {
         duration: 4000,
         position: 'top-right',

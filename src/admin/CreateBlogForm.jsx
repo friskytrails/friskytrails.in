@@ -62,7 +62,7 @@ const CreateBlogForm = () => {
         const res = await getCountries();
         setCountries(res.data);
       } catch (err) {
-        console.error("Failed to fetch countries", err);
+        // Error handled silently
       }
     };
     fetchCountries();
@@ -78,7 +78,7 @@ const CreateBlogForm = () => {
         setFormData((prev) => ({ ...prev, state: "", city: "" }));
         setCities([]);
       } catch (err) {
-        console.error("Failed to fetch states", err);
+        // Error handled silently
       }
     };
     fetchStates();
@@ -93,7 +93,7 @@ const CreateBlogForm = () => {
         setCities(res.data);
         setFormData((prev) => ({ ...prev, city: "" }));
       } catch (err) {
-        console.error("Failed to fetch cities", err);
+        // Error handled silently
       }
     };
     fetchCities();
@@ -152,7 +152,6 @@ const CreateBlogForm = () => {
       setStates([]);
       setCities([]);
     } catch (err) {
-      console.error("Error creating blog:", err);
       setMessage("Failed to create blog");
     }
   };

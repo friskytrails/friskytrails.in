@@ -48,10 +48,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
     const fetchBlog = async () => {
       try {
         const res = await getBlogById(blogId);
-        console.log("Blog fetch response:", res);
         const blog = res.data;
-        console.log("Fetched blog:", blog);
-        console.log("Blog blocks:", blog.state?._id, blog.state);
 
         setFormData({
           title: blog.title,
@@ -77,7 +74,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
         setCoverImagePreview(blog.coverImage || "");
 
       } catch (err) {
-        console.error("Failed to fetch blog", err);
+        // Error handled silently
       } finally {
         setLoading(false);
       }
@@ -92,7 +89,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
         const res = await getCountries();
         setCountries(res.data);
       } catch (err) {
-        console.error(err);
+        // Error handled silently
       }
     };
     fetchCountries();
@@ -175,7 +172,6 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
       if (onUpdate) onUpdate();
       if (onClose) onClose();
     } catch (err) {
-      console.error(err);
       setMessage("Failed to update blog");
     }
   };
