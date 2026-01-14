@@ -23,7 +23,6 @@ const Newblog = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
     setFormData({
       from: "",
       to: "",

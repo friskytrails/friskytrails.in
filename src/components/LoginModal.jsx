@@ -43,7 +43,6 @@ const LoginModal = ({ onClose }) => {
         alert(response.message || "Failed to send OTP");
       }
     } catch (error) {
-      console.error(error);
       alert(error.message || error.response?.data?.message || "Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
@@ -66,7 +65,6 @@ const LoginModal = ({ onClose }) => {
         alert(response.message || "OTP verification failed");
       }
     } catch (error) {
-      console.error(error);
       alert(error.message || error.response?.data?.message || "Invalid OTP. Please try again.");
     } finally {
       setLoading(false);
@@ -116,7 +114,6 @@ const LoginModal = ({ onClose }) => {
         }
       }
     } catch (error) {
-      console.error(error);
       alert(error.message || error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);

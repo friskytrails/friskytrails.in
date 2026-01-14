@@ -16,7 +16,6 @@ const CreateCountryForm = () => {
       try {
         const res = await getCurrentUser();
         const user = res.data.user;
-        console.log(user);
         if (!user || user.admin != true) {
           setIsAllowed(false);
           // alert("You are not an admin!");
@@ -25,7 +24,6 @@ const CreateCountryForm = () => {
           setIsAdmin(true);
         }
       } catch (err) {
-        console.error(err);
         alert("Failed to verify user");
         window.location.href = "/";
       } finally {
@@ -69,7 +67,6 @@ const CreateCountryForm = () => {
       setFormData({ name: "", slug: "" });
       setImageFile(null);
     } catch (err) {
-      console.error(err);
       setMessage("Failed to create country");
     }
   };

@@ -53,7 +53,6 @@ const EditStateForm = ({ stateId, onClose, onUpdate }) => {
         const countriesData = res.data?.data || res.data || [];
         setCountries(countriesData);
       } catch (err) {
-        console.error(err);
         setCountries([]);
       } finally {
         setCountriesLoading(false);
@@ -89,7 +88,6 @@ const EditStateForm = ({ stateId, onClose, onUpdate }) => {
           setImagePreview(stateData.image || "");
         }
       } catch (err) {
-        console.error("Failed to fetch state", err);
         setMessage("Failed to load state data");
       } finally {
         setLoading(false);
@@ -145,7 +143,6 @@ const EditStateForm = ({ stateId, onClose, onUpdate }) => {
         if (onClose) onClose();
       }, 1500);
     } catch (err) {
-      console.error(err);
       setMessage(err.message || "Failed to update state ❌");
     } finally {
       setSubmitting(false);

@@ -14,7 +14,6 @@ const AllCountries = () => {
     try {
       setLoading(true);
       const result = await getAllCountries();
-      console.log('my',result)
 
       if (!result.data) {
         throw new Error(result.message || "Failed to fetch countries");
@@ -22,7 +21,6 @@ const AllCountries = () => {
 
       setCountries(result.data || []);
     } catch (err) {
-      console.error("Error fetching countries:", err);
       setError(err.message);
     } finally {
       setLoading(false);

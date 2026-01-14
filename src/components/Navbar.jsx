@@ -74,7 +74,6 @@ const Navbar = () => {
       setShowDropdown(false);
       window.location.href = "/";
     } catch (error) {
-      console.error("Logout failed:", error);
       setShowDropdown(false);
       window.location.href = "/";
     }

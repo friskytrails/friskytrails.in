@@ -18,9 +18,7 @@ const createBlog = async (formData) => {
 };
 const getAllBlogs = async () => {
   try {
-    console.log("hehe")
     const response = await axiosInstance.get("/api/v1/admin/blogs");
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -211,23 +209,18 @@ const getProductBySlug = async (slug) => {
 
 export const getProductById = async (id) => {
   try {
-    console.log("Fetching product with ID f api:", id);
     const response = await axiosInstance.get(`/api/v1/admin/product/id/${id}`);
-    console.log("Response from getProductById:", response);
     return response.data;
   } catch (error) {
-    // More robust error logging
+    // More robust error handling
     if (error.response) {
       // Server responded with a status code out of 2xx
-      console.error("Server error:", error.response.data);
       throw new Error(error.response.data.message || "Failed to fetch product");
     } else if (error.request) {
       // Request was made but no response received
-      console.error("No response received:", error.request);
       throw new Error("No response from server. Please try again later.");
     } else {
       // Something else caused the error
-      console.error("Error setting up request:", error.message);
       throw new Error(error.message);
     }
   }
@@ -322,9 +315,7 @@ const getAllProductTypes = async () => {
 
 const getAllStates = async () => {
   try {
-    console.log("hiiii")
     const response = await axiosInstance.get("/api/v1/admin/states");
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -332,9 +323,7 @@ const getAllStates = async () => {
 };
 const getStateById= async (id) => {
   try {
-    console.log("hiiii2")
     const response = await axiosInstance.get(`/api/v1/admin/state/${id}`);
-    console.log(response)
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -393,9 +382,7 @@ const updateCountry = async (id, data) => {
 
 const getAllCities = async () => {
   try {
-    console.log("Fetching all cities");
     const response = await axiosInstance.get("/api/v1/admin/cities");
-    console.log(response);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
