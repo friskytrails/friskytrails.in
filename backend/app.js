@@ -14,9 +14,22 @@ import blogRoutes from "./routes/blog.routes.js";
 import stateRoutes from "./routes/state.routes.js";
 
 
-dotenv.config({
-  path: ".env",
-});
+// Load environment variables
+// In Vercel, env vars are automatically available
+// Only load .env file in local development
+try {
+  if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+    // Local development - try to load .env file
+    dotenv.config({ path: ".env" });
+  } else {
+    // Vercel/production - env vars are already in process.env
+    // Just call dotenv.config() without path to ensure it's initialized
+    dotenv.config();
+  }
+} catch (error) {
+  // If .env file doesn't exist, that's okay - env vars might be set elsewhere
+  console.log("Note: .env file not found, using environment variables");
+}
 
 const allowedOrigins = [
   "http://localhost:5173",
