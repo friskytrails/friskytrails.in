@@ -167,6 +167,14 @@ export const login = async (req, res) => {
       });
     }
 
+    // Check if user has a password set
+    if (!user.password) {
+      return res.status(401).json({
+        success: false,
+        message: 'Please complete your registration first',
+      });
+    }
+
     // Check password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
@@ -179,9 +187,17 @@ export const login = async (req, res) => {
     sendTokenResponse(user, 200, res);
   } catch (error) {
     console.error('Login error:', error);
+    console.error('Login error stack:', error.stack);
+    
+    // Set CORS headers even on error
+    setCorsHeaders(req, res);
+    
     res.status(500).json({
       success: false,
       message: 'Server error during login',
+      ...(process.env.NODE_ENV === 'development' && { 
+        error: error.message 
+      }),
     });
   }
 };
