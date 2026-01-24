@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createState,  getStates, getStateWithBlogs } from "../controllers/state.controller"
+import { createState,  getStates, getStateWithBlogs } from "../controllers/state.controller.js"
 
 const router = Router()
 
