@@ -37,7 +37,25 @@ const allowedOrigins = [
   "https://frisky-trails.vercel.app",
   "https://frisky-trails-cv8k.vercel.app",
   process.env.CORS_ORIGIN,
+  process.env.FRONTEND_URL,
 ].filter(Boolean);
+
+// Helper function to check if origin is allowed
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Allow requests with no origin
+  
+  // Check exact matches
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+  
+  // Allow any Vercel preview deployment (for development)
+  if (origin.includes('.vercel.app')) {
+    return true;
+  }
+  
+  return false;
+};
 
 app.use((req, res, next) => {
   // Set COOP to allow popups for OAuth flows
@@ -48,16 +66,11 @@ app.use((req, res, next) => {
 });
 
 
+// CORS configuration
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) {
-        return callback(null, true);
-      }
-      
-      // Check if origin is in allowed list
-      if (allowedOrigins.includes(origin)) {
+      if (isOriginAllowed(origin)) {
         callback(null, true);
       } else {
         // Log the blocked origin for debugging
@@ -67,10 +80,24 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-    exposedHeaders: ["Content-Range", "X-Content-Range"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Cookie"],
+    exposedHeaders: ["Content-Range", "X-Content-Range", "Set-Cookie"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   })
 );
+
+// Handle preflight requests explicitly
+app.options("*", (req, res) => {
+  const origin = req.headers.origin;
+  if (isOriginAllowed(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Cookie");
+  }
+  res.sendStatus(204);
+});
 
 // app.options("*", cors()); 
 
@@ -161,6 +188,15 @@ app.get("/__routes", (req, res) => {
 
 // 404 handler for undefined routes
 app.use((req, res) => {
+  // Set CORS headers for 404 responses
+  const origin = req.headers.origin;
+  if (isOriginAllowed(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Cookie");
+  }
+  
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`
@@ -180,6 +216,15 @@ app.use((err, req, res, next) => {
   console.error('Request Params:', req.params);
   console.error('Request Query:', req.query);
   console.error('--- END ERROR DETAILS ---\n');
+  
+  // Set CORS headers even on errors
+  const origin = req.headers.origin;
+  if (isOriginAllowed(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Cookie");
+  }
   
   // Normalize status code: if a Mongoose error code is present (e.g. 11000)
   // map it to an appropriate HTTP status. Only use err.code directly when
