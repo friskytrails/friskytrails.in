@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
@@ -14,6 +15,7 @@ import stateRoutes from "./routes/state.routes.js";
 
 import configurePassport from "./config/passport.js";
 import { isOriginAllowed, setCorsHeaders } from "./utils/corsHelper.js";
+import connectDB from "./db/index.js";
 
 dotenv.config();
 
@@ -62,6 +64,26 @@ app.use((req, res, next) => {
 ======================= */
 configurePassport();
 app.use(passport.initialize());
+
+/* =======================
+   DATABASE CONNECTION MIDDLEWARE (FOR VERCEL SERVERLESS)
+======================= */
+app.use(async (req, res, next) => {
+  // Ensure DB is connected before handling request (important for serverless)
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB();
+    } catch (error) {
+      console.error("Database connection error:", error);
+      setCorsHeaders(req, res);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+      });
+    }
+  }
+  next();
+});
 
 /* =======================
    REQUEST LOGGER
@@ -171,7 +193,14 @@ export default app;
 ======================= */
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 8000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.log("MONGODB connection failed: ", err);
+      process.exit(1);
+    });
 }
