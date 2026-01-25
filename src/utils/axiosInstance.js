@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
   ? 'http://localhost:8000'
   : (import.meta.env.VITE_API_URL_PROD || 'https://frisky-trails-backend.vercel.app'),
-  timeout: 80000,
+  timeout: 30000,
   withCredentials: true,
   headers: {
       'Content-Type': 'application/json',
