@@ -6,21 +6,20 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);   // NEW
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let isMounted = true; // Flag to prevent state updates if component unmounts
+    let isMounted = true;
 
     const checkAuth = async () => {
-      // Skip /me when we have no token — avoids 401 and "Failed to load resource" in console
       const token = localStorage.getItem('token');
       if (!token || token === 'none') {
         if (isMounted) {
           setUser(null);
           setIsAdmin(false);
+          setLoading(false);
         }
-        if (isMounted) setLoading(false);
         return;
       }
 
@@ -38,12 +37,10 @@ export const AuthProvider = ({ children }) => {
           }
         }
       } catch (error) {
-        // 401 = invalid/expired token — clear and treat as logged out
         if (isMounted) {
           setUser(null);
           setIsAdmin(false);
-        }
-        if (error.response?.status === 401) {
+          // Token invalid hai toh hata do
           localStorage.removeItem('token');
         }
       } finally {
@@ -55,7 +52,6 @@ export const AuthProvider = ({ children }) => {
 
     checkAuth();
 
-    // Cleanup function to prevent state updates after unmount
     return () => {
       isMounted = false;
     };
@@ -68,10 +64,15 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      // API call to logout from backend
       await axiosInstance.post('/api/v1/user/logout');
     } catch (error) {
-      // Logout error handled silently
+      console.error("Logout API failed:", error);
     } finally {
+      // FIX: Token ko localStorage se remove karna zaroori hai
+      localStorage.removeItem('token'); 
+      
+      // Reset State
       setUser(null);
       setIsAdmin(false);
     }

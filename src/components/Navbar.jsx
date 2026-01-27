@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import Admodal from "../components/Admodal";
 import LoginModal from "./LoginModal";
@@ -9,6 +9,7 @@ import { FaChevronDown, FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate(); // Added for stable redirection
   const [showModal, setShowModal] = useState(false);
   const [showAdmodal, setShowAdmodal] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,14 +27,14 @@ const Navbar = () => {
 
   const toggleServices = () => {
     setShowServices((prev) => {
-      if (!prev) setShowAdventures(false);
+      if (!prev) setShowAdventures(false); // Close adventures if opening services
       return !prev;
     });
   };
 
   const toggleAdventures = () => {
     setShowAdventures((prev) => {
-      if (!prev) setShowAdventures(false);
+      if (!prev) setShowServices(false); // Close services if opening adventures
       return !prev;
     });
   };
@@ -69,12 +70,14 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-    } catch (error) {
-      // Handle error silently
-    } finally {
+      // Reset all UI states
       setShowDropdown(false);
       setShowLogin(false);
-      window.location.href = "/";
+      setIsMenuOpen(false);
+      // Use navigate instead of window.location.href to prevent race conditions
+      navigate("/"); 
+    } catch (error) {
+      console.error("Logout error:", error);
     }
   };
 
@@ -152,7 +155,7 @@ const Navbar = () => {
             >
               Adventures 
               <img 
-                className="w-4 h-4 transition-transform group-hover:-rotate-180" 
+                className={`w-4 h-4 transition-transform ${showAdmodal ? "-rotate-180" : ""}`} 
                 src={Arrow} 
                 alt="arrow" 
               />
@@ -165,7 +168,7 @@ const Navbar = () => {
             >
               Services 
               <img 
-                className="w-4 h-4 transition-transform group-hover:-rotate-180" 
+                className={`w-4 h-4 transition-transform ${showModal ? "-rotate-180" : ""}`} 
                 src={Arrow} 
                 alt="arrow" 
               />
@@ -368,18 +371,21 @@ const Navbar = () => {
               Contact Us
             </Link>
 
-            {/* Login/Logout - Moved here after Contact Us */}
+            {/* Login/Logout Section */}
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="block w-full p-4 rounded-xl hover:bg-amber-50 hover:text-amber-600 transition-all text-lg font-semibold border-t border-gray-200 mt-2 pt-6"
+                className="block w-full p-4 rounded-xl text-center hover:bg-red-50 hover:text-red-600 transition-all text-lg font-semibold border-t border-gray-200 mt-2 pt-6"
               >
                 Logout
               </button>
             ) : (
               <button
-                onClick={() => setShowLogin(true)}
-                className="block w-full p-4 rounded-xl hover:bg-amber-50 hover:text-amber-600 transition-all text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white border-t border-gray-200 mt-2 pt-6 shadow-lg"
+                onClick={() => {
+                  handleNavigation();
+                  setShowLogin(true);
+                }}
+                className="block w-full p-4 text-center rounded-xl   hover:bg-amber-50 hover:text-amber-600 transition-all text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white border-t border-gray-200 mt-4 pt-6 shadow-lg"
               >
                 Login
               </button>

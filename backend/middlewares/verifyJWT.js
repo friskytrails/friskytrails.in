@@ -25,7 +25,7 @@ export const verifyJWT = async (req, res, next) => {
       });
     }
 
-    const JWT_SECRET = process.env.JWT_SECRET || process.env.ACCESS_TOKEN_SECRET
+    const JWT_SECRET = process.env.JWT_SECRET || process.env.ACCESS_TOKEN_SECRET  || '123g56a'
 
     if (!JWT_SECRET) {
       console.error("🔥 JWT_SECRET NOT SET IN ENV");
