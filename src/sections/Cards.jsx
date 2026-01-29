@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { data } from "../lib/corouselData";
+import ProductDetails from "../admin/ProductDetails";
 
 const Cards = () => {
   const settings = {
@@ -28,6 +29,11 @@ const Cards = () => {
     return `₹${(priceNum + 1000).toLocaleString()}`;
   };
 
+  //  INLINE PREFETCH FUNCTION for optimization ke liye
+  const prefetchTourPage = () => {
+    import("../admin/ProductDetails");
+  };
+
   return (
     <div className="w-full py-6 md:py-8 mt-8 md:mt-12">
       <h1
@@ -41,8 +47,13 @@ const Cards = () => {
         <Slider {...settings}>
           {data.map((item, index) => {
             const cutPrice = getCutPrice(item.price);
+
             return (
-              <div key={index} className="px-3">
+              <div
+                key={index}
+                className="px-3"
+                onMouseEnter={prefetchTourPage} // 🔥 prefetch on card hover
+              >
                 <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden h-full flex flex-col min-h-[350px]">
                   
                   <img
@@ -60,10 +71,9 @@ const Cards = () => {
                       {item.title}
                     </h2>
 
-                    {/* PRICE + CTA — ALWAYS AT BOTTOM */}
-                    <div className="flex items-center justify-between  sm:mb-0">
-
-                      <div className="flex flex-col  items-start">
+                    {/* PRICE + CTA */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col items-start">
                         <span className="text-gray-400 text-sm line-through mb-1">
                           {cutPrice}
                         </span>
@@ -77,7 +87,11 @@ const Cards = () => {
                         </div>
                       </div>
 
-                      <Link to={item.link}>
+                      {/* 🔥 INLINE PREFETCH ON LINK HOVER */}
+                      <Link
+                        to={item.link}
+                        onMouseEnter={prefetchTourPage}
+                      >
                         <button className="rounded-full px-4 py-2 border border-gray-300 text-sm sm:text-base font-semibold bg-white hover:bg-[rgb(255,99,33)] hover:text-white transition-all">
                           Book Now
                         </button>

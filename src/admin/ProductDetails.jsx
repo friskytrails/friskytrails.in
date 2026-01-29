@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import Right from "../assets/right.svg";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
 import Call from "../assets/calling.svg";
 
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import {
   getProductBySlug,
@@ -20,6 +20,7 @@ import { MapPin } from "lucide-react";
 
 const ProductDetails = () => {
   const { slug } = useParams();
+
   const [product, setProduct] = useState(null);
   const [thingsToCarry, setThingsToCarry] = useState([]);
   const [howToReach, setHowToReach] = useState("");
@@ -28,7 +29,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
 
   /* =====================
-     SHARE HANDLER (ADDED)
+     SHARE HANDLER
   ===================== */
   const handleShare = async () => {
     try {
@@ -36,45 +37,75 @@ const ProductDetails = () => {
       await navigator.clipboard.writeText(url);
       toast.success("Link copied to clipboard!");
     } catch (error) {
-      toast.error("Failed to copy link",error);
+      toast.error("Failed to copy link", error);
     }
   };
 
-  // Auto image slider for mobile
+  /* =====================
+     AUTO IMAGE SLIDER (optimized but same behavior)
+  ===================== */
   useEffect(() => {
     if (!product?.images || product.images.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % product.images.length);
-    }, 3000);
-    return () => clearInterval(interval);
+
+    let interval;
+
+    const start = () => {
+      interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % product.images.length);
+      }, 3000);
+    };
+
+    const stop = () => clearInterval(interval);
+
+    if (document.visibilityState === "visible") start();
+
+    const onVisibilityChange = () => {
+      document.visibilityState === "visible" ? start() : stop();
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [product?.images]);
 
-  // Fetch product, product type, and city details
+  /* =====================
+     DATA FETCH (parallel optimized)
+  ===================== */
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
+
         const productRes = await getProductBySlug(slug);
         const productData = productRes.data;
         setProduct(productData);
 
-        if (productData.productType) {
-          const typeRes = await getProductTypeById(productData.productType);
-          let carryData = typeRes.data.thingsToCarry || "";
+        const promises = [];
 
-          if (carryData) {
-            try {
-              const parsed = JSON.parse(carryData);
-              setThingsToCarry(Array.isArray(parsed) ? parsed : [carryData]);
-            } catch {
-              setThingsToCarry(carryData);
-            }
-          }
+        if (productData.productType) {
+          promises.push(getProductTypeById(productData.productType));
         }
 
         if (productData.city?._id) {
-          const cityRes = await getCityById(productData.city._id);
-          setHowToReach(cityRes.data?.howToReach || "");
+          promises.push(getCityById(productData.city._id));
+        }
+
+        const [typeRes, cityRes] = await Promise.all(promises);
+
+        if (typeRes?.data?.thingsToCarry) {
+          try {
+            const parsed = JSON.parse(typeRes.data.thingsToCarry);
+            setThingsToCarry(Array.isArray(parsed) ? parsed : [parsed]);
+          } catch {
+            setThingsToCarry(typeRes.data.thingsToCarry);
+          }
+        }
+
+        if (cityRes?.data?.howToReach) {
+          setHowToReach(cityRes.data.howToReach || "");
         }
       } catch (error) {
         console.error("Error fetching product/type/city:", error);
@@ -86,33 +117,18 @@ const ProductDetails = () => {
     fetchProductData();
   }, [slug]);
 
-  const openBookingModal = () => setShowBooking(true);
-  const closeBookingModal = () => setShowBooking(false);
+  const openBookingModal = useCallback(() => setShowBooking(true), []);
+  const closeBookingModal = useCallback(() => setShowBooking(false), []);
 
   if (loading || !product) {
-    return (
-     <FriskyLoader/>
-    );
+    return <FriskyLoader />;
   }
 
   return (
     <div className="min-h-screen w-full">
-      {/* TOASTER (ADDED) */}
-
-
       {/* Breadcrumb */}
       <div className="w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mt-12 md:mt-20 lg:mt-30  m-auto px-4 md:py-2">
-        {/* <div className="flex items-center pt-4 sm:pt-6 flex-wrap gap-2">
-          <h3 className="font-semibold text-sm sm:text-base">Home</h3>
-          <img className="h-3 w-3 sm:h-4 sm:w-4 mt-1" src={Right} alt="rightarrow" />
-          <h3 className="font-semibold text-sm sm:text-base">Products</h3>
-          <img className="h-3 w-3 sm:h-4 sm:w-4 mt-1" src={Right} alt="rightarrow" />
-          <h3 className="font-semibold text-gray-600 text-sm sm:text-base truncate">
-            {product.name}
-          </h3>
-        </div> */}
-
-        <h1 className="text-xl sm:text-2xl  md:text-3xl tracking-tighter font-bold pt-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl tracking-tighter font-bold pt-6">
           {product.name}
         </h1>
 
@@ -122,12 +138,11 @@ const ProductDetails = () => {
               ⭐ {product.rating} ({product.reviews || 0} Reviews)
             </h3>
             <h3 className="flex items-center gap-1 text-gray-500 text-sm sm:text-base">
-  <MapPin size={16} className="text-gray-500" />
-  {product.city?.name}, {product.state?.name}
-</h3>
+              <MapPin size={16} className="text-gray-500" />
+              {product.city?.name}, {product.state?.name}
+            </h3>
           </div>
 
-          {/* SHARE BUTTON (onClick ADDED) */}
           <button
             onClick={handleShare}
             className="py-2 flex items-center justify-center gap-2 px-4 sm:px-6 font-semibold text-white active:scale-95 transition-all duration-300 bg-[rgb(233,99,33)] rounded-3xl text-sm sm:text-base w-fit"
@@ -224,7 +239,6 @@ const ProductDetails = () => {
 
       {/* Main Section */}
       <div className="w-[100%] sm:w-[90%] md:w-[85%] lg:w-[90%] m-auto flex flex-col lg:flex-row px-4 gap-8 mt-6 md:mt-10">
-        {/* Left - Content */}
         <div className="w-full lg:w-[70%] lg:order-1">
           <Content
             product={product}
@@ -233,82 +247,62 @@ const ProductDetails = () => {
           />
         </div>
 
-        {/* Right - Sidebar */}
         <div className="w-full lg:w-[30%] lg:order-2 pt-14 lg:pl-6">
           <div className="lg:sticky lg:top-28">
+            {/* PRICE CARD */}
             <div className="hidden lg:block bg-white border border-orange-500 rounded-lg shadow-md overflow-hidden">
               <div className="bg-orange-500 py-4 relative">
-                <span className="text-white absolute right-2 top-1 text-xs sm:text-sm md:text-base">
+                <span className="text-white absolute right-2 top-1">
                   Save 28.58%
                 </span>
               </div>
-              <div className="p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div className="text-center sm:text-left">
-                  <span className="font-semibold text-xs sm:text-sm md:text-base">
-                    From
-                  </span>
-                  <span className="line-through pl-2 text-base sm:text-lg md:text-xl text-gray-500">
+              <div className="p-4 flex justify-between items-center gap-4">
+                <div>
+                  <span className="line-through text-gray-500">
                     ₹{product.actualPrice}
                   </span>
-                  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-orange-500">
+                  <h1 className="text-3xl font-bold text-orange-500">
                     ₹{product.offerPrice}
                   </h1>
-                  <span className="font-semibold text-xs sm:text-sm md:text-base">
-                    per person
-                  </span>
+                  <span className="font-semibold">per person</span>
                 </div>
                 <button
                   onClick={openBookingModal}
-                  className="py-2 px-6 sm:px-8 md:px-10 text-sm sm:text-base md:text-lg font-semibold text-white active:scale-95 transition-all duration-300 bg-[rgb(233,99,33)] rounded-3xl"
+                  className="py-2 px-6 font-semibold text-white bg-[rgb(233,99,33)] rounded-3xl"
                 >
                   Book Now
                 </button>
               </div>
-              <div className="flex items-start gap-2 sm:gap-3 px-4 pb-4">
-                <img
-                  className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0"
-                  src={Payment}
-                  alt="payment"
-                />
-                <p className="text-xs sm:text-sm md:text-base leading-snug">
+              <div className="flex gap-2 px-4 pb-4">
+                <img src={Payment} className="h-5 w-5" alt="" />
+                <p className="text-sm">
                   <span className="underline font-semibold">
                     Reserve now & pay later
-                  </span>{" "}
-                  to book your spot and pay nothing today
+                  </span>
                 </p>
               </div>
             </div>
 
-            {/* Contact Card */}
-            <div className="hidden md:block bg-white border border-orange-500 rounded-lg shadow-md p-4 mb-2 md:mb-0 md:mt-10 sm:p-5">
-              <h1 className="text-orange-500 text-lg sm:text-xl md:text-2xl font-semibold">
+            {/* CONTACT CARD */}
+            <div className="hidden md:block bg-white border border-orange-500 rounded-lg shadow-md p-4 mt-10">
+              <h1 className="text-orange-500 text-xl font-semibold">
                 Got a Question?
               </h1>
-              <p className="text-sm sm:text-base md:text-lg mt-2">
-                Our destination expert will be happy to help you resolve your
-                queries for this tour.
+              <p className="mt-2">
+                Our destination expert will be happy to help you.
               </p>
-              <div className="flex gap-3 sm:gap-4 items-center w-full mt-4">
-                <div className="flex items-center justify-center bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 h-9 w-9 sm:h-10 sm:w-10 rounded-full">
-                  <img
-                    className="h-4 w-4 sm:h-5 sm:w-5 invert"
-                    src={Call}
-                    alt="call"
-                  />
+              <div className="flex gap-4 items-center mt-4">
+                <div className="bg-orange-500 h-10 w-10 rounded-full flex items-center justify-center">
+                  <img className="invert h-5 w-5" src={Call} alt="call" />
                 </div>
                 <div>
                   <a
-                    className="text-base sm:text-lg md:text-xl font-semibold block"
                     href="tel:+91-7501516714"
+                    className="font-semibold text-lg"
                   >
                     +91-75015 16714
                   </a>
-                  <h3 className="text-xs sm:text-sm">Mon-Sun: 9AM-8PM</h3>
-                  <h3 className="text-xs sm:text-sm break-all font-semibold">
-                    <a href="mailto:contact@friskytrails.in" className="text-black md:hidden lg:block">
-                      contact@friskytrails.in
-                    </a>
-                  </h3>
+                  <p className="text-sm">Mon-Sun: 9AM-8PM</p>
                 </div>
               </div>
             </div>
@@ -316,22 +310,22 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Mobile Fixed Book Now Bar */}
-      <div className="lg:hidden fixed inset-x-0 bottom-0 w-full bg-white border-t border-orange-500 shadow-md py-5 px-2 flex justify-between items-center z-50">
-        <div className="flex flex-col justify-center">
-          <span className="text-md line-through text-gray-500">
+      {/* Mobile Fixed Bar */}
+      <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white border-t border-orange-500 shadow-md py-5 px-4 flex justify-between items-center z-50">
+        <div>
+          <span className="line-through text-gray-500">
             ₹{product.actualPrice}
           </span>
           <div className="flex items-baseline gap-1">
             <span className="text-xl font-bold text-orange-500">
               ₹{product.offerPrice}
             </span>
-            <span className="text-md text-gray-600">per person</span>
+            <span className="text-gray-600">per person</span>
           </div>
         </div>
         <button
           onClick={openBookingModal}
-          className="py-2 px-4 text-base font-semibold text-white bg-[rgb(233,99,33)] rounded-3xl active:scale-95 transition-all duration-300"
+          className="py-2 px-4 font-semibold text-white bg-[rgb(233,99,33)] rounded-3xl"
         >
           Book Now
         </button>
@@ -341,7 +335,6 @@ const ProductDetails = () => {
         <Choose />
       </div>
 
-      {/* Booking Modal */}
       {showBooking && (
         <BookingModal productSlug={product.slug} onClose={closeBookingModal} />
       )}
