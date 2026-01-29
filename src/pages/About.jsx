@@ -46,7 +46,7 @@ const About = () => {
   }
 
   return (
-    <div className="min-h-screen mt-14 md:mt-20 lg:mt-24 xl:mt-[108px] w-full">
+    <div className="min-h-screen mt-14 md:mt-20 lg:mt-24 xl:mt-[98px] w-full">
       {/* HERO IMAGE DESKTOP */}
       <div
         className="hidden lg:block"

@@ -102,12 +102,14 @@ const Navbar = () => {
           sm:min-h-[40px] 
           md:min-h-[50px]
           lg:h-[8vh]            
-          w-full bg-white/95 backdrop-blur-md border-b border-gray-200
-          flex flex-col lg:flex-row 
+w-full bg-white
+border-none shadow-none
+
+        flex flex-col lg:flex-row 
           justify-between items-center
           px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12
           py-2 sm:py-2.5 md:py-3 lg:py-0
-          shadow-sm
+   
         ">
           {/* Logo and Hamburger */}
           <div className="flex justify-between items-center w-full lg:w-auto py-1.5 lg:py-0">

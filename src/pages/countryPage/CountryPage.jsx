@@ -62,7 +62,7 @@ const CountryPage = () => {
     <div className="min-h-screen">
       {/* HERO */}
       <div
-  className="w-full mt-12 lg:mt-[6.7rem]"
+  className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24"
         style={{
           marginTop:
             typeof window !== "undefined"
