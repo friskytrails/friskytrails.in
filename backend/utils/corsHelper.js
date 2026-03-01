@@ -7,6 +7,8 @@ const allowedOrigins = [
   "http://127.0.0.1:5173",
   "https://frisky-trails.vercel.app",
   "https://frisky-trails-cv8k.vercel.app",
+  "https://friskytrails.in",
+  "https://www.friskytrails.in",
   process.env.CORS_ORIGIN,
   process.env.FRONTEND_URL,
 ].filter(Boolean); // Remove undefined values
