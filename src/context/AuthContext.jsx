@@ -14,14 +14,8 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
-      if (!token || token === 'none') {
-        if (isMounted) {
-          setUser(null);
-          setIsAdmin(false);
-          setLoading(false);
-        }
-        return;
-      }
+      // If we have no token in localStorage, still try /me — cookie (e.g. from Google OAuth) may be present
+      const hasLocalToken = token && token !== 'none';
 
       try {
         const response = await axiosInstance.get('/api/v1/user/me');
@@ -40,8 +34,10 @@ export const AuthProvider = ({ children }) => {
         if (isMounted) {
           setUser(null);
           setIsAdmin(false);
-          // Token invalid hai toh hata do
-          localStorage.removeItem('token');
+          // Only clear localStorage token; cookie is cleared by backend on invalid/expired
+          if (hasLocalToken) {
+            localStorage.removeItem('token');
+          }
         }
       } finally {
         if (isMounted) {
