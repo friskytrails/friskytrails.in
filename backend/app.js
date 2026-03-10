@@ -12,6 +12,7 @@ import adventureRoutes from "./routes/adventure.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import stateRoutes from "./routes/state.routes.js";
+import sitemapRouter from "./controllers/sitemap.controller.js";
 
 import configurePassport from "./config/passport.js";
 import { isOriginAllowed, setCorsHeaders } from "./utils/corsHelper.js";
@@ -103,6 +104,9 @@ app.use("/api/v1/blog", blogRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/v1", adventureRoutes);
 app.use("/api/states", stateRoutes);
+
+// SEO sitemap
+app.use("/", sitemapRouter);
 
 /* =======================
    HEALTH CHECKS

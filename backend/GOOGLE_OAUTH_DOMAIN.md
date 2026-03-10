@@ -73,6 +73,9 @@ In the **same backend project** → **Settings** → **Environment Variables**, 
 | **GOOGLE_REDIRECT_URI** | `https://api.friskytrails.in/api/v1/user/google/callback` |
 | **CLIENT_URL** | `https://www.friskytrails.in` |
 | **CORS_ORIGIN** | `https://www.friskytrails.in` |
+| **COOKIE_DOMAIN** | `.friskytrails.in` |
+
+**COOKIE_DOMAIN** ensures the auth cookie works when the frontend (www) calls the API (api) subdomain.
 
 Redeploy the backend after changing env vars (Deployments → … → Redeploy).
 
@@ -87,7 +90,7 @@ Redeploy the backend after changing env vars (Deployments → … → Redeploy).
 
 After this, the redirect URI is on your domain and Google will show **api.friskytrails.in** in the flow.
 
-### Step 6: Frontend (optional but recommended)
+### Step 6: Frontend (required when using api.friskytrails.in)
 
 So the site uses your API domain for all requests (including “Login with Google”):
 

@@ -287,9 +287,13 @@ export const googleCallback = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/',
     };
+    // Use COOKIE_DOMAIN for api.friskytrails.in so cookie works when frontend (www) calls api subdomain
     if (process.env.COOKIE_DOMAIN) {
       cookieOptions.domain = process.env.COOKIE_DOMAIN;
+    } else if (process.env.API_URL?.includes('api.friskytrails.in')) {
+      cookieOptions.domain = '.friskytrails.in';
     }
 
     res

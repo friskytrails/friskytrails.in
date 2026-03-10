@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://api.friskytrails.in/sitemap.xml
+
