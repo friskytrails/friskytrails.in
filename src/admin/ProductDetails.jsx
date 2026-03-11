@@ -4,6 +4,7 @@ import Right from "../assets/right.svg";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
 import Call from "../assets/calling.svg";
+import { Star, StarHalf, StarOff } from "lucide-react"; // Add these imports
 
 import toast from "react-hot-toast";
 
@@ -33,16 +34,38 @@ const ProductDetails = () => {
   ===================== */
   const handleShare = async () => {
     try {
-      const url = `https://www.friskytrails.in//tours/${slug}`;
+      const url = `https://www.friskytrails.in/tours/${slug}`;
       await navigator.clipboard.writeText(url);
       toast.success("Link copied to clipboard!");
     } catch (error) {
-      toast.error("Failed to copy link", error);
+      toast.error("Failed to copy link");
     }
   };
 
   /* =====================
-     AUTO IMAGE SLIDER (optimized but same behavior)
+     Star Rating Component
+  ===================== */
+  const StarRating = ({ rating, reviews, size = 20 }) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+    return (
+      <div className="flex items-center gap-1">
+        {[...Array(fullStars)].map((_, i) => (
+          <Star key={`full-${i}`} size={size} className="fill-yellow-400 text-yellow-400" />
+        ))}
+        {hasHalfStar && <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />}
+        {[...Array(emptyStars)].map((_, i) => (
+          <StarOff key={`empty-${i}`} size={size} className="text-gray-300" />
+        ))}
+        <span className="ml-1 text-sm font-medium text-gray-600">({reviews || 0})</span>
+      </div>
+    );
+  };
+
+  /* =====================
+     AUTO IMAGE SLIDER (unchanged)
   ===================== */
   useEffect(() => {
     if (!product?.images || product.images.length === 0) return;
@@ -72,7 +95,7 @@ const ProductDetails = () => {
   }, [product?.images]);
 
   /* =====================
-     DATA FETCH (parallel optimized)
+     DATA FETCH (unchanged)
   ===================== */
   useEffect(() => {
     const fetchProductData = async () => {
@@ -126,17 +149,22 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen w-full">
-      {/* Breadcrumb */}
-      <div className="w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mt-12 md:mt-20 lg:mt-30  m-auto px-4 md:py-2">
+      {/* Breadcrumb - UPDATED WITH STARS */}
+      <div className="w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mt-12 md:mt-20 lg:mt-30 m-auto px-4 md:py-2">
         <h1 className="text-xl sm:text-2xl md:text-3xl tracking-tighter font-bold pt-6">
           {product.name}
         </h1>
 
         <div className="flex flex-col sm:flex-row sm:justify-between gap-4 pt-2">
-          <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
-            <h3 className="text-gray-500 text-sm sm:text-base">
-              ⭐ {product.rating} ({product.reviews || 0} Reviews)
-            </h3>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 flex-wrap">
+            {/* Star Rating Display */}
+            <StarRating 
+              rating={product.rating || 0} 
+              reviews={product.reviews || 0}
+              size={18}
+            />
+            
+            {/* Location */}
             <h3 className="flex items-center gap-1 text-gray-500 text-sm sm:text-base">
               <MapPin size={16} className="text-gray-500" />
               {product.city?.name}, {product.state?.name}
@@ -153,7 +181,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Images Section */}
+      {/* Images Section - UNCHANGED */}
       <div className="h-auto w-full pt-4 px-4">
         <div className="w-full max-w-7xl rounded-lg bg-white m-auto">
           {product.images && product.images.length > 0 && (
@@ -210,9 +238,7 @@ const ProductDetails = () => {
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 hover:scale-110"
                       style={{
-                        backgroundImage: `url('${
-                          product.images[2] || product.images[0]
-                        }')`,
+                        backgroundImage: `url('${product.images[2] || product.images[0]}')`,
                       }}
                     ></div>
                   </div>
@@ -237,7 +263,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Main Section */}
+      {/* Rest of component UNCHANGED */}
       <div className="w-[100%] sm:w-[90%] md:w-[85%] lg:w-[90%] m-auto flex flex-col lg:flex-row px-4 gap-8 mt-6 md:mt-10">
         <div className="w-full lg:w-[70%] lg:order-1">
           <Content
@@ -296,10 +322,7 @@ const ProductDetails = () => {
                   <img className="invert h-5 w-5" src={Call} alt="call" />
                 </div>
                 <div>
-                  <a
-                    href="tel:+91-7501516714"
-                    className="font-semibold text-lg"
-                  >
+                  <a href="tel:+91-7501516714" className="font-semibold text-lg">
                     +91-75015 16714
                   </a>
                   <p className="text-sm">Mon-Sun: 9AM-8PM</p>
@@ -313,13 +336,9 @@ const ProductDetails = () => {
       {/* Mobile Fixed Bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white border-t border-orange-500 shadow-md py-5 px-4 flex justify-between items-center z-50">
         <div>
-          <span className="line-through text-gray-500">
-            ₹{product.actualPrice}
-          </span>
+          <span className="line-through text-gray-500">₹{product.actualPrice}</span>
           <div className="flex items-baseline gap-1">
-            <span className="text-xl font-bold text-orange-500">
-              ₹{product.offerPrice}
-            </span>
+            <span className="text-xl font-bold text-orange-500">₹{product.offerPrice}</span>
             <span className="text-gray-600">per person</span>
           </div>
         </div>

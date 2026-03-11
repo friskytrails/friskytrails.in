@@ -43,47 +43,81 @@ const CreateProductPage = () => {
 
 
 
-//package 
-const [packages, setPackages] = useState([
-  {
-    name: "",
-    price: "",
-    actualPrice: "",
-    features: [""],
-    isPopular: false,
-  },
-]);
-const handlePackageChange = (index, field, value) => {
-  const updated = [...packages];
-  updated[index][field] = value;
-  setPackages(updated);
-};
-
-const handleFeatureChange = (pkgIndex, featureIndex, value) => {
-  const updated = [...packages];
-  updated[pkgIndex].features[featureIndex] = value;
-  setPackages(updated);
-};
-
-const addFeature = (pkgIndex) => {
-  const updated = [...packages];
-  updated[pkgIndex].features.push("");
-  setPackages(updated);
-};
-
-const addPackage = () => {
-  if (packages.length >= 5)
-    return alert("You can add up to 5 packages only");
-
-  setPackages([
-    ...packages,
-    { name: "", price: "", actualPrice: "", features: [""], isPopular: false },
+  // Packages: use included / excluded instead of legacy features
+  const [packages, setPackages] = useState([
+    {
+      name: "",
+      price: "",
+      actualPrice: "",
+      included: [""],
+      excluded: [""],
+      isPopular: false,
+    },
   ]);
-};
 
-const removePackage = (index) => {
-  setPackages(packages.filter((_, i) => i !== index));
-};
+  const handlePackageChange = (index, field, value) => {
+    const updated = [...packages];
+    updated[index][field] = value;
+    setPackages(updated);
+  };
+
+  const handleIncludedChange = (pkgIndex, featureIndex, value) => {
+    const updated = [...packages];
+    updated[pkgIndex].included[featureIndex] = value;
+    setPackages(updated);
+  };
+
+  const handleExcludedChange = (pkgIndex, featureIndex, value) => {
+    const updated = [...packages];
+    updated[pkgIndex].excluded[featureIndex] = value;
+    setPackages(updated);
+  };
+
+  const addPackage = () => {
+    if (packages.length >= 5) {
+      alert("You can add up to 5 packages only");
+      return;
+    }
+    setPackages((prev) => [
+      ...prev,
+      {
+        name: "",
+        price: "",
+        actualPrice: "",
+        included: [""],
+        excluded: [""],
+        isPopular: false,
+      },
+    ]);
+  };
+
+  const addIncluded = (pkgIndex) => {
+    const updated = [...packages];
+    updated[pkgIndex].included.push("");
+    setPackages(updated);
+  };
+
+  const addExcluded = (pkgIndex) => {
+    const updated = [...packages];
+    updated[pkgIndex].excluded.push("");
+    setPackages(updated);
+  };
+
+  const removePackage = (index) => {
+    setPackages(packages.filter((_, i) => i !== index));
+  };
+
+  const removeIncluded = (pkgIndex, featureIndex) => {
+    const updated = [...packages];
+    updated[pkgIndex].included.splice(featureIndex, 1);
+    setPackages(updated);
+  };
+
+  const removeExcluded = (pkgIndex, featureIndex) => {
+    const updated = [...packages];
+    updated[pkgIndex].excluded.splice(featureIndex, 1);
+    setPackages(updated);
+  };
 
 
 
@@ -191,7 +225,7 @@ const removePackage = (index) => {
         formObj.append(key, formData[key]);
       }
   
-      // IMPORTANT: send packages as JSON
+      // IMPORTANT: send packages as JSON (backend normalizes to schema)
       formObj.append("packages", JSON.stringify(packages));
   
       images.forEach((f) => formObj.append("images", f));
@@ -221,6 +255,16 @@ const removePackage = (index) => {
       });
       setImages([]);
       setPreviews([]);
+      setPackages([
+        {
+          name: "",
+          price: "",
+          actualPrice: "",
+          included: [""],
+          excluded: [""],
+          isPopular: false,
+        },
+      ]);
     } catch (err) {
       console.error("Error creating product:", err);
       alert("❌ Failed to create product");
@@ -458,8 +502,8 @@ const removePackage = (index) => {
   </h3>
 
   {packages.map((pkg, index) => (
-    <div key={index} className="border rounded-lg p-4 space-y-3">
-      <div className="flex gap-3">
+    <div key={index} className="border rounded-lg p-4 space-y-4">
+      <div className="flex gap-3 flex-col sm:flex-row">
         <input
           type="text"
           placeholder="Package Name (e.g. Basic)"
@@ -491,26 +535,67 @@ const removePackage = (index) => {
         />
       </div>
 
-      {/* Features */}
+      {/* Included Features */}
       <div className="space-y-2">
-        {pkg.features.map((f, fIndex) => (
-          <input
-            key={fIndex}
-            type="text"
-            placeholder="Feature"
-            value={f}
-            onChange={(e) =>
-              handleFeatureChange(index, fIndex, e.target.value)
-            }
-            className="p-2 border rounded w-full"
-          />
+        <p className="text-sm font-semibold text-green-700">Included</p>
+        {pkg.included.map((f, fIndex) => (
+          <div key={`inc-${fIndex}`} className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Included feature"
+              value={f}
+              onChange={(e) =>
+                handleIncludedChange(index, fIndex, e.target.value)
+              }
+              className="p-2 border rounded w-full"
+            />
+            <button
+              type="button"
+              onClick={() => removeIncluded(index, fIndex)}
+              className="text-red-500 text-sm px-2"
+            >
+              ✕
+            </button>
+          </div>
         ))}
         <button
           type="button"
-          onClick={() => addFeature(index)}
+          onClick={() => addIncluded(index)}
           className="text-sm text-orange-600 font-semibold"
         >
-          + Add Feature
+          + Add Included
+        </button>
+      </div>
+
+      {/* Excluded Features */}
+      <div className="space-y-2">
+        <p className="text-sm font-semibold text-red-700">Excluded</p>
+        {pkg.excluded.map((f, fIndex) => (
+          <div key={`exc-${fIndex}`} className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Excluded feature"
+              value={f}
+              onChange={(e) =>
+                handleExcludedChange(index, fIndex, e.target.value)
+              }
+              className="p-2 border rounded w-full"
+            />
+            <button
+              type="button"
+              onClick={() => removeExcluded(index, fIndex)}
+              className="text-red-500 text-sm px-2"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => addExcluded(index)}
+          className="text-sm text-orange-600 font-semibold"
+        >
+          + Add Excluded
         </button>
       </div>
 

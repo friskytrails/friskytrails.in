@@ -47,7 +47,7 @@ const parseItineraryHtml = (html) => {
 
       days.push({
         dayNumber,
-        title: `Day ${dayNumber} ${title}`.toUpperCase(),
+        title: `${title}`.toUpperCase(),
         items,
       });
     }

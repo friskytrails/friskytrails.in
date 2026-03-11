@@ -2,231 +2,334 @@ import { useEffect, useState } from "react";
 import { adventure } from "../api/adventure.api";
 import { useAuth } from "../context/AuthContext";
 
-const Form = () => {
+const AdventureForm = () => {
   const { user } = useAuth();
+  
   const [formData, setFormData] = useState({
     from: "",
     to: "",
+    date: "",
     duration: "",
     budget: "",
-    date: "",
     guests: "",
   });
 
-  const [showMobileForm, setShowMobileForm] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Prevent background body scroll when popup is active
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [showPopup]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const response = await adventure({ fromCity: formData.from, toCity: formData.to, duration: formData.duration, budget: formData.budget, date: formData.date, guests: formData.guests });
+    try {
+      const response = await adventure({
+        fromCity: formData.from,
+        toCity: formData.to,
+        duration: formData.duration,
+        budget: formData.budget,
+        date: formData.date,
+        guests: formData.guests
+      });
       if (response.success) {
         alert("Adventure booked successfully!");
-      } else { 
+      } else {
         alert("Failed to book adventure.");
       }
-    }catch (error) {
+    } catch (error) {
       const errorMessage = error.response?.data?.message;
       if (!user && !errorMessage) {
-        alert('Please login first');
+        alert("Please login first");
       } else {
         alert(errorMessage || "An error occurred. Please try again.");
       }
     }
+    
     setFormData({
       from: "",
       to: "",
+      date: "",
       duration: "",
       budget: "",
-      date: "",
-      guests: "",
+      guests: ""
     });
-    setShowMobileForm(false);
+    setShowPopup(false);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowMobileForm(false);
-    };
-
-    if (showMobileForm) {
-      window.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [showMobileForm]);
 
   const labels = {
-    from: "From City",
-    to: "To City",
-    duration: "Duration (in Days)",
-    budget: "Budget (in ₹)",
-    date: "Departure Date",
-    guests: "No. of Guests",
-  };
-
-  const placeholders = {
-    from: "Enter location",
-    to: "Enter destination",
-    duration: "Enter duration",
-    budget: "Enter amount",
-    guests: "No. of persons",
+    from: "From",
+    to: "To",
+    date: "Date",
+    duration: "Days",
+    budget: "₹ Budget",
+    guests: "Guests"
   };
 
   return (
     <>
-      {/* ============ Tablet/Desktop Form ============ */}
-      <div className="hidden md:block bg-white h-auto w-[90vw] rounded-lg z-20 absolute bottom-40 lg:bottom-60 xl:bottom-20 left-1/2 transform -translate-x-1/2 shadow-lg px-10 py-4">
-        <h2 className="text-2xl text-orange-400 font-bold pb-4 text-center">
-          Where's Your Next Adventure?
-        </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-6 justify-center items-center w-full xl:flex-nowrap xl:gap-10"
-        >
-          {Object.keys(formData).map((field, index) => (
-            <div className="w-full md:w-[30%]" key={index}>
-              <label className="block font-semibold mb-1 pl-1">
-                {labels[field]}
-              </label>
-              <input
-                type={
-                  field === "date"
-                    ? "date"
-                    : ["budget", "duration", "guests"].includes(field)
-                    ? "number"
-                    : "text"
-                }
-                name={field}
-                placeholder={placeholders[field]}
-                value={formData[field]}
-                onChange={handleChange}
-                min={field === "date" ? new Date().toISOString().split("T")[0] : "0"}
-                step={field === "budget" ? "1000" : undefined}
-                className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                required
-              />
-            </div>
-          ))}
-          <div className="w-full md:w-auto">
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-2 xl:mt-6 text-white rounded-xl font-semibold w-full"
-            >
-              Submit
-            </button>
+      {/* 🎯 LG+ SINGLE ROW - Sticks to Banner Bottom */}
+      <div className="hidden lg:block relative -mt-24 lg:-mt-20 xl:-mt-20 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-4 lg:p-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-3 lg:gap-4">
+              {/* 1. From City */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.from}</label>
+                <input
+                  type="text"
+                  name="from"
+                  value={formData.from}
+                  placeholder="City"
+                  onChange={handleChange}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 2. To City */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.to}</label>
+                <input
+                  type="text"
+                  name="to"
+                  value={formData.to}
+                  placeholder="City"
+                  onChange={handleChange}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 3. Date */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.date}</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 4. Duration */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.duration}</label>
+                <input
+                  type="number"
+                  name="duration"
+                  value={formData.duration}
+                  placeholder="Days"
+                  onChange={handleChange}
+                  min="1"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 5. Budget */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.budget}</label>
+                <input
+                  type="number"
+                  name="budget"
+                  value={formData.budget}
+                  placeholder="0"
+                  onChange={handleChange}
+                  min="0"
+                  step="1000"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 6. BOOK BUTTON */}
+              <div className="col-span-1 flex flex-col justify-end">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 invisible">Book</label>
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white p-2 lg:p-3 rounded-xl font-bold text-xs lg:text-sm shadow-lg hover:shadow-xl flex items-center justify-center gap-1 transition-all duration-200"
+                >
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  BOOK
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
 
-      {/* ============ Mobile Trigger Button ============ */}
-      <div className="md:hidden relative text-center bottom-10 z-10">
-        <button
-          onClick={() => setShowMobileForm(true)}
-          className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:bg-amber-400 text-white px-6 py-3 rounded-xl shadow-md font-semibold"
-        >
-          Plan My Trip
-        </button>
-      </div>
-
-      {/* ============ Mobile Popup Form ============ */}
-      {showMobileForm && (
-        <div className="md:hidden fixed top-[20%] left-1/2 transform -translate-x-1/2 w-[90vw] h-auto py-8 bg-white rounded-xl shadow-xl z-30 px-4 border border-gray-200 overflow-y-auto">
-          {/* Close Button */}
+      {/* 📱 MD/SM BUTTON */}
+      <div className="lg:hidden relative -mt-12 md:-mt-10 z-20">
+        <div className="max-w-2xl mb-4 mx-auto px-4 sm:px-6">
           <button
-            className="absolute top-3 right-4 text-2xl font-bold text-gray-500 hover:text-red-500"
-            onClick={() => setShowMobileForm(false)}
+            onClick={() => setShowPopup(true)}
+            className="max-w-sm mx-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 px-6 rounded-2xl font-bold text-base shadow-2xl flex items-center justify-center gap-2 border border-white/30 backdrop-blur-sm"
           >
-            &times;
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            Plan My Adventure
           </button>
+        </div>
+      </div>
 
-          <h2 className="text-xl text-orange-400 font-bold pb-4 text-center">
-            Where's Your Next Adventure?
-          </h2>
+      {/* 🚀 SUPER RESPONSIVE POPUP FORM */}
+      {showPopup && (
+        <div className="lg:hidden fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
+          {/* Overlay */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setShowPopup(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full sm:max-w-lg bg-white rounded-t-[2.5rem] sm:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] transition-transform duration-300 transform translate-y-0">
+            
+            {/* Grabber for Mobile UI feel */}
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3 sm:hidden" />
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-            {/* Row 1: From & To */}
-            <div className="flex gap-4 w-full">
-              {["from", "to"].map((field, index) => (
-                <div className="w-1/2" key={index}>
-                  <label className="block font-semibold mb-1 pl-1">
-                    {labels[field]}
-                  </label>
-                  <input
-                    type="text"
-                    name={field}
-                    placeholder={placeholders[field]}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Row 2: Duration & Budget */}
-            <div className="flex gap-4 w-full">
-              {["duration", "budget"].map((field, index) => (
-                <div className="w-1/2" key={index}>
-                  <label className="block font-semibold mb-1 pl-1">
-                    {labels[field]}
-                  </label>
-                  <input
-                    type="number"
-                    name={field}
-                    placeholder={placeholders[field]}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    step={field === "budget" ? "1000" : undefined}
-                    min="0"
-                    className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Row 3: Date & Guests */}
-            <div className="flex gap-4 w-full">
-              {["date", "guests"].map((field, index) => (
-                <div className="w-1/2" key={index}>
-                  <label className="block font-semibold mb-1 pl-1">
-                    {labels[field]}
-                  </label>
-                  <input
-                    type={field === "date" ? "date" : "number"}
-                    name={field}
-                    placeholder={placeholders[field]}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    min={field === "date" ? new Date().toISOString().split("T")[0] : "0"}
-                    className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Submit Button */}
-            <div className="w-full">
+            {/* Header */}
+            <div className="px-6 py-5 flex items-center justify-between border-b border-gray-100">
+              <h2 className="text-xl font-extrabold text-gray-800 flex items-center gap-2">
+                <span className="bg-orange-100 p-2 rounded-lg">🌄</span>
+                Plan Adventure
+              </h2>
               <button
-                type="submit"
-                className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-2 text-white rounded-xl font-semibold w-full"
+                onClick={() => setShowPopup(false)}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all"
               >
-                Submit
+                <span className="text-2xl font-light">&times;</span>
               </button>
             </div>
-          </form>
+
+            {/* Scrollable Form Area */}
+            <div className="p-6 overflow-y-auto overflow-x-hidden">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                
+                {/* Row 1: Cities */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.from}</label>
+                    <input
+                      type="text"
+                      name="from"
+                      value={formData.from}
+                      placeholder="e.g. Delhi"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.to}</label>
+                    <input
+                      type="text"
+                      name="to"
+                      value={formData.to}
+                      placeholder="e.g. Manali"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Date & Duration */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.date}</label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none text-sm font-semibold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.duration}</label>
+                    <input
+                      type="number"
+                      name="duration"
+                      value={formData.duration}
+                      placeholder="3"
+                      onChange={handleChange}
+                      min="1"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-bold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Row 3: Budget & Guests */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.budget}</label>
+                    <input
+                      type="number"
+                      name="budget"
+                      value={formData.budget}
+                      placeholder="Budget"
+                      onChange={handleChange}
+                      min="0"
+                      step="1000"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-bold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.guests}</label>
+                    <input
+                      type="number"
+                      name="guests"
+                      value={formData.guests}
+                      placeholder="2"
+                      onChange={handleChange}
+                      min="1"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-bold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Submit Container */}
+                <div className="pt-4 pb-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-orange-100 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                  >
+                    PLAN ADVENTURE
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       )}
     </>
   );
 };
 
-export default Form;
+export default AdventureForm;

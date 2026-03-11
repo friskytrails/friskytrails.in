@@ -19,8 +19,14 @@ const packageSchema = new mongoose.Schema(
       type: Number,
       min: 0,
     },
-    features: {
-      type: [String], // e.g. ["Feature 1", "Feature 2"]
+    // Included items for the package (e.g. "Hotel stay", "Breakfast")
+    included: {
+      type: [String],
+      default: [],
+    },
+    // Excluded items for the package (e.g. "Flights", "Personal expenses")
+    excluded: {
+      type: [String],
       default: [],
     },
     isPopular: {

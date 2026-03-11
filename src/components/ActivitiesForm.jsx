@@ -4,16 +4,29 @@ import { useAuth } from "../context/AuthContext";
 
 const ActivitiesForm = () => {
   const { user } = useAuth();
+  
   const [formData, setFormData] = useState({
     activityType: "",
     activityLocation: "",
     activityWhen: "",
   });
 
-  const [showMobileForm, setShowMobileForm] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Prevent background body scroll when popup is active
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [showPopup]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -41,131 +54,193 @@ const ActivitiesForm = () => {
         alert(errorMessage || "An error occurred. Please try again.");
       }
     }
+    
     setFormData({
       activityType: "",
       activityLocation: "",
       activityWhen: "",
     });
-    setShowMobileForm(false);
+    setShowPopup(false);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowMobileForm(false);
-    };
-
-    if (showMobileForm) {
-      window.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [showMobileForm]);
 
   const labels = {
-    activityType: "Activity Type",
+    activityType: "Activity",
     activityLocation: "Location",
-    activityWhen: "When",
-  };
-
-  const placeholders = {
-    activityType: "Enter activity type",
-    activityLocation: "Enter location",
-    activityWhen: "Enter when",
+    activityWhen: "When"
   };
 
   return (
     <>
-      {/* ============ Tablet/Desktop Form ============ */}
-      <div className="hidden md:block bg-white h-auto w-[90vw] rounded-lg z-20 absolute bottom-40 lg:bottom-60 xl:bottom-20 left-1/2 transform -translate-x-1/2 shadow-lg px-10 py-4">
-        <h2 className="text-2xl text-orange-400 font-bold pb-4 text-center">
-          Activities
-        </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-6 justify-center items-center w-full xl:flex-nowrap xl:gap-10"
-        >
-          {Object.keys(formData).map((field, index) => (
-            <div className="w-full md:w-[30%]" key={index}>
-              <label className="block font-semibold mb-1 pl-1">
-                {labels[field]}
-              </label>
-              <input
-                type="text"
-                name={field}
-                placeholder={placeholders[field]}
-                value={formData[field]}
-                onChange={handleChange}
-                className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                required
-              />
-            </div>
-          ))}
-          <div className="w-full md:w-auto">
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-2 xl:mt-6 text-white rounded-xl font-semibold w-full"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* ============ Mobile Trigger Button ============ */}
-      <div className="md:hidden relative text-center bottom-10 z-10">
-        <button
-          onClick={() => setShowMobileForm(true)}
-          className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:bg-amber-400 text-white px-6 py-3 rounded-xl shadow-md font-semibold"
-        >
-          Book My Adventure
-        </button>
-      </div>
-
-      {/* ============ Mobile Popup Form ============ */}
-      {showMobileForm && (
-        <div className="md:hidden fixed top-[20%] left-1/2 transform -translate-x-1/2 w-[90vw] h-auto py-8 bg-white rounded-xl shadow-xl z-30 px-4 border border-gray-200 overflow-y-auto">
-          {/* Close Button */}
-          <button
-            className="absolute top-3 right-4 text-2xl font-bold text-gray-500 hover:text-red-500"
-            onClick={() => setShowMobileForm(false)}
-          >
-            &times;
-          </button>
-
-          <h2 className="text-xl text-orange-400 font-bold pb-4 text-center">
-            Activities
-          </h2>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-            {Object.keys(formData).map((field, index) => (
-              <div className="w-full" key={index}>
-                <label className="block font-semibold mb-1 pl-1">
-                  {labels[field]}
-                </label>
+      {/* 🎯 LG+ SINGLE ROW - Sticks to Banner Bottom */}
+      <div className="hidden lg:block relative -mt-24 lg:-mt-20 xl:-mt-20 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-4 lg:p-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-3 lg:gap-4">
+              {/* 1. Activity Type */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.activityType}</label>
                 <input
                   type="text"
-                  name={field}
-                  placeholder={placeholders[field]}
-                  value={formData[field]}
+                  name="activityType"
+                  value={formData.activityType}
+                  placeholder="Paragliding"
                   onChange={handleChange}
-                  className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
                   required
                 />
               </div>
-            ))}
 
-            {/* Submit Button */}
-            <div className="w-full">
+              {/* 2. Location */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.activityLocation}</label>
+                <input
+                  type="text"
+                  name="activityLocation"
+                  value={formData.activityLocation}
+                  placeholder="Bir Billing"
+                  onChange={handleChange}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 3. Date */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">{labels.activityWhen}</label>
+                <input
+                  type="date"
+                  name="activityWhen"
+                  value={formData.activityWhen}
+                  onChange={handleChange}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 4. BOOK BUTTON */}
+              <div className="col-span-1 flex flex-col justify-end">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 invisible">Book</label>
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white p-2 lg:p-3 rounded-xl font-bold text-xs lg:text-sm shadow-lg hover:shadow-xl flex items-center justify-center gap-1 transition-all duration-200"
+                >
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  BOOK
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* 📱 MD/SM BUTTON */}
+      <div className="lg:hidden relative -mt-12 md:-mt-10 z-20">
+        <div className="max-w-2xl mb-4 mx-auto px-4 sm:px-6">
+          <button
+            onClick={() => setShowPopup(true)}
+            className="max-w-sm mx-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 px-6 rounded-2xl font-bold text-base shadow-2xl flex items-center justify-center gap-2 border border-white/30 backdrop-blur-sm"
+          >
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            Book My Activity
+          </button>
+        </div>
+      </div>
+
+      {/* 🚀 SUPER RESPONSIVE POPUP FORM */}
+      {showPopup && (
+        <div className="lg:hidden fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
+          {/* Overlay */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setShowPopup(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full sm:max-w-lg bg-white rounded-t-[2.5rem] sm:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] transition-transform duration-300 transform translate-y-0">
+            
+            {/* Grabber for Mobile UI feel */}
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3 sm:hidden" />
+
+            {/* Header */}
+            <div className="px-6 py-5 flex items-center justify-between border-b border-gray-100">
+              <h2 className="text-xl font-extrabold text-gray-800 flex items-center gap-2">
+                <span className="bg-orange-100 p-2 rounded-lg">🎉</span>
+                Book Activity
+              </h2>
               <button
-                type="submit"
-                className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-2 text-white rounded-xl font-semibold w-full"
+                onClick={() => setShowPopup(false)}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all"
               >
-                Submit
+                <span className="text-2xl font-light">&times;</span>
               </button>
             </div>
-          </form>
+
+            {/* Scrollable Form Area */}
+            <div className="p-6 overflow-y-auto overflow-x-hidden">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                
+                {/* Row 1: Activity & Location */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.activityType}</label>
+                    <input
+                      type="text"
+                      name="activityType"
+                      value={formData.activityType}
+                      placeholder="e.g. Paragliding"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.activityLocation}</label>
+                    <input
+                      type="text"
+                      name="activityLocation"
+                      value={formData.activityLocation}
+                      placeholder="e.g. Bir Billing"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Date */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.activityWhen}</label>
+                  <input
+                    type="date"
+                    name="activityWhen"
+                    value={formData.activityWhen}
+                    onChange={handleChange}
+                    min={new Date().toISOString().split("T")[0]}
+                    className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none text-sm font-semibold"
+                    required
+                  />
+                </div>
+
+                {/* Submit Container */}
+                <div className="pt-4 pb-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-orange-100 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                  >
+                    BOOK ACTIVITY
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       )}
     </>

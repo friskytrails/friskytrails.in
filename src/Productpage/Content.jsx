@@ -18,11 +18,30 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
     }));
   };
 
-
   // Count words
   const countWords = (text) => {
     if (!text) return 0;
     return text.replace(/<[^>]+>/g, "").trim().split(/\s+/).length;
+  };
+
+  // Enhanced HTML processor for bold subheadings
+  const processHtmlContent = (htmlContent) => {
+    // Preserve existing HTML tags first
+    let processed = htmlContent;
+    
+    // Convert **Bold Subheading:** patterns to styled <h3>
+    processed = processed.replace(
+      /\*\*(.+?):\*\*/g,
+      '<h3 class="custom-subheading mb-4 mt-6 font-bold  text-xl md:text-2xl text-orange-900">$1:</h3>'
+    );
+    
+    // Convert standalone **bold text** (without colon) to <strong>
+    processed = processed.replace(
+      /\*\*(.+?)\*\*/g,
+      '<strong class="font-semibold text-orange-900">$1</strong>'
+    );
+    
+    return processed;
   };
 
   // Render sections with Read More
@@ -30,14 +49,26 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
     const wordCount = countWords(htmlContent);
     const isExpanded = expandedSections[key];
     const shouldTruncate = wordCount > MAX_WORDS;
-  
-    const truncated =
-      shouldTruncate && !isExpanded
-        ? htmlContent.split(" ").slice(0, MAX_WORDS).join(" ") + "..."
-        : htmlContent;
+    
+    // Process HTML for custom styling BEFORE truncation
+    const processedContent = processHtmlContent(htmlContent);
+    
+    // Truncate processed content (strip HTML for word count, but preserve HTML structure)
+    const truncateHtml = (html) => {
+      const textContent = html.replace(/<[^>]+>/g, "").trim();
+      if (!shouldTruncate || isExpanded) return html;
+      
+      const words = textContent.split(/\s+/);
+      const truncatedText = words.slice(0, MAX_WORDS).join(" ") + "...";
+      
+      // Simple truncation - for production, consider html-truncate lib
+      return html.split(" ").slice(0, MAX_WORDS).join(" ") + "...";
+    };
+    
+    const displayContent = truncateHtml(processedContent);
   
     return (
-      <div className="w-full mx-auto mb-6">
+      <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
         <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
           
           {showTitle && (
@@ -51,7 +82,10 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
             </h2>
           )}
   
-          <div dangerouslySetInnerHTML={{ __html: truncated }} />
+          <div 
+            className="prose prose-headings:font-bold prose-headings:text-gray-900"
+            dangerouslySetInnerHTML={{ __html: displayContent }} 
+          />
   
           {shouldTruncate && (
             <button
@@ -65,10 +99,9 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
       </div>
     );
   };
-  
 
   return (
-    <div className="pt-6 w-full">
+    <div className="pt-6 w-full space-y-4 md:space-y-6">
       {/* 1. Highlights */}
       {product.productHighlights &&
         renderSection("highlights", "Highlights", product.productHighlights)}
@@ -79,62 +112,55 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
 
       {/* 3. Things to Carry */}
       {thingsToCarry && (
-  <div className="w-full mx-auto mb-6">
-    <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
+        <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
+          <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
+            <h2 className="mb-3 not-prose ml-3">
+              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
+                {product.name}{" "}
+              </span>
+              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-orange-500">
+                Things to Carry
+              </span>
+            </h2>
 
-      {/* Heading INSIDE white box */}
-      <h2 className="mb-3 not-prose ml-3">
-        <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
-          {product.name}{" "}
-        </span>
-        <span className="text-lg sm:text-xl md:text-2xl font-semibold text-orange-500">
-          Things to Carry
-        </span>
-      </h2>
+            {Array.isArray(thingsToCarry) ? (
+              <ul className="list-disc pl-5">
+                {(expandedSections["carry"]
+                  ? thingsToCarry
+                  : thingsToCarry.slice(0, 10)
+                ).map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <div
+                className="prose prose-headings:font-bold prose-headings:text-gray-900"
+                dangerouslySetInnerHTML={{
+                  __html: processHtmlContent(
+                    countWords(thingsToCarry) > MAX_WORDS && !expandedSections["carry"]
+                      ? thingsToCarry.split(" ").slice(0, MAX_WORDS).join(" ") + "..."
+                      : thingsToCarry
+                  ),
+                }}
+              />
+            )}
 
-      {Array.isArray(thingsToCarry) ? (
-        <ul className="list-disc pl-5">
-          {(expandedSections["carry"]
-            ? thingsToCarry
-            : thingsToCarry.slice(0, 10)
-          ).map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      ) : (
-        <div
-          dangerouslySetInnerHTML={{
-            __html:
-              countWords(thingsToCarry) > MAX_WORDS &&
-              !expandedSections["carry"]
-                ? thingsToCarry
-                    .split(" ")
-                    .slice(0, MAX_WORDS)
-                    .join(" ") + "..."
-                : thingsToCarry,
-          }}
-        />
+            {countWords(
+              Array.isArray(thingsToCarry) ? thingsToCarry.join(" ") : thingsToCarry
+            ) > MAX_WORDS && (
+              <button
+                onClick={() => toggleSection("carry")}
+                className="text-orange-500 font-semibold mt-2 ml-4"
+              >
+                {expandedSections["carry"] ? "Read Less" : "Read More"}
+              </button>
+            )}
+          </div>
+        </div>
       )}
-
-      {countWords(
-        Array.isArray(thingsToCarry)
-          ? thingsToCarry.join(" ")
-          : thingsToCarry
-      ) > MAX_WORDS && (
-        <button
-          onClick={() => toggleSection("carry")}
-          className="text-orange-500 font-semibold mt-2 ml-4"
-        >
-          {expandedSections["carry"] ? "Read Less" : "Read More"}
-        </button>
-      )}
-    </div>
-  </div>
-)}
-
 
       {/* 4. Got a Question - Contact Card */}
-      <div className="md:hidden bg-white border border-orange-500 rounded-lg shadow-md p-4 mb-4 md:mb-0 md:mt-10 sm:p-5">
+      <div className="md:hidden bg-white border border-orange-500 rounded-lg shadow-md p-4 mb-6 md:mb-8 lg:mb-10 md:mt-10 sm:p-5">
         <h1 className="text-orange-500 text-lg sm:text-xl md:text-2xl font-semibold">
           Got a Question?
         </h1>
@@ -160,8 +186,8 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
             <h3 className="text-xs sm:text-sm">Mon-Sun: 9AM-8PM</h3>
             <h3 className="text-xs sm:text-sm break-all">
               <a href="mailto:contact@friskytrails.in" className="text-black md:hidden lg:block">
-              contact@friskytrails.in
-            </a>
+                [contact@friskytrails.in](mailto:contact@friskytrails.in)
+              </a>
             </h3>
           </div>
         </div>
@@ -169,42 +195,35 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
 
       {/* 5. Know Before You Book */}
       {product.additionalInfo &&
-        renderSection(
-          "additionalInfo",
-          "Know Before You Book",
-          product.additionalInfo
-        )}
+        renderSection("additionalInfo", "Know Before You Book", product.additionalInfo)}
 
       {/* 6. How to Reach */}
       {howToReach &&
         howToReach.trim() !== "" &&
         renderSection("howToReach", "How to Reach", howToReach)}
 
-      {/* 7. FAQ */}
+      {/* 7. FAQ - Fixed spacing */}
       {product.faq && (
-        <FAQ
-          productName={product.name}
-          faq={product.faq}
-        />
+        <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
+          <FAQ productName={product.name} faq={product.faq} />
+        </div>
       )}
 
-      {
-        product.itineraries && (
-
+      {/* 8. ItineraryTimeline - Fixed spacing */}
+      {product.itineraries && (
+        <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
           <ItineraryTimeline itineraries={product.itineraries} />
-        )
-      }
+        </div>
+      )}
 
-{
-  product.packages &&
-  typeof product.packages === "object" &&
-  Object.keys(product.packages).length > 0 && (
-    <PackageShowcase packages={product.packages} />
-  )
-}
-
-
-
+      {/* 9. PackageShowcase */}
+      {product.packages &&
+        typeof product.packages === "object" &&
+        Object.keys(product.packages).length > 0 && (
+          <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
+            <PackageShowcase packages={product.packages} />
+          </div>
+        )}
     </div>
   );
 };
@@ -224,6 +243,8 @@ Content.propTypes = {
         })
       ),
     ]),
+    itineraries: PropTypes.array,
+    packages: PropTypes.object,
   }).isRequired,
   thingsToCarry: PropTypes.oneOfType([
     PropTypes.string,

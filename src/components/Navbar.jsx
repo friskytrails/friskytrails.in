@@ -236,11 +236,11 @@ border-none shadow-none
       >
         <div className="p-4 flex flex-col h-full">
           {/* Header */}
-          <div className="flex justify-between items-center mb-8 pt-2">
-            <h2 className="text-2xl font-bold text-gray-800">Menu</h2>
+          <div className="flex justify-end items-center mb-8 pt-2">
+        
             <button
               onClick={toggleMenu}
-              className="text-3xl font-bold text-gray-500 hover:text-black"
+              className="text-3xl  font-bold text-gray-500 hover:text-black "
             >
               ✕
             </button>
