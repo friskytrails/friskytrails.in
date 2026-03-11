@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Check, Clock } from "lucide-react";
+import { ChevronDown, ChevronUp, Check, Clock, X } from "lucide-react";
 
 const PackageCard = ({ package: pkg }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  //Discount count
+  // Discount count
   const hasDiscount = pkg.actualPrice && pkg.actualPrice > pkg.price;
   const discountPercentage = hasDiscount
     ? Math.round(((pkg.actualPrice - pkg.price) / pkg.actualPrice) * 100)
@@ -28,13 +28,6 @@ const PackageCard = ({ package: pkg }) => {
             <h3 className="text-lg md:text-xl font-semibold text-gray-900">
               {pkg.name}
             </h3>
-
-            {/* {pkg.duration && (
-              <div className="flex items-center gap-1.5 mt-2 text-gray-500">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm">{pkg.duration}</span>
-              </div>
-            )} */}
 
             <button
               onClick={() => setIsExpanded(!isExpanded)}
@@ -62,12 +55,6 @@ const PackageCard = ({ package: pkg }) => {
             </p>
 
             <p className="text-gray-500 text-sm">Per Adult</p>
-{/* 
-            {hasDiscount && (
-              <span className="inline-block mt-1 bg-orange-100 text-orange-600 text-xs font-medium px-2 py-0.5 rounded">
-                Save {discountPercentage}%
-              </span>
-            )} */}
           </div>
         </div>
 
@@ -77,19 +64,45 @@ const PackageCard = ({ package: pkg }) => {
             isExpanded ? "max-h-96 opacity-100 mt-5" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">
-              What's Included:
-            </h4>
+          <div className="border-t border-gray-200 pt-4 space-y-6">
+            
+            {/* Included Features */}
+            <div>
+              <h4 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                What's Included:
+              </h4>
+              <ul className="space-y-2">
+                {pkg.included?.length ? (
+                  pkg.included.map((feature, index) => (
+                    <li key={`inc-${index}`} className="flex items-start gap-2">
+                      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-600">{feature}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-sm text-gray-400 italic">No specific inclusions listed</li>
+                )}
+              </ul>
+            </div>
 
-            <ul className="space-y-2">
-              {pkg.features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-orange-500 mt-0.5" />
-                  <span className="text-sm text-gray-600">{feature}</span>
-                </li>
-              ))}
-            </ul>
+            {/* Excluded Features */}
+            {pkg.excluded?.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-red-700 mb-3 flex items-center gap-2">
+                  <X className="w-4 h-4" />
+                  What's Not Included:
+                </h4>
+                <ul className="space-y-2">
+                  {pkg.excluded.map((feature, index) => (
+                    <li key={`exc-${index}`} className="flex items-start gap-2">
+                      <X className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-gray-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

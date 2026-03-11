@@ -67,7 +67,7 @@ const Deals = () => {
       ));
 
   return (
-    <div className="min-h-screen w-full md:pt-10 lg:pt-20">
+    <div className="min-h-screen w-full md:pt-10 lg:pt-6">
       <h1 className="px-4 md:pt-20 lg:px-38 text-2xl md:text-4xl font-bold tracking-tight">
         Deals You Can't Miss
       </h1>

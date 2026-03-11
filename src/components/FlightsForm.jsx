@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 const FlightsForm = () => {
   const { user } = useAuth();
+  
   const [formData, setFormData] = useState({
     fromCity: "",
     toCity: "",
@@ -15,10 +16,22 @@ const FlightsForm = () => {
     airline: "",
   });
 
-  const [showMobileForm, setShowMobileForm] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Prevent background body scroll when popup is active
+  useEffect(() => {
+    if (showPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [showPopup]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -38,7 +51,7 @@ const FlightsForm = () => {
         alert(errorMessage || "An error occurred. Please try again.");
       }
     }
-
+    
     setFormData({
       fromCity: "",
       toCity: "",
@@ -47,204 +60,326 @@ const FlightsForm = () => {
       travelClass: "",
       passengers: "",
       price: "",
-      airline: "",
+      airline: ""
     });
-    setShowMobileForm(false);
+    setShowPopup(false);
   };
 
   const labels = {
     fromCity: "From",
     toCity: "To",
     departureDate: "Departure",
-    returnDate: "Return (Optional)",
+    returnDate: "Return",
     travelClass: "Class",
     passengers: "Passengers",
     price: "Price",
-    airline: "Airline",
+    airline: "Airline"
   };
 
-  const placeholders = {
-    fromCity: "Enter departure city",
-    toCity: "Enter destination city",
-    departureDate: "Select departure date",
-    returnDate: "Select return date",
-    travelClass: "Select class",
-    passengers: "Number of passengers",
-    price: "Enter price",
-    airline: "Enter airline name",
-  };
-
-  const classOptions = [
-    "Economy",
-    "Premium Economy",
-    "Business",
-    "First Class",
-  ];
+  const classOptions = ["Economy", "Premium Economy", "Business", "First Class"];
 
   return (
     <>
-      {/* Tablet/Desktop Form */}
-      <div className="hidden md:block bg-white h-auto w-[90vw] rounded-lg z-20 absolute bottom-40 lg:bottom-60 xl:bottom-20 left-1/2 transform -translate-x-1/2 shadow-lg px-10 py-4 overflow-visible">
-        <h2 className="text-2xl mt-6 text-orange-400 font-bold pb-4 text-center">
-          Flights
-        </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row md:flex-wrap gap-4 md:gap-6 justify-center items-center w-full xl:flex-nowrap xl:gap-10"
-        >
-          {Object.keys(formData).map((field, index) => (
-            <div className="w-full md:w-[30%]" key={index}>
-              <label className="block font-semibold mb-1 pl-1">
-                {labels[field]}
-              </label>
-
-              {field === "travelClass" ? (
-                <select
-                  name={field}
-                  value={formData[field]}
+      {/* 🎯 LG+ SINGLE ROW - Sticks to Banner Bottom */}
+      <div className="hidden lg:block relative -mt-24 lg:-mt-20 xl:-mt-20 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-4 lg:p-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-8 gap-3 lg:gap-4">
+              {/* 1. From City */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">From</label>
+                <input
+                  type="text"
+                  name="fromCity"
+                  value={formData.fromCity}
+                  placeholder="City"
                   onChange={handleChange}
-                  className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 2. To City */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">To</label>
+                <input
+                  type="text"
+                  name="toCity"
+                  value={formData.toCity}
+                  placeholder="City"
+                  onChange={handleChange}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 3. Departure */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">Dep.</label>
+                <input
+                  type="date"
+                  name="departureDate"
+                  value={formData.departureDate}
+                  onChange={handleChange}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
+                />
+              </div>
+
+              {/* 4. Return */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">Ret.</label>
+                <input
+                  type="date"
+                  name="returnDate"
+                  value={formData.returnDate}
+                  onChange={handleChange}
+                  min={new Date().toISOString().split("T")[0]}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                />
+              </div>
+
+              {/* 5. Class */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">Class</label>
+                <select
+                  name="travelClass"
+                  value={formData.travelClass}
+                  onChange={handleChange}
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
                   required
                 >
-                  <option value="" disabled>
-                    {placeholders[field]}
-                  </option>
-                  {classOptions.map((option, idx) => (
-                    <option key={idx} value={option}>
-                      {option}
-                    </option>
+                  <option value="">Class</option>
+                  {classOptions.map((opt, i) => (
+                    <option key={i} value={opt}>{opt}</option>
                   ))}
                 </select>
-              ) : (
+              </div>
+
+              {/* 6. Passengers */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">Passenger</label>
                 <input
-                  type={
-                    ["departureDate", "returnDate"].includes(field)
-                      ? "date"
-                      : field === "passengers" || field === "price"
-                      ? "number"
-                      : "text"
-                  }
-                  name={field}
-                  value={formData[field]}
-                  placeholder={placeholders[field]}
+                  type="number"
+                  name="passengers"
+                  value={formData.passengers}
+                  placeholder="#"
                   onChange={handleChange}
-                  min={
-                    ["departureDate", "returnDate"].includes(field)
-                      ? new Date().toISOString().split("T")[0]
-                      : "0"
-                  }
-                  className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  required={
-                    field !== "returnDate" &&
-                    field !== "price" &&
-                    field !== "airline"
-                  }
+                  min="1"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                  required
                 />
-              )}
-            </div>
-          ))}
+              </div>
 
+              {/* 7. Price */}
+              <div className="col-span-1">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 text-gray-700 text-center">₹</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  placeholder="0"
+                  onChange={handleChange}
+                  min="0"
+                  className="w-full p-2 lg:p-3 text-xs lg:text-sm border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100/50 transition-all"
+                />
+              </div>
+
+              {/* 8. BOOK BUTTON */}
+              <div className="col-span-1 flex flex-col justify-end">
+                <label className="block text-xs lg:text-sm font-semibold mb-1 invisible">Book</label>
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white p-2 lg:p-3 rounded-xl font-bold text-xs lg:text-sm shadow-lg hover:shadow-xl flex items-center justify-center gap-1 transition-all duration-200"
+                >
+                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  BOOK
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* 📱 MD/SM BUTTON */}
+      <div className="lg:hidden relative -mt-12 md:-mt-10 z-20">
+        <div className="max-w-2xl mb-4 mx-auto px-4 sm:px-6">
           <button
-            type="submit"
-            className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-2 xl:mt-6 text-white rounded-xl font-semibold"
+            onClick={() => setShowPopup(true)}
+            className=" max-w-sm mx-auto bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 px-6 rounded-2xl font-bold text-base shadow-2xl flex items-center justify-center gap-2 border border-white/30 backdrop-blur-sm"
           >
-            Submit
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            Book My Flight
           </button>
-        </form>
+        </div>
       </div>
 
-      {/* Mobile Trigger Button */}
-      <div className="md:hidden relative text-center bottom-10 z-10">
-        <button
-          onClick={() => setShowMobileForm(true)}
-          className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 text-white px-6 py-3 rounded-xl shadow-md font-semibold"
-        >
-          Book My Flight
-        </button>
-      </div>
-
-      {/* Mobile Popup Form - ✅ FIXED WITH TOP MARGIN */}
-      {showMobileForm && (
-        <div className="md:hidden fixed inset-0 z-30 bg-black/40 flex items-center justify-center pt-16  md:pt-0">
-          <div className="relative w-[95vw] max-w-sm max-h-[85vh] bg-white rounded-xl shadow-xl px-4 py-6 overflow-y-auto border border-gray-200">
+      {/* 🚀 SUPER RESPONSIVE POPUP FORM */}
+      {showPopup && (
+        <div className="lg:hidden fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
+          {/* Overlay */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setShowPopup(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full sm:max-w-lg bg-white rounded-t-[2.5rem] sm:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] transition-transform duration-300 transform translate-y-0">
             
-            {/* Close Button */}
-            <button
-              className="absolute  mt-8 top-3 right-3 text-2xl font-bold text-gray-500 hover:text-red-500 z-10 p-2"
-              onClick={() => setShowMobileForm(false)}
-            >
-              &times;
-            </button>
+            {/* Grabber for Mobile UI feel */}
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3 sm:hidden" />
 
-            {/* HEADING */}
-            <h2 className="text-xl pt-10 text-orange-400 font-bold text-center">
-              Flights
-            </h2>
+            {/* Header */}
+            <div className="px-6 py-5 flex items-center justify-between border-b border-gray-100">
+              <h2 className="text-xl font-extrabold text-gray-800 flex items-center gap-2">
+                <span className="bg-orange-100 p-2 rounded-lg">✈️</span>
+                Book Flight
+              </h2>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all"
+              >
+                <span className="text-2xl font-light">&times;</span>
+              </button>
+            </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-3 w-full mt-4"
-            >
-              {Object.keys(formData).map((field, index) => (
-                <div className="w-full" key={index}>
-                  <label className="block font-semibold mb-1 pl-1 text-sm">
-                    {labels[field]}
-                  </label>
-
-                  {field === "travelClass" ? (
-                    <select
-                      name={field}
-                      value={formData[field]}
+            {/* Scrollable Form Area */}
+            <div className="p-6 overflow-y-auto overflow-x-hidden">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                
+                {/* Row 1: Cities */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.fromCity}</label>
+                    <input
+                      type="text"
+                      name="fromCity"
+                      value={formData.fromCity}
+                      placeholder="e.g. Delhi"
                       onChange={handleChange}
-                      className="w-full p-2.5 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.toCity}</label>
+                    <input
+                      type="text"
+                      name="toCity"
+                      value={formData.toCity}
+                      placeholder="e.g. Mumbai"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 focus:ring-4 focus:ring-orange-100/50 transition-all outline-none font-semibold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Dates */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.departureDate}</label>
+                    <input
+                      type="date"
+                      name="departureDate"
+                      value={formData.departureDate}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none text-sm font-semibold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.returnDate}</label>
+                    <input
+                      type="date"
+                      name="returnDate"
+                      value={formData.returnDate}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none text-sm font-semibold"
+                    />
+                  </div>
+                </div>
+
+                {/* Row 3: Class & Passengers */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.travelClass}</label>
+                    <select
+                      name="travelClass"
+                      value={formData.travelClass}
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-semibold appearance-none"
                       required
                     >
-                      <option value="" disabled>
-                        {placeholders[field]}
-                      </option>
-                      {classOptions.map((option, idx) => (
-                        <option key={idx} value={option}>
-                          {option}
-                        </option>
+                      <option value="">Select</option>
+                      {classOptions.map((opt, i) => (
+                        <option key={i} value={opt}>{opt}</option>
                       ))}
                     </select>
-                  ) : (
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.passengers}</label>
                     <input
-                      type={
-                        ["departureDate", "returnDate"].includes(field)
-                          ? "date"
-                          : field === "passengers" || field === "price"
-                          ? "number"
-                          : "text"
-                      }
-                      name={field}
-                      value={formData[field]}
-                      placeholder={placeholders[field]}
+                      type="number"
+                      name="passengers"
+                      value={formData.passengers}
+                      placeholder="1"
                       onChange={handleChange}
-                      min={
-                        ["departureDate", "returnDate"].includes(field)
-                          ? new Date().toISOString().split("T")[0]
-                          : "0"
-                      }
-                      className="w-full p-2.5 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm"
-                      required={
-                        field !== "returnDate" &&
-                        field !== "price" &&
-                        field !== "airline"
-                      }
+                      min="1"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-bold"
+                      required
                     />
-                  )}
+                  </div>
                 </div>
-              ))}
 
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 hover:scale-95 py-3 px-6 mt-3 text-white rounded-xl font-semibold text-sm"
-              >
-                Submit
-              </button>
-            </form>
+                {/* Row 4: Price & Airline */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.price} (₹)</label>
+                    <input
+                      type="number"
+                      name="price"
+                      value={formData.price}
+                      placeholder="Budget"
+                      onChange={handleChange}
+                      min="0"
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-bold"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase ml-1">{labels.airline}</label>
+                    <input
+                      type="text"
+                      name="airline"
+                      value={formData.airline}
+                      placeholder="Preference"
+                      onChange={handleChange}
+                      className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:bg-white focus:border-orange-400 transition-all outline-none font-semibold"
+                    />
+                  </div>
+                </div>
+
+                {/* Submit Container */}
+                <div className="pt-4 pb-2">
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-orange-100 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                  >
+                    CONFIRM BOOKING
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

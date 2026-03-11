@@ -51,11 +51,41 @@ export const createProduct = asyncHandler(async (req, res) => {
       throw new ApiError(400, "You can upload up to 5 images only");
   }
 
-  // Parse packages safely
+  // Parse packages safely (supports string, object, or array from multipart)
   let parsedPackages = [];
   if (packages) {
     try {
-      parsedPackages = JSON.parse(packages);
+      let raw = packages;
+
+      // Multer can sometimes give arrays for repeated fields
+      if (Array.isArray(raw)) {
+        raw = raw[0];
+      }
+
+      // If it's a JSON string, parse it
+      if (typeof raw === "string") {
+        raw = JSON.parse(raw);
+      }
+
+      if (!Array.isArray(raw)) {
+        throw new Error("Packages must be an array");
+      }
+
+      // Normalize packages to ensure included/excluded are stored correctly
+      parsedPackages = raw.map((pkg) => ({
+        name: pkg.name || "",
+        price: pkg.price ?? 0,
+        actualPrice: pkg.actualPrice ?? 0,
+        isPopular: !!pkg.isPopular,
+        // Support both new (included) and old (features) keys
+        included:
+          (Array.isArray(pkg.included) && pkg.included.length
+            ? pkg.included
+            : Array.isArray(pkg.features)
+            ? pkg.features
+            : []),
+        excluded: Array.isArray(pkg.excluded) ? pkg.excluded : [],
+      }));
     } catch (err) {
       throw new ApiError(400, "Invalid packages format");
     }
@@ -218,7 +248,33 @@ export const updateProduct = asyncHandler(async (req, res) => {
   // Update packages
   if (packages) {
     try {
-      product.packages = JSON.parse(packages);
+      let raw = packages;
+
+      if (Array.isArray(raw)) {
+        raw = raw[0];
+      }
+
+      if (typeof raw === "string") {
+        raw = JSON.parse(raw);
+      }
+
+      if (!Array.isArray(raw)) {
+        throw new Error("Packages must be an array");
+      }
+
+      product.packages = raw.map((pkg) => ({
+        name: pkg.name || "",
+        price: pkg.price ?? 0,
+        actualPrice: pkg.actualPrice ?? 0,
+        isPopular: !!pkg.isPopular,
+        included:
+          (Array.isArray(pkg.included) && pkg.included.length
+            ? pkg.included
+            : Array.isArray(pkg.features)
+            ? pkg.features
+            : []),
+        excluded: Array.isArray(pkg.excluded) ? pkg.excluded : [],
+      }));
     } catch (err) {
       throw new ApiError(400, "Invalid packages format");
     }
