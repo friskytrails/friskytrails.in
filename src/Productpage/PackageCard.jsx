@@ -1,22 +1,37 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Check, Clock, X } from "lucide-react";
 
-const PackageCard = ({ package: pkg }) => {
+const PackageCard = ({ package: pkg, isSelected = false, onSelect }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Discount count
-  const hasDiscount = pkg.actualPrice && pkg.actualPrice > pkg.price;
+  const actual = Number(pkg.actualPrice);
+  const discounted = Number(
+    pkg.discountedPrice ?? pkg.price ?? pkg.actualPrice
+  );
+
+  const hasDiscount =
+    !Number.isNaN(actual) &&
+    !Number.isNaN(discounted) &&
+    actual > 0 &&
+    discounted >= 0 &&
+    actual > discounted;
   const discountPercentage = hasDiscount
-    ? Math.round(((pkg.actualPrice - pkg.price) / pkg.actualPrice) * 100)
+    ? Math.round(((actual - discounted) / actual) * 100)
     : 0;
 
   return (
-    <div className="relative rounded-lg border-2 border-gray-200 bg-white transition-all duration-300 overflow-hidden hover:border-orange-300">
+    <div
+      className={`relative rounded-lg border-2 bg-white transition-all duration-300 overflow-hidden cursor-pointer ${
+        isSelected ? "border-orange-500 shadow-md" : "border-gray-200 hover:border-orange-300"
+      }`}
+      onClick={onSelect ? () => onSelect() : undefined}
+    >
       {/* Popular Badge */}
-      {pkg.isPopular && (
+      {(pkg.isPopular || isSelected) && (
         <div className="absolute top-0 right-0">
           <div className="bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-bl-lg">
-            Popular
+            {isSelected ? "Selected" : "Popular"}
           </div>
         </div>
       )}
@@ -46,15 +61,22 @@ const PackageCard = ({ package: pkg }) => {
           <div className="text-left md:text-right flex-shrink-0">
             {hasDiscount && (
               <p className="text-gray-400 text-sm line-through">
-                INR {pkg.actualPrice.toLocaleString("en-IN")}
+                INR {actual.toLocaleString("en-IN")}
               </p>
             )}
 
             <p className="text-orange-500 text-2xl md:text-3xl font-bold">
-              INR {pkg.price.toLocaleString("en-IN")}
+              INR {discounted.toLocaleString("en-IN")}
             </p>
 
             <p className="text-gray-500 text-sm">Per Adult</p>
+
+            {typeof discountPercentage === "number" &&
+              discountPercentage > 0 && (
+                <p className="mt-1 text-xs text-green-600 font-semibold">
+                  Save {discountPercentage}% on this package
+                </p>
+              )}
           </div>
         </div>
 

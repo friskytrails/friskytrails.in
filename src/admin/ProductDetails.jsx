@@ -4,7 +4,7 @@ import Right from "../assets/right.svg";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
 import Call from "../assets/calling.svg";
-import { Star, StarHalf, StarOff } from "lucide-react"; // Add these imports
+import { Star, StarHalf } from "lucide-react"; // Add these imports
 
 import toast from "react-hot-toast";
 
@@ -23,6 +23,7 @@ const ProductDetails = () => {
   const { slug } = useParams();
 
   const [product, setProduct] = useState(null);
+  const [selectedPackageIndex, setSelectedPackageIndex] = useState(0);
   const [thingsToCarry, setThingsToCarry] = useState([]);
   const [howToReach, setHowToReach] = useState("");
   const [showBooking, setShowBooking] = useState(false);
@@ -48,21 +49,18 @@ const ProductDetails = () => {
   const StarRating = ({ rating, reviews, size = 20 }) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
     return (
       <div className="flex items-center gap-1">
-        {[...Array(fullStars)].map((_, i) => (
-          <Star key={`full-${i}`} size={size} className="fill-yellow-400 text-yellow-400" />
-        ))}
-        {hasHalfStar && <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />}
-        {[...Array(emptyStars)].map((_, i) => (
-          <StarOff key={`empty-${i}`} size={size} className="text-gray-300" />
-        ))}
-        <span className="ml-1 text-sm font-medium text-gray-600">({reviews || 0})</span>
-      </div>
-    );
-  };
+      {[...Array(fullStars)].map((_, i) => (
+        <Star key={`full-${i}`} size={size} className="fill-yellow-400 text-yellow-400" />
+      ))}
+      {hasHalfStar && <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />}
+      {/* Empty stars hata diye - sirf actual rating show hogi */}
+      <span className="ml-1 text-sm font-medium text-gray-600">({reviews || 0})</span>
+    </div>
+  );
+};
 
   /* =====================
      AUTO IMAGE SLIDER (unchanged)
@@ -106,6 +104,11 @@ const ProductDetails = () => {
         const productData = productRes.data;
         setProduct(productData);
 
+        // Default to first package when data is loaded
+        if (Array.isArray(productData.packages) && productData.packages.length) {
+          setSelectedPackageIndex(0);
+        }
+
         const promises = [];
 
         if (productData.productType) {
@@ -146,6 +149,37 @@ const ProductDetails = () => {
   if (loading || !product) {
     return <FriskyLoader />;
   }
+
+  const selectedPackage =
+    Array.isArray(product.packages) && product.packages.length
+      ? product.packages[selectedPackageIndex] || product.packages[0]
+      : null;
+
+  const selectedPackageActual = selectedPackage
+    ? Number(selectedPackage.actualPrice)
+    : NaN;
+  const selectedPackageDiscounted = selectedPackage
+    ? Number(
+        selectedPackage.discountedPrice ??
+          selectedPackage.price ??
+          selectedPackage.actualPrice
+      )
+    : NaN;
+
+  const hasPackagePricing =
+    !Number.isNaN(selectedPackageActual) &&
+    !Number.isNaN(selectedPackageDiscounted) &&
+    selectedPackageActual > 0 &&
+    selectedPackageDiscounted >= 0;
+
+  const savingsPercent =
+    hasPackagePricing && selectedPackageActual > selectedPackageDiscounted
+      ? Math.round(
+          ((selectedPackageActual - selectedPackageDiscounted) /
+            selectedPackageActual) *
+            100
+        )
+      : null;
 
   return (
     <div className="min-h-screen w-full">
@@ -270,6 +304,8 @@ const ProductDetails = () => {
             product={product}
             howToReach={howToReach}
             thingsToCarry={thingsToCarry}
+            selectedPackageIndex={selectedPackageIndex}
+            onSelectPackage={setSelectedPackageIndex}
           />
         </div>
 
@@ -278,18 +314,24 @@ const ProductDetails = () => {
             {/* PRICE CARD */}
             <div className="hidden lg:block bg-white border border-orange-500 rounded-lg shadow-md overflow-hidden">
               <div className="bg-orange-500 py-4 relative">
-                <span className="text-white absolute right-2 top-1">
-                  Save 28.58%
-                </span>
+                {hasPackagePricing && savingsPercent !== null && savingsPercent > 0 && (
+                  <span className="text-white absolute right-2 top-1">
+                    Save {savingsPercent}%
+                  </span>
+                )}
               </div>
               <div className="p-4 flex justify-between items-center gap-4">
                 <div>
-                  <span className="line-through text-gray-500">
-                    ₹{product.actualPrice}
-                  </span>
-                  <h1 className="text-3xl font-bold text-orange-500">
-                    ₹{product.offerPrice}
-                  </h1>
+                  {hasPackagePricing && (
+                    <>
+                      <span className="line-through text-gray-500">
+                        ₹{selectedPackageActual.toLocaleString("en-IN")}
+                      </span>
+                      <h1 className="text-3xl font-bold text-orange-500">
+                        ₹{selectedPackageDiscounted.toLocaleString("en-IN")}
+                      </h1>
+                    </>
+                  )}
                   <span className="font-semibold">per person</span>
                 </div>
                 <button
@@ -336,11 +378,19 @@ const ProductDetails = () => {
       {/* Mobile Fixed Bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white border-t border-orange-500 shadow-md py-5 px-4 flex justify-between items-center z-50">
         <div>
-          <span className="line-through text-gray-500">₹{product.actualPrice}</span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl font-bold text-orange-500">₹{product.offerPrice}</span>
-            <span className="text-gray-600">per person</span>
-          </div>
+          {hasPackagePricing && (
+            <>
+              <span className="line-through text-gray-500">
+                ₹{selectedPackageActual.toLocaleString("en-IN")}
+              </span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-bold text-orange-500">
+                  ₹{selectedPackageDiscounted.toLocaleString("en-IN")}
+                </span>
+                <span className="text-gray-600">per person</span>
+              </div>
+            </>
+          )}
         </div>
         <button
           onClick={openBookingModal}

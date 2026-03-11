@@ -7,7 +7,8 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const emptyPackage = {
   name: "",
-  price: "",
+  actualPrice: "",
+  discountedPrice: "",
   included: [""],
   excluded: [],
   isPopular: false,
@@ -17,8 +18,6 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     name: "",
     slug: "",
-    offerPrice: "",
-    actualPrice: "",
     productType: "",
     rating: 0,
     reviews: 0,
@@ -71,7 +70,16 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         const transformedPackages =
           product.packages?.map((pkg) => ({
             name: pkg.name || "",
-            price: pkg.price || "",
+            actualPrice:
+              pkg.actualPrice !== undefined && pkg.actualPrice !== null
+                ? String(pkg.actualPrice)
+                : "",
+            discountedPrice:
+              pkg.discountedPrice !== undefined && pkg.discountedPrice !== null
+                ? String(pkg.discountedPrice)
+                : pkg.price !== undefined && pkg.price !== null
+                ? String(pkg.price)
+                : "",
             isPopular: pkg.isPopular || false,
             // Prefer new included field; fall back to legacy features
             included:
@@ -89,8 +97,6 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         setFormData({
           name: product.name || "",
           slug: product.slug || "",
-          offerPrice: product.offerPrice || "",
-          actualPrice: product.actualPrice || "",
           productType: product.productType?._id || product.productType || "",
           rating: product.rating || 0,
           reviews: product.reviews || 0,
@@ -342,30 +348,6 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
           className="p-2 border rounded bg-gray-100 cursor-not-allowed"
         />
 
-        <label htmlFor="actualPrice" className="block mb-1 font-medium">Actual Price</label>
-        <input
-          type="number"
-          id="actualPrice"
-          name="actualPrice"
-          value={formData.actualPrice}
-          onChange={handleChange}
-          placeholder="Actual Price"
-          required
-          className="p-2 border rounded"
-        />
-
-        <label htmlFor="offerPrice" className="block mb-1 font-medium">Offer Price</label>
-        <input
-          type="number"
-          id="offerPrice"
-          name="offerPrice"
-          value={formData.offerPrice}
-          onChange={handleChange}
-          placeholder="Offer Price"
-          required
-          className="p-2 border rounded"
-        />
-
         <label htmlFor="productType" className="block mb-1 font-medium">Product Type</label>
         <select 
           name="productType" 
@@ -496,14 +478,25 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
               className="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
             />
 
-            <input
-              type="number"
-              placeholder="Package Price"
-              value={pkg.price}
-              onChange={e => updatePackage(i, "price", e.target.value)}
-              min="0"
-              className="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input
+                type="number"
+                placeholder="Actual Price"
+                value={pkg.actualPrice}
+                onChange={e => updatePackage(i, "actualPrice", e.target.value)}
+                min="0"
+                className="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
+
+              <input
+                type="number"
+                placeholder="Discounted Price"
+                value={pkg.discountedPrice}
+                onChange={e => updatePackage(i, "discountedPrice", e.target.value)}
+                min="0"
+                className="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
+              />
+            </div>
 
             <label className="flex items-center gap-3 p-3 bg-white rounded-lg border w-full sm:w-auto">
               <input

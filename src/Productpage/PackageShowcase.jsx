@@ -3,6 +3,8 @@ import PackageCard from "./PackageCard";
 const PackageShowcase = ({
   packages,
   title = "Available Packages",
+  selectedIndex = 0,
+  onSelectPackage,
 }) => {
   return (
     <div className="w-full flex justify-center mt-8">
@@ -18,7 +20,16 @@ const PackageShowcase = ({
         {/* Package Cards */}
         <div className="space-y-4">
           {packages.map((pkg, index) => (
-            <PackageCard key={index} package={pkg} />
+            <PackageCard
+              key={index}
+              package={pkg}
+              isSelected={index === selectedIndex}
+              onSelect={
+                typeof onSelectPackage === "function"
+                  ? () => onSelectPackage(index)
+                  : undefined
+              }
+            />
           ))}
         </div>
       </div>

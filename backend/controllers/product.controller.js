@@ -18,8 +18,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     productType,
     rating,
     reviews,
-    offerPrice,
-    actualPrice,
     description,
     productHighlights,
     productOverview,
@@ -33,10 +31,10 @@ export const createProduct = asyncHandler(async (req, res) => {
     packages,
   } = req.body;
 
-  if (!name || !slug || !productType || !offerPrice || !actualPrice) {
+  if (!name || !slug || !productType) {
     throw new ApiError(
       400,
-      "Name, Slug, Product Type, Offer Price, and Actual Price are required"
+      "Name, Slug, and Product Type are required"
     );
   }
 
@@ -74,8 +72,8 @@ export const createProduct = asyncHandler(async (req, res) => {
       // Normalize packages to ensure included/excluded are stored correctly
       parsedPackages = raw.map((pkg) => ({
         name: pkg.name || "",
-        price: pkg.price ?? 0,
         actualPrice: pkg.actualPrice ?? 0,
+        discountedPrice: pkg.discountedPrice ?? pkg.price ?? 0,
         isPopular: !!pkg.isPopular,
         // Support both new (included) and old (features) keys
         included:
@@ -100,8 +98,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     productType,
     rating: rating || 0,
     reviews: reviews || 0,
-    offerPrice,
-    actualPrice,
     description,
     productHighlights,
     productOverview,
@@ -128,7 +124,7 @@ export const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find()
     .populate("country state city", "name slug")
     .select(
-      "name slug productType rating reviews offerPrice actualPrice images city packages createdAt"
+      "name slug productType rating reviews images city packages createdAt"
     );
 
   res
@@ -188,8 +184,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
   const {
     name,
-    offerPrice,
-    actualPrice,
     productType,
     rating,
     reviews,
@@ -229,8 +223,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.name = name;
     product.slug = slugify(name, { lower: true, strict: true });
   }
-  if (offerPrice) product.offerPrice = offerPrice;
-  if (actualPrice) product.actualPrice = actualPrice;
   if (productType) product.productType = productType;
   if (rating !== undefined) product.rating = rating;
   if (reviews !== undefined) product.reviews = reviews;
@@ -264,8 +256,8 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
       product.packages = raw.map((pkg) => ({
         name: pkg.name || "",
-        price: pkg.price ?? 0,
         actualPrice: pkg.actualPrice ?? 0,
+        discountedPrice: pkg.discountedPrice ?? pkg.price ?? 0,
         isPopular: !!pkg.isPopular,
         included:
           (Array.isArray(pkg.included) && pkg.included.length

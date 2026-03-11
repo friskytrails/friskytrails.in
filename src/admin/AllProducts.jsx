@@ -121,8 +121,34 @@ const AllProducts = () => {
               <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.productType}</p>
 
               <div className="flex items-center justify-between mb-3">
-                <p className="text-green-600 font-bold">₹{product.offerPrice}</p>
-                <p className="text-gray-400 line-through text-sm">₹{product.actualPrice}</p>
+                {Array.isArray(product.packages) && product.packages.length > 0 ? (
+                  (() => {
+                    const firstPkg = product.packages[0];
+                    const actual = Number(firstPkg.actualPrice);
+                    const discounted = Number(
+                      firstPkg.discountedPrice ?? firstPkg.price ?? firstPkg.actualPrice
+                    );
+                    const hasActual = !Number.isNaN(actual) && actual > 0;
+                    const hasDiscounted = !Number.isNaN(discounted) && discounted >= 0;
+
+                    return (
+                      <>
+                        {hasDiscounted && (
+                          <p className="text-green-600 font-bold">
+                            ₹{discounted.toLocaleString("en-IN")}
+                          </p>
+                        )}
+                        {hasActual && (
+                          <p className="text-gray-400 line-through text-sm">
+                            ₹{actual.toLocaleString("en-IN")}
+                          </p>
+                        )}
+                      </>
+                    );
+                  })()
+                ) : (
+                  <p className="text-gray-400 text-sm">No pricing set</p>
+                )}
               </div>
 
               <div className="flex justify-between items-center gap-2">

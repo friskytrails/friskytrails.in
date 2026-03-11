@@ -5,7 +5,13 @@ import FAQ from "../components/FAQ";
 import ItineraryTimeline from "./ItineraryTimeline";
 import PackageShowcase from "./PackageShowcase";
 
-const Content = ({ product, thingsToCarry, howToReach }) => {
+const Content = ({
+  product,
+  thingsToCarry,
+  howToReach,
+  selectedPackageIndex = 0,
+  onSelectPackage,
+}) => {
   const MAX_WORDS = 50;
   const [expandedSections, setExpandedSections] = useState({});
 
@@ -217,13 +223,15 @@ const Content = ({ product, thingsToCarry, howToReach }) => {
       )}
 
       {/* 9. PackageShowcase */}
-      {product.packages &&
-        typeof product.packages === "object" &&
-        Object.keys(product.packages).length > 0 && (
-          <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
-            <PackageShowcase packages={product.packages} />
-          </div>
-        )}
+      {Array.isArray(product.packages) && product.packages.length > 0 && (
+        <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
+          <PackageShowcase
+            packages={product.packages}
+            selectedIndex={selectedPackageIndex}
+            onSelectPackage={onSelectPackage}
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -244,7 +252,7 @@ Content.propTypes = {
       ),
     ]),
     itineraries: PropTypes.array,
-    packages: PropTypes.object,
+    packages: PropTypes.array,
   }).isRequired,
   thingsToCarry: PropTypes.oneOfType([
     PropTypes.string,

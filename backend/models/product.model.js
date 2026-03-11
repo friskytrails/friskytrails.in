@@ -10,14 +10,17 @@ const packageSchema = new mongoose.Schema(
       required: true,
       trim: true, // e.g. "Basic", "Premium"
     },
-    price: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
+    // Original price before discount
     actualPrice: {
       type: Number,
       min: 0,
+      default: 0,
+    },
+    // Discounted / offer price for this package
+    discountedPrice: {
+      type: Number,
+      min: 0,
+      default: 0,
     },
     // Included items for the package (e.g. "Hotel stay", "Breakfast")
     included: {
@@ -44,9 +47,6 @@ const productSchema = new mongoose.Schema(
     productType: { type: String, required: true, trim: true },
     rating: { type: Number, default: 0, min: 0, max: 5 },
     reviews: { type: Number, default: 0, min: 0 },
-
-    offerPrice: { type: Number, required: true },
-    actualPrice: { type: Number, required: true },
 
     country: {
       type: mongoose.Schema.Types.ObjectId,

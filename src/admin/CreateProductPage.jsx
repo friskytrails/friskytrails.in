@@ -16,8 +16,6 @@ const CreateProductPage = () => {
     slug: "",
     description: "",
     productType: "",
-    offerPrice: "",
-    actualPrice: "",
     productHighlights: "",
     productOverview: "",
     thingsToCarry: "",
@@ -47,8 +45,8 @@ const CreateProductPage = () => {
   const [packages, setPackages] = useState([
     {
       name: "",
-      price: "",
       actualPrice: "",
+      discountedPrice: "",
       included: [""],
       excluded: [""],
       isPopular: false,
@@ -82,8 +80,8 @@ const CreateProductPage = () => {
       ...prev,
       {
         name: "",
-        price: "",
         actualPrice: "",
+        discountedPrice: "",
         included: [""],
         excluded: [""],
         isPopular: false,
@@ -239,8 +237,6 @@ const CreateProductPage = () => {
         slug: "",
         description: "",
         productType: "",
-        offerPrice: "",
-        actualPrice: "",
         productHighlights: "",
         productOverview: "",
         // thingsToCarry: "",
@@ -258,8 +254,8 @@ const CreateProductPage = () => {
       setPackages([
         {
           name: "",
-          price: "",
           actualPrice: "",
+          discountedPrice: "",
           included: [""],
           excluded: [""],
           isPopular: false,
@@ -366,28 +362,6 @@ const CreateProductPage = () => {
             ))}
           </select>
         </div>
-        {/* Prices */}
-        <div className="flex gap-4">
-          <input
-            type="number"
-            name="offerPrice"
-            placeholder="Offer Price"
-            value={formData.offerPrice}
-            onChange={handleChange}
-            required
-            className="p-2 border rounded w-full"
-          />
-          <input
-            type="number"
-            name="actualPrice"
-            placeholder="Actual Price"
-            value={formData.actualPrice}
-            onChange={handleChange}
-            required
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
         {/* Reviews & Rating */}
         <div className="flex gap-4">
           <input
@@ -516,20 +490,20 @@ const CreateProductPage = () => {
 
         <input
           type="number"
-          placeholder="Offer Price"
-          value={pkg.price}
+          placeholder="Actual Price"
+          value={pkg.actualPrice}
           onChange={(e) =>
-            handlePackageChange(index, "price", e.target.value)
+            handlePackageChange(index, "actualPrice", e.target.value)
           }
           className="p-2 border rounded w-full"
         />
 
         <input
           type="number"
-          placeholder="Actual Price"
-          value={pkg.actualPrice}
+          placeholder="Discounted Price"
+          value={pkg.discountedPrice}
           onChange={(e) =>
-            handlePackageChange(index, "actualPrice", e.target.value)
+            handlePackageChange(index, "discountedPrice", e.target.value)
           }
           className="p-2 border rounded w-full"
         />
