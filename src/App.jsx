@@ -12,7 +12,6 @@ import Last from "./components/Last";
 import Holidays from "./ServicesPages/Holidays";
 import Newblog from "./Blogpages/Newblog";
 import Scrolltotop from "./components/Scrolltotop";
-import Productpage from "./Productpage/Productpage";
 import Hiring from "./pages/Hiring";
 import Dashboard from "./admin/Dashboard";
 // import LocationPage from "./Blogpages/LocationPage";
@@ -62,7 +61,6 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/tours" element={<Productpage />} />
           <Route path="/hiring" element={<Hiring />} />
           <Route path="/blog/newblog" element={<Newblog />} />
           <Route path="/blog/:slug" element={<Newlog />} />
