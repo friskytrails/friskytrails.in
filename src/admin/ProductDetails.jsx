@@ -49,30 +49,55 @@ const ProductDetails = () => {
   const StarRating = ({ rating, reviews, size = 20 }) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-
+  
     return (
       <div className="flex items-center gap-1">
-      {[...Array(fullStars)].map((_, i) => (
-        <Star key={`full-${i}`} size={size} className="fill-yellow-400 text-yellow-400" />
-      ))}
-      {hasHalfStar && <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />}
-      {/* Empty stars hata diye - sirf actual rating show hogi */}
-      <span className="ml-1 text-sm font-medium text-gray-600">({reviews || 0})</span>
-    </div>
-  );
-};
+        
+        {/* Full Stars */}
+        {[...Array(fullStars)].map((_, i) => (
+          <Star
+            key={`full-${i}`}
+            size={size}
+            className="fill-yellow-400 text-yellow-400"
+          />
+        ))}
+  
+        {/* Half Star */}
+        {hasHalfStar && (
+          <StarHalf size={size} className="fill-yellow-400 text-yellow-400" />
+        )}
+  
+        {/* Rating Text */}
+        <span className="ml-1 text-sm font-medium text-gray-700">
+          {rating}/5
+        </span>
+  
+        {/* Reviews */}
+        <span className="ml-1 text-sm text-gray-500">
+          ({reviews || 0})
+        </span>
+  
+      </div>
+    );
+  };
+
+  // Images used for the small-device slider
+  const sliderImages =
+    product?.sliderImages && product.sliderImages.length > 0
+      ? product.sliderImages
+      : product?.images || [];
 
   /* =====================
      AUTO IMAGE SLIDER (unchanged)
   ===================== */
   useEffect(() => {
-    if (!product?.images || product.images.length === 0) return;
+    if (!sliderImages || sliderImages.length === 0) return;
 
     let interval;
 
     const start = () => {
       interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % product.images.length);
+        setCurrentIndex((prev) => (prev + 1) % sliderImages.length);
       }, 3000);
     };
 
@@ -90,7 +115,7 @@ const ProductDetails = () => {
       stop();
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [product?.images]);
+  }, [sliderImages]);
 
   /* =====================
      DATA FETCH (unchanged)
@@ -220,13 +245,13 @@ const ProductDetails = () => {
         <div className="w-full max-w-7xl rounded-lg bg-white m-auto">
           {product.images && product.images.length > 0 && (
             <>
-              {/* Mobile & Tablet Auto Slider */}
+              {/* Mobile & Tablet Auto Slider (uses sliderImages if provided) */}
               <div className="block lg:hidden relative overflow-hidden rounded-xl shadow-2xl">
                 <div
                   className="flex transition-transform duration-700 ease-in-out"
                   style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                 >
-                  {product.images.map((img, idx) => (
+                  {sliderImages.map((img, idx) => (
                     <div
                       key={idx}
                       className="flex-shrink-0 w-full h-64 sm:h-80 relative overflow-hidden"
@@ -239,7 +264,7 @@ const ProductDetails = () => {
                   ))}
                 </div>
                 <div className="absolute bottom-3 left-0 right-0 flex justify-center space-x-2">
-                  {product.images.map((_, idx) => (
+                  {sliderImages.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentIndex(idx)}

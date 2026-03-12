@@ -29,6 +29,8 @@ export const createProduct = asyncHandler(async (req, res) => {
     state,
     city,
     packages,
+    existingImages,
+    existingSliderImages,
   } = req.body;
 
   if (!name || !slug || !productType) {
@@ -40,13 +42,27 @@ export const createProduct = asyncHandler(async (req, res) => {
 
   // Upload images to Cloudinary
   let images = [];
-  if (req.files && req.files.length > 0) {
-    for (const file of req.files) {
+  let sliderImages = [];
+
+  const imageFiles = req.files?.images || [];
+  const sliderImageFiles = req.files?.sliderImages || [];
+
+  if (imageFiles.length > 0) {
+    for (const file of imageFiles) {
       const result = await uploadOnCloudinary(file.buffer);
       if (result?.secure_url) images.push(result.secure_url);
     }
     if (images.length > 5)
       throw new ApiError(400, "You can upload up to 5 images only");
+  }
+
+  if (sliderImageFiles.length > 0) {
+    for (const file of sliderImageFiles) {
+      const result = await uploadOnCloudinary(file.buffer);
+      if (result?.secure_url) sliderImages.push(result.secure_url);
+    }
+    if (sliderImages.length > 5)
+      throw new ApiError(400, "You can upload up to 5 slider images only");
   }
 
   // Parse packages safely (supports string, object, or array from multipart)
@@ -106,6 +122,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     additionalInfo,
     faq,
     images,
+    sliderImages,
     packages: parsedPackages,
     country,
     state: cleanObjectId(state),
@@ -198,24 +215,96 @@ export const updateProduct = asyncHandler(async (req, res) => {
     state,
     city,
     packages,
+    existingImages,
+    existingSliderImages,
   } = req.body;
 
   const product = await Product.findOne({ slug });
   if (!product) throw new ApiError(404, "Product not found");
 
+  // Overwrite existing image arrays when provided from admin UI
+  if (existingImages !== undefined) {
+    try {
+      let parsed = existingImages;
+      if (Array.isArray(parsed)) {
+        parsed = parsed[0];
+      }
+      if (typeof parsed === "string") {
+        parsed = JSON.parse(parsed || "[]");
+      }
+      if (!Array.isArray(parsed)) {
+        throw new Error("existingImages must be an array");
+      }
+      if (parsed.length > 5) {
+        throw new ApiError(400, "You can upload up to 5 images only");
+      }
+      product.images = parsed;
+    } catch (err) {
+      throw new ApiError(400, "Invalid existingImages format");
+    }
+  }
+
+  if (existingSliderImages !== undefined) {
+    try {
+      let parsed = existingSliderImages;
+      if (Array.isArray(parsed)) {
+        parsed = parsed[0];
+      }
+      if (typeof parsed === "string") {
+        parsed = JSON.parse(parsed || "[]");
+      }
+      if (!Array.isArray(parsed)) {
+        throw new Error("existingSliderImages must be an array");
+      }
+      if (parsed.length > 5) {
+        throw new ApiError(
+          400,
+          "You can upload up to 5 slider images only"
+        );
+      }
+      product.sliderImages = parsed;
+    } catch (err) {
+      throw new ApiError(400, "Invalid existingSliderImages format");
+    }
+  }
+
   // Upload new images
-  if (req.files?.length) {
-    if (req.files.length + product.images.length > 5) {
+  const imageFiles = req.files?.images || [];
+  const sliderImageFiles = req.files?.sliderImages || [];
+
+  if (imageFiles.length) {
+    const existing = Array.isArray(product.images) ? product.images : [];
+    if (imageFiles.length + existing.length > 5) {
       throw new ApiError(400, "You can upload up to 5 images only");
     }
 
     const uploadedImages = [];
-    for (const file of req.files) {
+    for (const file of imageFiles) {
       const result = await uploadOnCloudinary(file.buffer);
       if (result?.secure_url) uploadedImages.push(result.secure_url);
     }
 
-    product.images = [...product.images, ...uploadedImages];
+    product.images = [...existing, ...uploadedImages];
+  }
+
+  if (sliderImageFiles.length) {
+    const existingSlider = Array.isArray(product.sliderImages)
+      ? product.sliderImages
+      : [];
+    if (sliderImageFiles.length + existingSlider.length > 5) {
+      throw new ApiError(
+        400,
+        "You can upload up to 5 slider images only"
+      );
+    }
+
+    const uploadedSliderImages = [];
+    for (const file of sliderImageFiles) {
+      const result = await uploadOnCloudinary(file.buffer);
+      if (result?.secure_url) uploadedSliderImages.push(result.secure_url);
+    }
+
+    product.sliderImages = [...existingSlider, ...uploadedSliderImages];
   }
 
   // Update fields

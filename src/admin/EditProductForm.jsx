@@ -35,6 +35,9 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
   const [images, setImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [sliderImages, setSliderImages] = useState([]);
+  const [newSliderImages, setNewSliderImages] = useState([]);
+  const [sliderPreviews, setSliderPreviews] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -112,6 +115,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         });
         
         setImages(product.images || []);
+        setSliderImages(product.sliderImages || []);
       } catch (err) {
         // Error handled silently
       } finally {
@@ -192,6 +196,12 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         return alert("❌ You can upload up to 5 images.");
       setNewImages(prev => [...prev, ...selected]);
       setPreviews(prev => [...prev, ...selected.map(f => URL.createObjectURL(f))]);
+    } else if (name === "sliderImages") {
+      const selected = Array.from(files);
+      if (selected.length + sliderImages.length + newSliderImages.length > 5)
+        return alert("❌ You can upload up to 5 slider images.");
+      setNewSliderImages(prev => [...prev, ...selected]);
+      setSliderPreviews(prev => [...prev, ...selected.map(f => URL.createObjectURL(f))]);
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
       if (name === "name") {
@@ -271,6 +281,15 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
     }
   };
 
+  const removeSliderImage = (index, isNew = false) => {
+    if (isNew) {
+      setNewSliderImages(prev => prev.filter((_, i) => i !== index));
+      setSliderPreviews(prev => prev.filter((_, i) => i !== index));
+    } else {
+      setSliderImages(prev => prev.filter((_, i) => i !== index));
+    }
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -284,7 +303,12 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         }
       });
 
+      // Send the remaining existing images so backend can delete removed ones
+      data.append("existingImages", JSON.stringify(images));
+      data.append("existingSliderImages", JSON.stringify(sliderImages));
+
       newImages.forEach(img => data.append("images", img));
+      newSliderImages.forEach(img => data.append("sliderImages", img));
   
       await updateProduct(formData.slug, data);
       
@@ -435,9 +459,9 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
           </div>
         </div>
 
-        {/* Images section unchanged */}
+        {/* Images for large devices (grid) */}
         <div>
-          <label className="block mb-2 font-medium">Product Images (Max 5)</label>
+          <label className="block mb-2 font-medium">Product Images (Desktop/Grid) - Max 5</label>
           <div className="flex flex-wrap gap-2 mb-2">
             {images.map((img, i) => (
               <div key={i} className="relative">
@@ -453,6 +477,26 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
             ))}
           </div>
           <input type="file" name="images" multiple accept="image/*" onChange={handleChange} className="p-2 border rounded w-full" />
+        </div>
+
+        {/* Slider Images for small devices */}
+        <div>
+          <label className="block mb-2 font-medium">Slider Images (Mobile) - Max 5</label>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {sliderImages.map((img, i) => (
+              <div key={i} className="relative">
+                <img src={img} className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded" alt="Slider image" />
+                <button type="button" onClick={() => removeSliderImage(i)} className="absolute top-1 right-1 text-red-500 bg-white rounded-full px-2 py-1 text-xs hover:bg-red-100">X</button>
+              </div>
+            ))}
+            {sliderPreviews.map((src, i) => (
+              <div key={i} className="relative">
+                <img src={src} className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded" alt="Slider preview" />
+                <button type="button" onClick={() => removeSliderImage(i, true)} className="absolute top-1 right-1 text-red-500 bg-white rounded-full px-2 py-1 text-xs hover:bg-red-100">X</button>
+              </div>
+            ))}
+          </div>
+          <input type="file" name="sliderImages" multiple accept="image/*" onChange={handleChange} className="p-2 border rounded w-full" />
         </div>
 
         {/* ---------------- UPDATED PACKAGES SECTION ---------------- */}

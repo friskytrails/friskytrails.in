@@ -71,7 +71,7 @@ const ItineraryTimeline = ({ itineraries }) => {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 bg-white sm:p-6">
+    <div className="w-full max-w-5xl mx-auto p-4 bg-white sm:p-6">
       {/* Header */}
       <div
         className="mb-6 sm:mb-8 pl-3 sm:pl-4"

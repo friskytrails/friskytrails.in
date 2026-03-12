@@ -31,6 +31,8 @@ const CreateProductPage = () => {
 
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [sliderImages, setSliderImages] = useState([]);
+  const [sliderPreviews, setSliderPreviews] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -209,6 +211,12 @@ const CreateProductPage = () => {
         return alert("❌ You can upload up to 5 images.");
       setImages(selected);
       setPreviews(selected.map((f) => URL.createObjectURL(f)));
+    } else if (name === "sliderImages") {
+      const selected = Array.from(files);
+      if (selected.length > 5)
+        return alert("❌ You can upload up to 5 slider images.");
+      setSliderImages(selected);
+      setSliderPreviews(selected.map((f) => URL.createObjectURL(f)));
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -227,6 +235,7 @@ const CreateProductPage = () => {
       formObj.append("packages", JSON.stringify(packages));
   
       images.forEach((f) => formObj.append("images", f));
+      sliderImages.forEach((f) => formObj.append("sliderImages", f));
   
       await createProduct(formObj);
       alert("Product created successfully!");
@@ -251,6 +260,8 @@ const CreateProductPage = () => {
       });
       setImages([]);
       setPreviews([]);
+      setSliderImages([]);
+      setSliderPreviews([]);
       setPackages([
         {
           name: "",
@@ -606,27 +617,59 @@ const CreateProductPage = () => {
 </div>
 
 
-        {/* Images */}
-        <input
-          type="file"
-          name="images"
-          multiple
-          accept="image/*"
-          onChange={handleChange}
-          className="p-2 border rounded w-full"
-        />
-        {previews.length > 0 && (
-          <div className="flex flex-wrap gap-3 mt-3">
-            {previews.map((src, idx) => (
-              <img
-                key={idx}
-                src={src}
-                className="w-32 h-24 object-cover rounded-lg border"
-                alt="Preview"
-              />
-            ))}
-          </div>
-        )}
+        {/* Images for large devices */}
+        <div className="space-y-2">
+          <label className="block mb-1 font-semibold text-gray-700">
+            Product Images (Desktop/Grid) - Max 5
+          </label>
+          <input
+            type="file"
+            name="images"
+            multiple
+            accept="image/*"
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+          {previews.length > 0 && (
+            <div className="flex flex-wrap gap-3 mt-3">
+              {previews.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  className="w-32 h-24 object-cover rounded-lg border"
+                  alt="Preview"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Slider images for small devices */}
+        <div className="space-y-2">
+          <label className="block mb-1 font-semibold text-gray-700">
+            Slider Images (Mobile) - Max 5
+          </label>
+          <input
+            type="file"
+            name="sliderImages"
+            multiple
+            accept="image/*"
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+          {sliderPreviews.length > 0 && (
+            <div className="flex flex-wrap gap-3 mt-3">
+              {sliderPreviews.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  className="w-32 h-24 object-cover rounded-lg border"
+                  alt="Slider Preview"
+                />
+              ))}
+            </div>
+          )}
+        </div>
 
         <button
           type="submit"

@@ -121,14 +121,26 @@ router.post(
   "/create-product",
   verifyJWT,
   verifyAdmin,
-  upload.array("images", 5),
+  upload.fields([
+    { name: "images", maxCount: 5 },
+    { name: "sliderImages", maxCount: 5 },
+  ]),
   createProduct
 );
 
 router.get("/products", getProducts);
 router.route("/product/id/:id").get(getProductById);
 router.get("/product/slug/:slug", getProductBySlug);
-router.put("/product/:slug", upload.array("images", 5), updateProduct, verifyJWT, verifyAdmin);
+router.put(
+  "/product/:slug",
+  upload.fields([
+    { name: "images", maxCount: 5 },
+    { name: "sliderImages", maxCount: 5 },
+  ]),
+  updateProduct,
+  verifyJWT,
+  verifyAdmin
+);
 router.delete("/product/:slug", deleteProduct);
 
 router.post("/bookings", verifyJWT, verifyAdmin, createBooking);
