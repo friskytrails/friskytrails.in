@@ -8,79 +8,172 @@ import { ProductType } from "../models/productType.model.js";
 
 const router = Router();
 
-router.get("/sitemap.xml", async (req, res) => {
-  try {
-    const baseUrl = "https://www.friskytrails.in";
+// Frontend base URL for <loc> entries
+const SITE_BASE_URL = "https://www.friskytrails.in";
+// Backend base URL for sitemap files themselves
+const API_BASE_URL = "https://api.friskytrails.in";
 
-    // Static routes that always exist
-    const staticPaths = [
-      "",
-      "/about",
-      "/blog",
-      "/contact",
-      "/tours",
-      "/hiring",
-      "/services/holidays",
-      "/services/flights",
-      "/services/offers",
-      "/services/rail-tickets",
-      "/services/hotels",
-      "/services/transport",
-      "/services/activities",
-      "/services/bus-tickets",
-    ];
-
-    const staticUrls = staticPaths.map((path) => `${baseUrl}${path}`);
-
-    // Dynamic content
-    const [blogs, countries, states, cities, products, productTypes] =
-      await Promise.all([
-        CreateBlog.find().select("slug").lean(),
-        Country.find().select("slug").lean(),
-        State.find().select("slug").lean(),
-        City.find().select("slug").lean(),
-        Product.find().select("slug").lean(),
-        ProductType.find().select("slug").lean(),
-      ]);
-
-    const blogUrls = blogs.map((b) => `${baseUrl}/blog/${b.slug}`);
-    const countryUrls = countries.map(
-      (c) => `${baseUrl}/country/${c.slug}/`
-    );
-    const stateUrls = states.map((s) => `${baseUrl}/state/${s.slug}/`);
-    const cityUrls = cities.map((c) => `${baseUrl}/city/${c.slug}/`);
-    const productUrls = products.map((p) => `${baseUrl}/tours/${p.slug}`);
-    const productTypeUrls = productTypes.map(
-      (pt) => `${baseUrl}/productType/${pt.slug}/product`
-    );
-
-    const allUrls = [
-      ...staticUrls,
-      ...blogUrls,
-      ...countryUrls,
-      ...stateUrls,
-      ...cityUrls,
-      ...productUrls,
-      ...productTypeUrls,
-    ];
-
-    const xml =
-      '<?xml version="1.0" encoding="UTF-8"?>' +
-      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
-      allUrls
-        .map(
-          (url) => `
+const buildUrlset = (urls) => {
+  return (
+    '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+    urls
+      .map(
+        (url) => `
   <url>
     <loc>${url}</loc>
   </url>`
-        )
-        .join("") +
-      "</urlset>";
+      )
+      .join("") +
+    "</urlset>"
+  );
+};
+
+// Sitemap index – points to category sitemaps
+router.get("/sitemap.xml", (req, res) => {
+  const sitemaps = [
+    "/sitemap-static.xml",
+    "/sitemap-blogs.xml",
+    "/sitemap-countries.xml",
+    "/sitemap-states.xml",
+    "/sitemap-cities.xml",
+    "/sitemap-products.xml",
+    "/sitemap-productTypes.xml",
+  ];
+
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+    sitemaps
+      .map(
+        (path) => `
+  <sitemap>
+    <loc>${API_BASE_URL}${path}</loc>
+  </sitemap>`
+      )
+      .join("") +
+    "</sitemapindex>";
+
+  res.header("Content-Type", "application/xml");
+  return res.send(xml);
+});
+
+// Static pages sitemap
+router.get("/sitemap-static.xml", (req, res) => {
+  const staticPaths = [
+    "",
+    "/about",
+    "/blog",
+    "/contact",
+    "/tours",
+    "/hiring",
+    "/services/holidays",
+    "/services/flights",
+    "/services/offers",
+    "/services/rail-tickets",
+    "/services/hotels",
+    "/services/transport",
+    "/services/activities",
+    "/services/bus-tickets",
+  ];
+
+  const urls = staticPaths.map((path) => `${SITE_BASE_URL}${path}`);
+  const xml = buildUrlset(urls);
+
+  res.header("Content-Type", "application/xml");
+  return res.send(xml);
+});
+
+// Blogs sitemap
+router.get("/sitemap-blogs.xml", async (req, res) => {
+  try {
+    const blogs = await CreateBlog.find().select("slug").lean();
+    const urls = blogs.map((b) => `${SITE_BASE_URL}/blog/${b.slug}`);
+    const xml = buildUrlset(urls);
 
     res.header("Content-Type", "application/xml");
     return res.send(xml);
   } catch (error) {
-    console.error("Sitemap generation error:", error);
+    console.error("Sitemap blogs error:", error);
+    return res.status(500).send("Sitemap error");
+  }
+});
+
+// Countries sitemap
+router.get("/sitemap-countries.xml", async (req, res) => {
+  try {
+    const countries = await Country.find().select("slug").lean();
+    const urls = countries.map(
+      (c) => `${SITE_BASE_URL}/country/${c.slug}/`
+    );
+    const xml = buildUrlset(urls);
+
+    res.header("Content-Type", "application/xml");
+    return res.send(xml);
+  } catch (error) {
+    console.error("Sitemap countries error:", error);
+    return res.status(500).send("Sitemap error");
+  }
+});
+
+// States sitemap
+router.get("/sitemap-states.xml", async (req, res) => {
+  try {
+    const states = await State.find().select("slug").lean();
+    const urls = states.map((s) => `${SITE_BASE_URL}/state/${s.slug}/`);
+    const xml = buildUrlset(urls);
+
+    res.header("Content-Type", "application/xml");
+    return res.send(xml);
+  } catch (error) {
+    console.error("Sitemap states error:", error);
+    return res.status(500).send("Sitemap error");
+  }
+});
+
+// Cities sitemap
+router.get("/sitemap-cities.xml", async (req, res) => {
+  try {
+    const cities = await City.find().select("slug").lean();
+    const urls = cities.map((c) => `${SITE_BASE_URL}/city/${c.slug}/`);
+    const xml = buildUrlset(urls);
+
+    res.header("Content-Type", "application/xml");
+    return res.send(xml);
+  } catch (error) {
+    console.error("Sitemap cities error:", error);
+    return res.status(500).send("Sitemap error");
+  }
+});
+
+// Products sitemap
+router.get("/sitemap-products.xml", async (req, res) => {
+  try {
+    const products = await Product.find().select("slug").lean();
+    const urls = products.map((p) => `${SITE_BASE_URL}/tours/${p.slug}`);
+    const xml = buildUrlset(urls);
+
+    res.header("Content-Type", "application/xml");
+    return res.send(xml);
+  } catch (error) {
+    console.error("Sitemap products error:", error);
+    return res.status(500).send("Sitemap error");
+  }
+});
+
+// Product types sitemap
+router.get("/sitemap-productTypes.xml", async (req, res) => {
+  try {
+    const productTypes = await ProductType.find().select("slug").lean();
+    const urls = productTypes.map(
+      (pt) => `${SITE_BASE_URL}/productType/${pt.slug}/product`
+    );
+    const xml = buildUrlset(urls);
+
+    res.header("Content-Type", "application/xml");
+    return res.send(xml);
+  } catch (error) {
+    console.error("Sitemap productTypes error:", error);
     return res.status(500).send("Sitemap error");
   }
 });
