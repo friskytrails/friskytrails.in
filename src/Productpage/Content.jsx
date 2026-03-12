@@ -30,24 +30,28 @@ const Content = ({
     return text.replace(/<[^>]+>/g, "").trim().split(/\s+/).length;
   };
 
-  // Enhanced HTML processor for bold subheadings
+  // Simple HTML processor - NO subheading conversion
   const processHtmlContent = (htmlContent) => {
-    // Preserve existing HTML tags first
     let processed = htmlContent;
     
-    // Convert **Bold Subheading:** patterns to styled <h3>
-    processed = processed.replace(
-      /\*\*(.+?):\*\*/g,
-      '<h3 class="custom-subheading mb-4 mt-6 font-bold  text-xl md:text-2xl text-orange-900">$1:</h3>'
-    );
-    
-    // Convert standalone **bold text** (without colon) to <strong>
+    // Only convert standalone **bold text** to <strong> (no subheading logic)
     processed = processed.replace(
       /\*\*(.+?)\*\*/g,
-      '<strong class="font-semibold text-orange-900">$1</strong>'
+      '<strong class="font-semibold">$1</strong>'
     );
     
     return processed;
+  };
+
+  // Fixed truncateHtml function
+  const truncateHtml = (html, shouldTruncate, isExpanded) => {
+    const textContent = html.replace(/<[^>]+>/g, "").trim();
+    if (!shouldTruncate || isExpanded) return html;
+    
+    const words = textContent.split(/\s+/);
+    if (words.length <= MAX_WORDS) return html;
+    
+    return html.split(" ").slice(0, MAX_WORDS).join(" ") + "...";
   };
 
   // Render sections with Read More
@@ -56,40 +60,26 @@ const Content = ({
     const isExpanded = expandedSections[key];
     const shouldTruncate = wordCount > MAX_WORDS;
     
-    // Process HTML for custom styling BEFORE truncation
     const processedContent = processHtmlContent(htmlContent);
-    
-    // Truncate processed content (strip HTML for word count, but preserve HTML structure)
-    const truncateHtml = (html) => {
-      const textContent = html.replace(/<[^>]+>/g, "").trim();
-      if (!shouldTruncate || isExpanded) return html;
-      
-      const words = textContent.split(/\s+/);
-      const truncatedText = words.slice(0, MAX_WORDS).join(" ") + "...";
-      
-      // Simple truncation - for production, consider html-truncate lib
-      return html.split(" ").slice(0, MAX_WORDS).join(" ") + "...";
-    };
-    
-    const displayContent = truncateHtml(processedContent);
+    const displayContent = truncateHtml(processedContent, shouldTruncate, isExpanded);
   
     return (
       <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
         <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
           
           {showTitle && (
-            <h2 className="mb-3 ml-4 not-prose">
+            <h2 className="mb-2 sm:mb-3 ml-4 not-prose leading-[1.1] sm:leading-tight">
               <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
                 {product.name}{" "}
               </span>
-              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-orange-500">
+              <span className="text-xl sm:text-xl md:text-2xl font-semibold text-orange-500 whitespace-nowrap">
                 {title}
               </span>
             </h2>
           )}
   
           <div 
-            className="prose prose-headings:font-bold prose-headings:text-gray-900"
+            className="prose prose-headings:font-bold prose-headings:text-gray-900 max-w-none"
             dangerouslySetInnerHTML={{ __html: displayContent }} 
           />
   
@@ -120,17 +110,17 @@ const Content = ({
       {thingsToCarry && (
         <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
           <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
-            <h2 className="mb-3 not-prose ml-3">
+            <h2 className="mb-1 sm:mb-3 not-prose ml-3 leading-[1.1] sm:leading-tight">
               <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
                 {product.name}{" "}
               </span>
-              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-orange-500">
+              <span className="text-xl sm:text-xl md:text-2xl font-semibold text-orange-500 whitespace-nowrap">
                 Things to Carry
               </span>
             </h2>
 
             {Array.isArray(thingsToCarry) ? (
-              <ul className="list-disc pl-5">
+              <ul className="list-disc pl-5 ml-4">
                 {(expandedSections["carry"]
                   ? thingsToCarry
                   : thingsToCarry.slice(0, 10)
@@ -140,7 +130,7 @@ const Content = ({
               </ul>
             ) : (
               <div
-                className="prose prose-headings:font-bold prose-headings:text-gray-900"
+                className="prose prose-headings:font-bold prose-headings:text-gray-900 ml-4"
                 dangerouslySetInnerHTML={{
                   __html: processHtmlContent(
                     countWords(thingsToCarry) > MAX_WORDS && !expandedSections["carry"]
@@ -191,8 +181,8 @@ const Content = ({
             </a>
             <h3 className="text-xs sm:text-sm">Mon-Sun: 9AM-8PM</h3>
             <h3 className="text-xs sm:text-sm break-all">
-              <a href="mailto:contact@friskytrails.in" className="text-black md:hidden lg:block">
-                [contact@friskytrails.in](mailto:contact@friskytrails.in)
+              <a href="mailto:contact@friskytrails.in" className="text-black">
+                contact@friskytrails.in
               </a>
             </h3>
           </div>

@@ -91,6 +91,15 @@ const productSchema = new mongoose.Schema(
         message: "You can upload up to 5 images only.",
       },
     },
+
+    // Separate slider images for small devices
+    sliderImages: {
+      type: [String],
+      validate: {
+        validator: (val) => val.length <= 5,
+        message: "You can upload up to 5 slider images only.",
+      },
+    },
   },
   { timestamps: true }
 );
