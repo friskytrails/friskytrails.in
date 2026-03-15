@@ -5,6 +5,34 @@
       "destination": "https://api.friskytrails.in/sitemap.xml"
     },
     {
+      "source": "/sitemap-static.xml",
+      "destination": "https://api.friskytrails.in/sitemap-static.xml"
+    },
+    {
+      "source": "/sitemap-blogs.xml",
+      "destination": "https://api.friskytrails.in/sitemap-blogs.xml"
+    },
+    {
+      "source": "/sitemap-countries.xml",
+      "destination": "https://api.friskytrails.in/sitemap-countries.xml"
+    },
+    {
+      "source": "/sitemap-states.xml",
+      "destination": "https://api.friskytrails.in/sitemap-states.xml"
+    },
+    {
+      "source": "/sitemap-cities.xml",
+      "destination": "https://api.friskytrails.in/sitemap-cities.xml"
+    },
+    {
+      "source": "/sitemap-products.xml",
+      "destination": "https://api.friskytrails.in/sitemap-products.xml"
+    },
+    {
+      "source": "/sitemap-productTypes.xml",
+      "destination": "https://api.friskytrails.in/sitemap-productTypes.xml"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
