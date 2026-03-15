@@ -108,6 +108,12 @@ app.use("/api/states", stateRoutes);
 // SEO sitemap
 app.use("/", sitemapRouter);
 
+// Backend robots.txt - prevent indexing of API endpoints
+app.get("/robots.txt", (req, res) => {
+  res.header("Content-Type", "text/plain");
+  res.send("User-agent: *\nDisallow: /");
+});
+
 /* =======================
    HEALTH CHECKS
 ======================= */
