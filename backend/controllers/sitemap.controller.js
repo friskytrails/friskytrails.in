@@ -9,9 +9,9 @@ import { ProductType } from "../models/productType.model.js";
 const router = Router();
 
 // Frontend base URL for <loc> entries
-const SITE_BASE_URL = "https://www.friskytrails.in";
-// Backend base URL for sitemap files themselves
-const API_BASE_URL = "https://api.friskytrails.in";
+const SITE_BASE_URL = "https://friskytrails.in";
+// Backend base URL for sitemap files themselves (used in sitemap index)
+const API_BASE_URL = "https://friskytrails.in";
 
 const buildUrlset = (urls) => {
   return (
