@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "https://api.friskytrails.in/sitemap"
+      "destination": "https://api.friskytrails.in/sitemap.xml"
     },
     {
       "source": "/(.*)",
