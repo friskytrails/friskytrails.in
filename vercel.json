@@ -31,10 +31,6 @@
     {
       "source": "/sitemap-productTypes.xml",
       "destination": "https://api.friskytrails.in/sitemap-productTypes.xml"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
