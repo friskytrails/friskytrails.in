@@ -1,8 +1,28 @@
 {
+  "redirects": [
+    {
+      "source": "/product/:slug",
+      "destination": "/tours/:slug",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-type/:slug",
+      "destination": "/tags/:slug",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
     {
       "source": "/sitemap.xml",
       "destination": "https://api.friskytrails.in/sitemap.xml"
+    },
+    {
+      "source": "/sitemap-tours-listing.xml",
+      "destination": "https://api.friskytrails.in/sitemap-products.xml"
+    },
+    {
+      "source": "/sitemap-tags-listing.xml",
+      "destination": "https://api.friskytrails.in/sitemap-productTypes.xml"
     },
     {
       "source": "/sitemap-static.xml",
@@ -23,14 +43,6 @@
     {
       "source": "/sitemap-cities.xml",
       "destination": "https://api.friskytrails.in/sitemap-cities.xml"
-    },
-    {
-      "source": "/sitemap-products.xml",
-      "destination": "https://api.friskytrails.in/sitemap-products.xml"
-    },
-    {
-      "source": "/sitemap-productTypes.xml",
-      "destination": "https://api.friskytrails.in/sitemap-productTypes.xml"
     },
     {
       "source": "/robots.txt",

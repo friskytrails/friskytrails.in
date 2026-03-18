@@ -68,7 +68,7 @@ const ProductType = () => {
                   Price: ₹{product.price}
                 </p>
                 <a
-                  href={`/product/${product.slug}`}
+                  href={`/tours/${product.slug}`}
                   className="text-orange-500 font-semibold mt-2 inline-block"
                 >
                   View Product →

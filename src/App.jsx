@@ -69,7 +69,7 @@ const App = () => {
           <Route path="/city/:slug/" element={<CityPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/tours/:slug" element={<ProductDetails />} />
-          <Route path="/productType/:slug/product" element={<ProductType />} />
+          <Route path="/tags/:slug" element={<ProductType />} />
           <Route path="/get-blogs" element={<AllBlogs />} />
 
           {/* Protected Routes - SAME AS BEFORE */}

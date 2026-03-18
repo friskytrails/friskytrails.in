@@ -37,8 +37,8 @@ router.get("/sitemap.xml", (req, res) => {
     "/sitemap-countries.xml",
     "/sitemap-states.xml",
     "/sitemap-cities.xml",
-    "/sitemap-products.xml",
-    "/sitemap-productTypes.xml",
+    "/sitemap-tours-listing.xml",
+    "/sitemap-tags-listing.xml",
   ];
 
   const xml =
@@ -166,9 +166,7 @@ router.get("/sitemap-products.xml", async (req, res) => {
 router.get("/sitemap-productTypes.xml", async (req, res) => {
   try {
     const productTypes = await ProductType.find().select("slug").lean();
-    const urls = productTypes.map(
-      (pt) => `${SITE_BASE_URL}/productType/${pt.slug}/product`
-    );
+    const urls = productTypes.map((pt) => `${SITE_BASE_URL}/tags/${pt.slug}`);
     const xml = buildUrlset(urls);
 
     res.header("Content-Type", "application/xml");

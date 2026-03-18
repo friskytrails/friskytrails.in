@@ -56,7 +56,7 @@ const ProductsPage = () => {
 
               {/* Link */}
               <Link
-                to={`/product/${p.slug}`}
+                to={`/tours/${p.slug}`}
                 className="text-orange-500 font-semibold mt-3 block"
               >
                 View Details →
