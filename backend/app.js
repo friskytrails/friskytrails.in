@@ -108,10 +108,56 @@ app.use("/api/states", stateRoutes);
 // SEO sitemap
 app.use("/", sitemapRouter);
 
-// Backend robots.txt - prevent indexing of API endpoints
+// Backend robots.txt - frontend SEO-friendly version with all sitemaps
 app.get("/robots.txt", (req, res) => {
+  const robotsTxt = `# robots.txt for FriskyTrails (https://www.friskytrails.in)
+# Purpose: maximize SEO for tour pages, block private/admin paths, and prevent duplicate content from query strings.
+
+User-agent: *
+# Allow crawling of the main site content
+Allow: /
+
+# Block admin/private/internal pages
+Disallow: /admin/
+Disallow: /login/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /temp/
+
+# Protect against duplicate content from search/filter query parameters
+Disallow: /*?s=
+Disallow: /*?search=
+Disallow: /search/
+Disallow: /*?filter=
+
+# Sitemap declaration(s) for search engines
+Sitemap: https://www.friskytrails.in/sitemap.xml
+Sitemap: https://www.friskytrails.in/sitemap-static.xml
+Sitemap: https://www.friskytrails.in/sitemap-blogs.xml
+Sitemap: https://www.friskytrails.in/sitemap-countries.xml
+Sitemap: https://www.friskytrails.in/sitemap-states.xml
+Sitemap: https://www.friskytrails.in/sitemap-cities.xml
+Sitemap: https://www.friskytrails.in/sitemap-tours-listing.xml
+Sitemap: https://www.friskytrails.in/sitemap-tags-listing.xml
+
+# Block overly aggressive scrapers and bots that waste server resources
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Dotbot
+Disallow: /
+
+User-agent: Rogerbot
+Disallow: /
+
+User-agent: Exabot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /`;
+  
   res.header("Content-Type", "text/plain");
-  res.send("User-agent: *\nDisallow: /");
+  res.send(robotsTxt);
 });
 
 /* =======================
