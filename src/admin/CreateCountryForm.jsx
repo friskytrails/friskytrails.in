@@ -23,7 +23,7 @@ const CreateCountryForm = () => {
         } else {
           setIsAdmin(true);
         }
-      } catch (err) {
+      } catch {
         alert("Failed to verify user");
         window.location.href = "/";
       } finally {
@@ -66,7 +66,7 @@ const CreateCountryForm = () => {
       setMessage(res.message || "Country created successfully!");
       setFormData({ name: "", slug: "" });
       setImageFile(null);
-    } catch (err) {
+    } catch {
       setMessage("Failed to create country");
     }
   };

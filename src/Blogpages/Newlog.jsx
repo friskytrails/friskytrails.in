@@ -17,7 +17,7 @@ const Newlog = () => {
       try {
         const res = await getSingleBlog(slug);
         setBlog(res);
-      } catch (err) {
+      } catch {
         setError("Blog not found");
       } finally {
         setLoading(false);

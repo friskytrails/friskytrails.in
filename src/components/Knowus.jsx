@@ -17,9 +17,9 @@ const Knowus = () => {
       <h4 className="text-orange-600 text-xl md:text-2xl font-semibold">
         Get In
       </h4>
-      <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl pt-2 font-semibold tracking-tighter leading-tight">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl pt-2 font-semibold tracking-tighter leading-tight">
         Touch & Start Your Adventure!
-      </h1>
+      </h2>
       <p className="pt-4 lg:pt-2 xl:pt-2 sm:pt-6 text-sm sm:text-base">
         Our expert support team is always prepared to help you with any queries or concerns,
         providing quick and tailored solutions to suit your needs.
@@ -35,8 +35,8 @@ const Knowus = () => {
             </div>
             <div>
               <h3 className="text-gray-600 text-sm sm:text-base">Phone No:</h3>
-              <h2 className="text-base sm:text-lg font-semibold text-orange-500 cursor-pointer"><a href="tel:+917501516714">
-              +91-75015 16714
+              <h2 className="text-base sm:text-lg font-semibold text-orange-500 cursor-pointer"><a href="tel:+917877979193">
+              +91-78779 79193
             </a></h2>
             </div>
           </div>
@@ -56,9 +56,9 @@ const Knowus = () => {
         </div>
 
         {/* Team Text */}
-        <h1 className="text-xl sm:text-2xl xl:text-3xl pt-6 font-semibold tracking-tighter">
+        <h2 className="text-xl sm:text-2xl xl:text-3xl pt-6 font-semibold tracking-tighter">
           20+ Expert Team member
-        </h1>
+        </h2>
 
         {/* Overlapping Circles with Images */}
         <div className="pt-6 sm:pt-10 flex items-center space-x-[-10px] relative z-0">

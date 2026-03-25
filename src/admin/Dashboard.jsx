@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { getCurrentUser } from "../api/user.api";
-import NotFound from "../components/NotFound";
+import { useState } from "react";
 
 // Import all forms
 import CreateBlogForm from "./CreateBlogForm";
@@ -14,12 +12,10 @@ import AllProducts from "./AllProducts";
 import AllStates from "./AllStates";
 import AllCountries from "./AllCountries";
 import AllCities from "./AllCities";
+import AllProductTypes from "./AllProductTypes";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState(""); // No active tab by default
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAllowed, setIsAllowed] = useState(true);
-  const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
   //   const checkAdmin = async () => {
@@ -51,6 +47,7 @@ const Dashboard = () => {
   const sections = [
     { key: "all-blogs", title: "All Blogs", component: <AllBlogs /> },
     { key: "all-products", title: "All Products", component: <AllProducts /> },
+    { key: "all-product-types", title: "All Product Types", component: <AllProductTypes /> },
     { key: "all-countries", title: "All Countries", component: <AllCountries /> },
     { key: "all-states", title: "All States", component: <AllStates /> },
     { key: "all-cities", title: "All Cities", component: <AllCities /> },

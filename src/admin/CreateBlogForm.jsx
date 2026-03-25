@@ -61,7 +61,7 @@ const CreateBlogForm = () => {
       try {
         const res = await getCountries();
         setCountries(res.data);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -77,7 +77,7 @@ const CreateBlogForm = () => {
         setStates(res.data);
         setFormData((prev) => ({ ...prev, state: "", city: "" }));
         setCities([]);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -92,7 +92,7 @@ const CreateBlogForm = () => {
         const res = await getCities(formData.state);
         setCities(res.data);
         setFormData((prev) => ({ ...prev, city: "" }));
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -151,7 +151,7 @@ const CreateBlogForm = () => {
       setImageFile(null);
       setStates([]);
       setCities([]);
-    } catch (err) {
+    } catch {
       setMessage("Failed to create blog");
     }
   };

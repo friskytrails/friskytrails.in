@@ -13,12 +13,12 @@ const Next = () => {
   return (
     <div className="h-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto py-2">
       {/* Title */}
-      <h1
+      <h2
         className="text-3xl mb-7 sm:text-4xl md:text-5xl font-bold text-center"
         style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
       >
         Where to Next?
-      </h1>
+      </h2>
 
       <div className="max-w-[90vw] mx-auto">
         {/* 🔹 Mobile: Horizontal scroll (ONLY HERE CHANGED) */}

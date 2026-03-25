@@ -88,7 +88,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
       try {
         const res = await getCountries();
         setCountries(res.data);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
