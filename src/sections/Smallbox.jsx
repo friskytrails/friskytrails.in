@@ -1,17 +1,41 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAllStates } from "../api/admin.api";
 
 const Smallbox = () => {
-  const data = [
-    { name: "Goa", image: "/nextimages/4.png", slug: "goa" },
-    { name: "Himachal", image: "/nextimages/5.png", slug: "himachal-pradesh" },
-    { name: "Kashmir", image: "/nextimages/2.png", slug: "jammu-and-kashmir" },
-    { name: "Kerala", image: "/nextimages/6.png", slug: "kerala" },
-    { name: "Arunachal ", image: "/destinations/Arunachal.png", slug: "arunachal-pradesh" },
-    { name: "Andaman", image: "/destinations/Andaman.png", slug: "andaman-and-nicobar-islands" },
-    { name: "Meghalaya", image: "/nextimages/1.png", slug: "meghalaya" },
-    { name: "Rajasthan", image: "/destinations/Rajasthan.png", slug: "rajasthan" },
-    { name: "Uttarakhand", image: "/destinations/Uttarakhand.png", slug: "uttarakhand" },
+  const defaultData = [
+    { name: "Goa", slug: "goa" },
+    { name: "Himachal", slug: "himachal-pradesh" },
+    { name: "Kashmir", slug: "jammu-and-kashmir" },
+    { name: "Kerala", slug: "kerala" },
+    { name: "Arunachal", slug: "arunachal-pradesh" },
+    { name: "Andaman", slug: "andaman-and-nicobar-islands" },
+    { name: "Meghalaya", slug: "meghalaya" },
+    { name: "Rajasthan", slug: "rajasthan" },
+    { name: "Uttarakhand", slug: "uttarakhand" },
   ];
+  const [data, setData] = useState(defaultData);
+
+  useEffect(() => {
+    const fetchStateImages = async () => {
+      try {
+        const result = await getAllStates();
+        const states = result?.data || [];
+        const imageBySlug = new Map(states.map((state) => [state.slug, state.image]));
+
+        setData((prev) =>
+          prev.map((item) => ({
+            ...item,
+            image: imageBySlug.get(item.slug) || item.image,
+          }))
+        );
+      } catch (error) {
+        console.error("Failed to load dynamic state images:", error);
+      }
+    };
+
+    fetchStateImages();
+  }, []);
 
   return (
     <>

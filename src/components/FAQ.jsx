@@ -63,9 +63,9 @@ export default function FAQ({ productName = "", faq }) {
 <div className="w-full bg-white max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-4">
       {/* Heading */}
       <div className="flex items-center gap-4 sm:mb-2">
-        <h1 className="text-lg  sm:text-xl md:text-2xl font-semibold ml-3 md:ml-2">
+        <h2 className="text-lg  sm:text-xl md:text-2xl font-semibold ml-3 md:ml-2">
           {productName} <span className="text-orange-400 ">FAQ</span>
-        </h1>
+        </h2>
       </div>
 
       {/* FAQ List */}

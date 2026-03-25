@@ -52,7 +52,7 @@ const EditCountryForm = ({ countryId, onClose, onUpdate }) => {
           });
           setImagePreview(country.image || "");
         }
-      } catch (err) {
+      } catch {
         setMessage("Failed to load country data");
       } finally {
         setLoading(false);

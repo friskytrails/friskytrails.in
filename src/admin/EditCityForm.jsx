@@ -51,7 +51,7 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
       try {
         const res = await getAllCountries();
         setCountries(res.data?.data || res.data || []);
-      } catch (err) {
+      } catch {
         setCountries([]);
       } finally {
         setCountriesLoading(false);

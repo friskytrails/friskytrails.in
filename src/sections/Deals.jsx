@@ -57,20 +57,20 @@ const Deals = () => {
             style={{ backgroundImage: `url('${deal.image}')` }}
           ></div>
 
-          <h1 className="absolute bottom-7 text-white font-semibold text-lg px-4 py-1 drop-shadow">
+          <h2 className="absolute bottom-7 text-white font-semibold text-lg px-4 py-1 drop-shadow">
             {deal.title}
-          </h1>
-          <h1 className="absolute bottom-2 text-white px-4 py-1 drop-shadow">
+          </h2>
+          <h2 className="absolute bottom-2 text-white px-4 py-1 drop-shadow">
             {deal.duration}
-          </h1>
+          </h2>
         </Link>
       ));
 
   return (
     <div className="min-h-screen w-full md:pt-10 lg:pt-6">
-      <h1 className="px-4 md:pt-20 lg:px-38 text-2xl md:text-4xl font-bold tracking-tight">
+      <h2 className="px-4 md:pt-20 lg:px-38 text-2xl md:text-4xl font-bold tracking-tight">
         Deals You Can't Miss
-      </h1>
+      </h2>
       <p className="pt-2 pb-4 md:pb-6 px-4 md:px-20 font-semibold text-xl lg:px-38">
         Travel beyond boundaries with incredible savings
       </p>
@@ -95,12 +95,12 @@ const Deals = () => {
               style={{ backgroundImage: `url('${deal.image}')` }}
             ></div>
 
-            <h1 className="absolute bottom-7 text-white font-semibold text-lg px-4 py-1 drop-shadow">
+            <h2 className="absolute bottom-7 text-white font-semibold text-lg px-4 py-1 drop-shadow">
               {deal.title}
-            </h1>
-            <h1 className="absolute bottom-2 text-white px-4 py-1 drop-shadow">
+            </h2>
+            <h2 className="absolute bottom-2 text-white px-4 py-1 drop-shadow">
               {deal.duration}
-            </h1>
+            </h2>
           </Link>
         ))}
       </div>

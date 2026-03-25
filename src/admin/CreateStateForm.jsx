@@ -28,7 +28,7 @@ const CreateStateForm = () => {
           } else {
             setIsAdmin(true);
           }
-        } catch (err) {
+      } catch {
           alert("Failed to verify user");
           window.location.href = "/";
         } finally {
@@ -44,7 +44,7 @@ const CreateStateForm = () => {
       try {
         const res = await getCountries();
         setCountries(res.data);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -94,7 +94,7 @@ const CreateStateForm = () => {
         country: "",
       });
       setImageFile(null);
-    } catch (err) {
+    } catch {
       setMessage("❌ Failed to create state");
     }
   };

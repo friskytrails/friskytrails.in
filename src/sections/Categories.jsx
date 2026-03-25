@@ -32,12 +32,12 @@ export default function HoverRevealButton() {
     <>
       {/* Desktop view */}
       <div className="hidden xl:block min-h-[60vh] w-full">
-        <h1
+        <h2
           className="text-3xl md:text-5xl text-center font-bold"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Curated Categories
-        </h1>
+        </h2>
 
         <div className="grid w-[90vw] mx-auto grid-cols-1 xl:grid-cols-4 mt-8 md:mt-10 gap-8 md:gap-16 place-items-center">
           {data.map((item, index) => (
@@ -74,12 +74,12 @@ export default function HoverRevealButton() {
 
       {/* Mobile view — ONLY main div margin changed */}
       <div className="xl:hidden h-auto mb-4 w-full px-4 ">
-        <h1
+        <h2
           className="text-3xl md:text-5xl text-center font-bold"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Curated Categories
-        </h1>
+        </h2>
 
         <div className="flex overflow-x-auto h-auto gap-6 mt-6 pb-4 scrollbar-hide">
           {data.map((item, index) => (

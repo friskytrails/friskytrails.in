@@ -14,7 +14,6 @@ const LoginModal = ({ onClose }) => {
     otp: "",
   });
   const [loading, setLoading] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,7 +35,6 @@ const LoginModal = ({ onClose }) => {
     try {
       const response = await sendOtp({ email: form.email });
       if (response.success) {
-        setOtpSent(true);
         setSignupStep(2);
         alert("OTP sent successfully to your email!");
       } else {
@@ -103,7 +101,6 @@ const LoginModal = ({ onClose }) => {
           alert("Registration successful! Please login.");
           setIsLogin(true);
           setSignupStep(1);
-          setOtpSent(false);
           setForm({
             userName: "",
             firstName: "",

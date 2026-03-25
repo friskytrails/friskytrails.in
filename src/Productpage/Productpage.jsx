@@ -12,7 +12,7 @@ const Productpage = () => {
     reviews: "⭐⭐⭐⭐⭐ Reviews",
     oldPrice: "₹5,047",
     newPrice: "₹4,047",
-    contact: "+91-75015 16714",
+    contact: "+91-78779 79193",
     contactHours: "10:30 AM - 8:00 PM (Mon to Sat)",
     images: [
       "/images/kashmir.webp",
@@ -128,7 +128,7 @@ const Productpage = () => {
                   <span className="line-through pl-2 text-xl text-gray-500">
                     {product.oldPrice}
                   </span>
-                  <h1 className="text-3xl font-bold text-orange-500">{product.newPrice}</h1>
+                  <h2 className="text-3xl font-bold text-orange-500">{product.newPrice}</h2>
                   <span className="font-semibold">per person</span>
                 </div>
                 <div>
@@ -151,9 +151,9 @@ const Productpage = () => {
             <div className="h-[36vh] w-full border-1 border-orange-500 mt-10 bg-white m-auto">
               <div className="flex items-center justify-between w-[90%] m-auto">
                 <div className="">
-                  <h1 className="text-orange-500 pt-4 text-3xl font-semibold">
+                  <h2 className="text-orange-500 pt-4 text-3xl font-semibold">
                     Got a Question?
-                  </h1>
+                  </h2>
                   <p className="pt-4 text-xl">
                     Our destination expert will be happy to help you resolve
                     your queries for this tour.

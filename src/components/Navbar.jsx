@@ -121,9 +121,9 @@ border-none shadow-none
                   alt="FriskyTrails Logo"
                 />
               </Link>
-              <h1 className="text-lg sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold whitespace-nowrap text-gray-800 flex-shrink-0">
+              <h2 className="text-lg sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold whitespace-nowrap text-gray-800 flex-shrink-0">
                 FriskyTrails
-              </h1>
+              </h2>
             </div>
             
             <button 

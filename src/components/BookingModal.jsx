@@ -33,7 +33,7 @@ const BookingModal = ({ productSlug, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await bookProduct({ productSlug, ...formData });
+      await bookProduct({ productSlug, ...formData });
       alert("Booking confirmed!");
       onClose();
     } catch (error) {

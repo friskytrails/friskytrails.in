@@ -43,7 +43,7 @@ const NotFound = () => {
                   </div>
                   <div className="flex items-center gap-2 sm:ml-2">
                     <span className="text-gray-700 font-semibold">
-                      +91-75015 16714
+                      +91-78779 79193
                     </span>
                     <span className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 bg-clip-text text-transparent font-bold">
                       (Toll Free)

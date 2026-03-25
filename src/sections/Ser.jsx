@@ -37,9 +37,9 @@ const Ser = () => {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <h1 className="text-white  text-2xl sm:text-3xl md:text-4xl font-semibold pt-20 md:pt-28 pl-4">
+            <h2 className="text-white  text-2xl sm:text-3xl md:text-4xl font-semibold pt-20 md:pt-28 pl-4">
               Loved For Experiences!
-            </h1>
+            </h2>
             <p className="text-white text-base sm:text-lg pl-4 max-w-[90%] md:max-w-[40%] mt-2">
               Read stories from travellers who trusted us to craft their perfect
               journeys!
@@ -57,9 +57,9 @@ const Ser = () => {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <h1 className="text-white text-center text-2xl sm:text-3xl md:text-4xl font-semibold">
+            <h2 className="text-white text-center text-2xl sm:text-3xl md:text-4xl font-semibold">
               Loved For Experiences!
-            </h1>
+            </h2>
             <p className="text-white ml-4 text-center text-base sm:text-lg pl-4 max-w-[100%] mt-1">
               Read stories from travellers who trusted us to craft their
               journeys!
@@ -72,9 +72,9 @@ const Ser = () => {
 
         {/* Holiday Packages */}
         <div className="w-full max-w-[1280px] px-4 sm:px-8 md:px-12 mx-auto ">
-          <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl">
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl">
             Find Your Perfect “Holiday” Package
-          </h1>
+          </h2>
           <p className="pt-4 text-sm sm:text-base">
             At FriskyTrails, we believe travel should be hassle-free, exciting,
             and tailored just for you. Whether you’re planning a family

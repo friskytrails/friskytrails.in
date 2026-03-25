@@ -44,9 +44,9 @@ import { TestimonialMarquee } from './TestimonialMarquee';
   }
 ]
 
-const Testimonial = () => {
+const Testimonial = ({ className = "" }) => {
   return (
-    <section className="w-full  md:py-4 px-4 md:px-8 lg:px-12 text-center mt-6 md:mt-2">
+    <section className={`w-full md:py-4 px-4 md:px-8 lg:px-12 text-center mt-6 md:mt-2 ${className}`}>
       
       {/* Small Top Orange Heading */}
       <h3 className="text-orange-500 font-semibold text-lg md:text-xl mb-2">
@@ -54,9 +54,9 @@ const Testimonial = () => {
       </h3>
 
       {/* Main Bold Black Heading */}
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
         What Says Our Visitors
-      </h1>
+      </h2>
 
       <TestimonialMarquee data={testimonialData} />
     </section>

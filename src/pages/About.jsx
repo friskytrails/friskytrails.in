@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import Jointeam from "../components/Jointeam";
 import Form from "../components/Popupform";
 import Arrow from "../assets/rightarrow.svg";
 import Choose from "../sections/Choose";
 import Promise from "../sections/Promise";
 import { useNavigate } from "react-router-dom";
-import FortImage from "/images/fort.webp";
 import FriskyLoader from "../components/Loader";
 
 const About = () => {
@@ -13,14 +11,11 @@ const About = () => {
 
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [showJointeam, setShowJointeam] = useState(false);
 
   const toggleForm = () => setShowForm((prev) => !prev);
-  const toggleJointeam = () => setShowJointeam((prev) => !prev);
 
   const handleScroll = () => {
     setShowForm(false);
-    setShowJointeam(false);
   };
 
   useEffect(() => {
@@ -78,9 +73,9 @@ const About = () => {
 
       {/* WHY SECTION */}
       <div>
-        <h1 className="text-2xl md:text-4xl font-semibold mt-2 md:mt-16 text-[rgb(255,99,33)] text-center">
+      <h2 className="text-2xl md:text-4xl font-semibold mt-2 md:mt-16 text-[rgb(255,99,33)] text-center">
           Why FriskyTrails?
-        </h1>
+      </h2>
 
         <div className="w-full md:w-[70vw] mx-auto flex justify-center px-4">
           <p className="text-center mt-2 md:mt-8 text-base md:text-xl text-gray-600">
@@ -141,7 +136,7 @@ const About = () => {
 
           {/* CALL BUTTON */}
           <button className="w-full sm:w-auto bg-white mt-2 md:mt-8 border-2 border-[rgb(255,99,33)] font-semibold rounded-full active:scale-95 transition-all duration-300 hover:bg-[rgb(255,99,33)] hover:text-white px-6 md:px-8 py-3 md:py-4 shadow-lg">
-            <a href="tel:+917501516714">+91-75015 16714</a>
+            <a href="tel:+917877979193">+91-78779 79193</a>
           </button>
         </div>
       </div>
@@ -151,10 +146,10 @@ const About = () => {
 
       {/* CAREER SECTION */}
       <div className="px-4 pb-12 md:px-8">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-12 md:mt-24 text-center">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-12 md:mt-24 text-center">
           Let's Redefine Adventure,{" "}
           <span className="text-[rgb(255,99,33)] font-bold">TOGETHER!</span>
-        </h1>
+        </h2>
 
         <div className="flex mt-6 justify-center">
           <button

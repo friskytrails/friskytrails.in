@@ -68,7 +68,7 @@ const Landing = () => {
 
       <div className="animation w-full">
         <div className="relative text flex whitespace-nowrap overflow-hidden">
-          <motion.h1
+          <motion.h2
             initial={{ x: 0 }}
             animate={{ x: "-100%" }}
             transition={{ ease: "linear", repeat: Infinity, duration: 12 }}
@@ -83,13 +83,13 @@ const Landing = () => {
                 src="/logo.PNG"
                 alt=""
               />
-              <h1 className="md:text-6xl text-3xl">
+              <h2 className="md:text-6xl text-3xl">
                 Explore every destination, Every season – with FriskyTrails!
-              </h1>
+              </h2>
             </span>
-          </motion.h1>
+          </motion.h2>
 
-          <motion.h1
+          <motion.h2
             initial={{ x: 0 }}
             animate={{ x: "-100%" }}
             transition={{ ease: "linear", repeat: Infinity, duration: 12 }}
@@ -104,11 +104,11 @@ const Landing = () => {
                 src="/logo.PNG"
                 alt=""
               />
-              <h1 className="md:text-6xl text-3xl">
+              <h2 className="md:text-6xl text-3xl">
                 Explore every destination, Every season – with FriskyTrails!
-              </h1>
+              </h2>
             </span>
-          </motion.h1>
+          </motion.h2>
         </div>
       </div>
     </div>

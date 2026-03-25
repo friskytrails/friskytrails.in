@@ -1,9 +1,9 @@
 const Promise = () => {
   return (
     <div className="h-auto w-full px-4 md:px-8 mb-8 lg:px-16">
-      <h1 className="text-center text-3xl md:text-5xl pt-10 font-bold">
+      <h2 className="text-center text-3xl md:text-5xl pt-10 font-bold">
           What we promise
-      </h1>
+      </h2>
 
       {/* Container switches layout based on screen size */}
       <div className="mt-6 md:mt-10">
@@ -23,9 +23,9 @@ const Promise = () => {
                   />
                 </div>
 
-                <h1 className="mt-4 md:mt-6 text-lg md:text-xl font-semibold text-center">
+                <h2 className="mt-4 md:mt-6 text-lg md:text-xl font-semibold text-center">
                   {item.title}
-                </h1>
+                </h2>
 
                 <p className="w-full px-4 tracking-tighter mt-2 text-center">
                   {item.des}

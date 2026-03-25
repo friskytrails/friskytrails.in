@@ -10,7 +10,7 @@ const Modal = ({ onClose }) => {
         }
     }
 
-    const handleOptionClick = (e) => {
+    const handleOptionClick = () => {
         onClose();
     }
 
