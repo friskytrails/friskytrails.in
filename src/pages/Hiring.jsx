@@ -59,9 +59,9 @@ const Hiring = () => {
       </div>
 
       {/* Current Openings */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-4 md:mb-10 text-center">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-8 md:mt-12 mb-4 md:mb-10 text-center">
         Current Openings
-      </h1>
+      </h2>
 
       {/* Opening Cards */}
       <div className="flex flex-col gap-4 px-4 pb-10">

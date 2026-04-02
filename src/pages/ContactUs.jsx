@@ -52,9 +52,9 @@ const ContactUs = () => {
 
           {/* Right */}
           <div className="w-full lg:w-[50%]">
-            <h1 className="font-semibold tracking-tight text-center text-2xl sm:text-3xl md:text-4xl pt-6 md:pt-10">
+            <h2 className="font-semibold tracking-tight text-center text-2xl sm:text-3xl md:text-4xl pt-6 md:pt-10">
               Looking for any help?
-            </h1>
+            </h2>
             <div className="pt-6 sm:pt-8 flex justify-center">
               <Contactform />
             </div>
@@ -66,9 +66,9 @@ const ContactUs = () => {
           <h4 className="font-semibold text-base sm:text-lg md:text-xl text-center text-orange-500">
             Our Location
           </h4>
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mt-2">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mt-2">
             Office In India
-          </h1>
+          </h2>
 
           <div className="flex flex-col lg:flex-row items-center justify-center gap-10 pt-8 sm:pt-10 lg:pt-16">
             {/* Image */}
@@ -94,7 +94,7 @@ const ContactUs = () => {
                     />
                   </div>
                   <h2 className="text-base sm:text-lg md:text-2xl font-semibold text-gray-700">
-                    <a href="tel:+917501516714">+91-75015 16714</a>
+                    <a href="tel:+917877979193">+91-78779 79193</a>
                   </h2>
                 </div>
 

@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
             setIsAdmin(false);
           }
         }
-      } catch (error) {
+      } catch {
         if (isMounted) {
           setUser(null);
           setIsAdmin(false);

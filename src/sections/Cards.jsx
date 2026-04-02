@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { data } from "../lib/corouselData";
-import ProductDetails from "../admin/ProductDetails";
+
 
 const Cards = () => {
   const settings = {
@@ -36,12 +36,12 @@ const Cards = () => {
 
   return (
     <div className="w-full py-6 md:py-8 mt-8 md:mt-12">
-      <h1
+      <h2
         className="text-center text-3xl sm:text-4xl md:text-5xl font-bold"
         style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
       >
         Upcoming Trips & Adventures
-      </h1>
+      </h2>
 
       <div className="w-full max-w-7xl mx-auto px-4 mt-10">
         <Slider {...settings}>

@@ -49,7 +49,7 @@ const CreateCityForm = () => {
       try {
         const res = await getCountries();
         setCountries(res.data);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -63,7 +63,7 @@ const CreateCityForm = () => {
       try {
         const res = await getStates(formData.country);
         setStates(res.data);
-      } catch (err) {
+      } catch {
         // Error handled silently
       }
     };
@@ -110,7 +110,7 @@ const CreateCityForm = () => {
       setFormData({ name: "", slug: "", country: "", state: "", howToReach: "" });
       setImageFile(null);
       setStates([]);
-    } catch (err) {
+    } catch {
       setMessage("❌ Failed to create city");
     }
   };

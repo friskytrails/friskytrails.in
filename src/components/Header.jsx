@@ -20,8 +20,8 @@ const Header = () => {
           <div className="hidden md:block h-4 xl:h-5 border-l border-black/70" />
           <div className="flex items-center gap-1.5 xl:gap-2">
             <img className="w-4 h-4 xl:w-5 xl:h-5" src={Call} alt="call" />
-            <a href="tel:+917501516714" className="text-black text-xs xl:text-sm whitespace-nowrap">
-              +91-75015 16714
+            <a href="tel:+917877979193" className="text-black text-xs xl:text-sm whitespace-nowrap">
+              +91-78779 79193
             </a>
           </div>
         </div>
@@ -52,8 +52,8 @@ const Header = () => {
       <div className="fixed md:hidden flex h-[5.2vh] bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 z-[1000] w-full justify-between items-center px-3 py-1">
         <div className="flex items-center gap-1.5">
           <img className="w-4 h-4 flex-shrink-0" src={Call} alt="call" />
-          <a href="tel:+917501516714" className="text-black text-xs font-medium">
-            +91-75015 16714
+          <a href="tel:+917877979193" className="text-black text-xs font-medium">
+            +91-78779 79193
           </a>
         </div>
 

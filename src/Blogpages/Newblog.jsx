@@ -62,13 +62,13 @@ const Newblog = () => {
         {/* Form Section */}
         <div className="bg-white w-[90vw] rounded-lg mt-6 mx-auto shadow-lg">
           <div className="grid grid-cols-3 text-xs sm:text-base pt-4 font-semibold">
-            <h1 className="text-center border py-4 border-gray-300">
+            <h2 className="text-center border py-4 border-gray-300">
               Holidays
-            </h1>
-            <h1 className="text-center border py-4 border-gray-300">
+            </h2>
+            <h2 className="text-center border py-4 border-gray-300">
               Adventures
-            </h1>
-            <h1 className="text-center border py-4 border-gray-300">Hotels</h1>
+            </h2>
+            <h2 className="text-center border py-4 border-gray-300">Hotels</h2>
           </div>
 
           <form

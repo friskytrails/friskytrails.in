@@ -59,28 +59,33 @@ const CityPage = () => {
   }
 
   return (
-    <div className="min-h-screen ">
-      {/* HERO */}
-    
+    <div className="min-h-screen">
+      {/* HERO - PERFECT RESPONSIVE IMAGE */}
       <div
-  className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24" 
-  style={{
-    marginTop:
-      typeof window !== "undefined"
-        ? window.innerWidth === 1024 && window.innerHeight === 600
-          ? "3.9rem"     // Nest Hub → kam gap
-          : window.innerWidth === 1024 && window.innerHeight === 1366
-          ? "9.5rem"     // 1024×1366 → thoda zyada gap
-          : undefined  // baaki sab Tailwind se
-        : undefined,
-  }}
->
-  <img
-    src={city.image}
-    alt={city.name}
-    className="w-full h-64 sm:h-80 md:h-96 object-cover object-right sm:object-center"
-  />
-</div>
+        className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24"
+        style={{
+          marginTop:
+            typeof window !== "undefined"
+              ? window.innerWidth === 1024 && window.innerHeight === 600
+                ? "3.9rem"     // Nest Hub → kam gap
+                : window.innerWidth === 1024 && window.innerHeight === 1366
+                ? "9.5rem"     // 1024×1366 → thoda zyada gap
+                : undefined    // baaki sab Tailwind se
+              : undefined,
+        }}
+      >
+        {/* Responsive Container with Fixed Aspect Ratios */}
+        <div className="relative overflow-hidden rounded-lg mx-4 sm:mx-6 lg:mx-8">
+          <div className="w-full pt-[56.25%] sm:pt-[62.5%] md:pt-[75%] lg:pt-[70%] xl:pt-[66.67%]">
+            <img
+              src={city.image}
+              alt={city.name}
+              className="absolute inset-0 w-full h-full object-cover object-center hover:object-right transition-all duration-300"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
         {/* HEADER */}
@@ -91,12 +96,6 @@ const CityPage = () => {
           <p className="mt-3 text-gray-600 max-w-2xl">
             Experiential journeys will make you a storyteller
           </p>
-          {/* {city.howToReach && (
-            <div className="mt-4 p-4 bg-orange-50 rounded-lg">
-              <h3 className="font-semibold text-orange-700 mb-2">How to Reach</h3>
-              <p className="text-gray-700">{city.howToReach}</p>
-            </div>
-          )} */}
         </section>
 
         {/* BLOGS */}
@@ -113,14 +112,15 @@ const CityPage = () => {
           renderItem={(blog) => (
             <Link
               to={`/blog/${blog.slug}`}
-              className="bg-white rounded-2xl shadow overflow-hidden block h-full"
+              className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-shadow duration-300"
             >
               <img
                 src={blog.imageUrl}
                 alt={blog.title}
                 className="w-full h-48 object-cover"
+                loading="lazy"
               />
-              <div className="p-4 font-semibold line-clamp-2">
+              <div className="p-4 font-semibold line-clamp-2 leading-tight">
                 {blog.title}
               </div>
             </Link>
@@ -131,7 +131,7 @@ const CityPage = () => {
         <div className="flex justify-center mt-10">
           <Link
             to="/blog"
-            className="px-10 py-4 font-semibold bg-white border shadow-xl rounded-full hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-400 hover:text-white transition"
+            className="px-10 py-4 font-semibold bg-white border-2 border-orange-500 shadow-xl rounded-full hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-400 hover:text-white hover:border-transparent transition-all duration-300 text-orange-500 hover:shadow-2xl"
           >
             More Blogs
           </Link>
@@ -142,7 +142,3 @@ const CityPage = () => {
 }
 
 export default CityPage
-
-
-
-

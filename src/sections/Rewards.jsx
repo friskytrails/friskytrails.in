@@ -30,12 +30,12 @@ const Rewards = () => {
   return (
     <div className="h-auto w-full md:px-8 mb-8 lg:px-16 md:mt-4">
       {/* Heading */}
-      <h1
+      <h2
         className="text-center text-3xl sm:text-4xl md:text-5xl pt-6 md:pt-2 font-bold"
         style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
       >
         Discover More with FriskyTrails
-      </h1>
+      </h2>
 
       {/* Cards Container */}
       <div className="mt-6 md:mt-6">

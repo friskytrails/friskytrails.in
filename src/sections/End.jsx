@@ -18,7 +18,7 @@ const End = () => {
               <div className="w-full">
                 <div className="flex items-center gap-4">
                   <img className="h-20 w-20 bg-white rounded-full object-cover" src="/logo.PNG" alt="logo" />
-                  <h1 className="text-3xl font-bold text-white">FriskyTrails</h1>
+                  <h2 className="text-3xl font-bold text-white">FriskyTrails</h2>
                 </div>
 
                 <h3 className="text-gray-400 font-semibold mt-6">
@@ -28,7 +28,7 @@ const End = () => {
 
                 <div className="mt-6 space-y-2">
                   <h3 className="text-gray-400 font-bold">
-                    <a href="tel:+917501516714" className="hover:text-white">+91-75015 16714</a>
+                    <a href="tel:+917877979193" className="hover:text-white">+91-78779 79193</a>
                   </h3>
                   <h3 className="text-gray-400 font-bold">
                     <a href="mailto:friskytrails@gmail.com" className="hover:text-white">contact@friskytrails.in</a>
@@ -55,7 +55,7 @@ const End = () => {
               <div className="w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h1 className="text-white text-3xl font-semibold">Short Links</h1>
+                    <h2 className="text-white text-3xl font-semibold">Short Links</h2>
                     <div className="mt-6 space-y-4">
                       {[
                         { text: "About Us", path: "/about" },
@@ -81,7 +81,7 @@ const End = () => {
                   </div>
 
                   <div>
-                    <h1 className="text-white text-3xl font-semibold">Quick Links</h1>
+                    <h2 className="text-white text-3xl font-semibold">Quick Links</h2>
                     <div className="mt-6  space-y-4">
                       {[
                         { text: "Contact Us", path: "/contact" },
@@ -110,7 +110,7 @@ const End = () => {
 
               {/* RIGHT COLUMN */}
               <div className="w-full">
-                <h1 className="text-white text-3xl font-semibold">Travel Destinations</h1>
+                <h2 className="text-white text-3xl font-semibold">Travel Destinations</h2>
 
                 {/* Make the destinations grid responsive: 2 cols on md, 3 cols on lg/xl */}
                 <div className="mt-6 grid grid-cols-2 md:grid-cols-3  gap-4">
@@ -126,7 +126,7 @@ const End = () => {
       <div className="xl:hidden h-auto w-full bg-[rgb(10,3,34)] px-3 sm:px-4 md:px-6 py-6 md:py-8 text-white">
         {/* Travel Destinations Section */}
         <div className="mb-6 md:mb-8">
-          <h1 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Travel Destinations</h1>
+          <h2 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Travel Destinations</h2>
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 md:h-full md:w-full gap-2 sm:gap-3 mt-3 md:mt-4">
             <Smallbox />
           </div>
@@ -134,7 +134,7 @@ const End = () => {
 
         {/* Short Links Section */}
         <div className="mb-6 md:mb-8">
-          <h1 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Short Links</h1>
+          <h2 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Short Links</h2>
           <div className="flex justify-center items-start mt-3 md:mt-4 gap-8 sm:gap-10 md:gap-16">
             <div className="flex flex-col gap-3 sm:gap-4">
               <Link to="/about">
@@ -165,7 +165,7 @@ const End = () => {
 
         {/* Quick Links Section */}
         <div className="mb-6 md:mb-8">
-          <h1 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Quick Links</h1>
+          <h2 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Quick Links</h2>
           <div className="flex justify-center items-start mt-3 md:mt-4 gap-8 sm:gap-10 md:gap-16">
             <div className="flex  ml-10 flex-col gap-3 sm:gap-4">
               <Link to="/contact">
@@ -202,7 +202,7 @@ const End = () => {
               src="/logo.PNG"
               alt="FriskyTrails Logo"
             />
-            <h1 className="text-xl sm:text-2xl md:text-2xl font-bold text-white">FriskyTrails</h1>
+            <h2 className="text-xl sm:text-2xl md:text-2xl font-bold text-white">FriskyTrails</h2>
           </div>
           <h3 className="text-gray-400 font-semibold mt-3 md:mt-4 text-center text-xs sm:text-sm md:text-base px-1">
             Uttarapan Market Complex, G15, Hill Cart Rd, opposite of Biswadeep Cinema Hall, Ward 1, Patiram Jote,
@@ -213,7 +213,7 @@ const End = () => {
               <a href="mailto:contact@friskytrails.in" className="hover:text-white transition-colors">contact@friskytrails.in</a>
             </h3>
             <h3 className="text-gray-400 font-bold text-xs sm:text-sm md:text-base">
-              <a href="tel:+917501516714" className="hover:text-white transition-colors">+91-75015 16714</a>
+              <a href="tel:+917877979193" className="hover:text-white transition-colors">+91-78779 79193</a>
             </h3>
           </div>
           <div className="images mt-4 md:mt-6 flex justify-center items-center gap-3 sm:gap-4">

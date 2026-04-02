@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import Right from "../assets/right.svg";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
 import Call from "../assets/calling.svg";
@@ -18,6 +17,7 @@ import BookingModal from "../components/BookingModal";
 import Choose from "../sections/Choose";
 import FriskyLoader from "../components/Loader";
 import { MapPin } from "lucide-react";
+import Testimonial from "../sections/Testimonial";
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -207,9 +207,9 @@ const ProductDetails = () => {
       : null;
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full pb-24 lg:pb-0">
       {/* Breadcrumb - UPDATED WITH STARS */}
-      <div className="w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mt-12 md:mt-20 lg:mt-30 m-auto px-4 md:py-2">
+      <div className="w-full max-w-7xl mx-auto mt-10 md:mt-16 lg:mt-24 px-4 md:py-2">
         <h1 className="text-xl sm:text-2xl md:text-3xl tracking-tighter font-bold pt-6">
           {product.name}
         </h1>
@@ -242,7 +242,7 @@ const ProductDetails = () => {
 
       {/* Images Section - UNCHANGED */}
       <div className="h-auto w-full pt-4 px-4">
-        <div className="w-full max-w-7xl rounded-lg bg-white m-auto">
+        <div className="w-full max-w-7xl rounded-lg bg-white mx-auto">
           {product.images && product.images.length > 0 && (
             <>
               {/* Mobile & Tablet Auto Slider (uses sliderImages if provided) */}
@@ -323,8 +323,8 @@ const ProductDetails = () => {
       </div>
 
       {/* Rest of component UNCHANGED */}
-      <div className="w-[100%] sm:w-[90%] md:w-[85%] lg:w-[90%] m-auto flex flex-col lg:flex-row px-4 gap-8 mt-6 md:mt-10">
-        <div className="w-full lg:w-[70%] lg:order-1">
+      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row px-4 gap-8 mt-5 md:mt-8 lg:mt-10">
+        <div className="w-full lg:w-[68%] lg:order-1">
           <Content
             product={product}
             howToReach={howToReach}
@@ -334,7 +334,7 @@ const ProductDetails = () => {
           />
         </div>
 
-        <div className="w-full lg:w-[30%] lg:order-2 pt-14 lg:pl-6">
+        <div className="w-full lg:w-[32%] lg:order-2 pt-4 lg:pt-8 lg:pl-2 xl:pl-6">
           <div className="lg:sticky lg:top-28">
             {/* PRICE CARD */}
             <div className="hidden lg:block bg-white border border-orange-500 rounded-lg shadow-md overflow-hidden">
@@ -352,9 +352,9 @@ const ProductDetails = () => {
                       <span className="line-through text-gray-500">
                         ₹{selectedPackageActual.toLocaleString("en-IN")}
                       </span>
-                      <h1 className="text-3xl font-bold text-orange-500">
+                      <h2 className="text-3xl font-bold text-orange-500">
                         ₹{selectedPackageDiscounted.toLocaleString("en-IN")}
-                      </h1>
+                      </h2>
                     </>
                   )}
                   <span className="font-semibold">per person</span>
@@ -378,9 +378,9 @@ const ProductDetails = () => {
 
             {/* CONTACT CARD */}
             <div className="hidden md:block bg-white border border-orange-500 rounded-lg shadow-md p-4 mt-10">
-              <h1 className="text-orange-500 text-xl font-semibold">
+              <h2 className="text-orange-500 text-xl font-semibold">
                 Got a Question?
-              </h1>
+              </h2>
               <p className="mt-2">
                 Our destination expert will be happy to help you.
               </p>
@@ -389,8 +389,8 @@ const ProductDetails = () => {
                   <img className="invert h-5 w-5" src={Call} alt="call" />
                 </div>
                 <div>
-                  <a href="tel:+91-7501516714" className="font-semibold text-lg">
-                    +91-75015 16714
+                  <a href="tel:+91-7877979193" className="font-semibold text-lg">
+                    +91-78779 79193
                   </a>
                   <p className="text-sm">Mon-Sun: 9AM-8PM</p>
                 </div>
@@ -402,7 +402,7 @@ const ProductDetails = () => {
 
       {/* Mobile Fixed Bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white border-t border-orange-500 shadow-md py-5 px-4 flex justify-between items-center z-50">
-        <div>
+        <div className="min-w-0">
           {hasPackagePricing && (
             <>
               <span className="line-through text-gray-500">
@@ -419,15 +419,18 @@ const ProductDetails = () => {
         </div>
         <button
           onClick={openBookingModal}
-          className="py-2 px-4 font-semibold text-white bg-[rgb(233,99,33)] rounded-3xl"
+          className="py-2 px-4 font-semibold text-white bg-[rgb(233,99,33)] rounded-3xl whitespace-nowrap"
         >
           Book Now
         </button>
       </div>
 
-      <div className="lg:mt-10 -mt-20 lg:mb-4">
+      <Testimonial className="!mt-3 md:!mt-5 lg:!mt-7" />
+
+      <div className="mt-3 md:mt-5 lg:mt-7 mb-0 lg:mb-6">
         <Choose />
       </div>
+
 
       {showBooking && (
         <BookingModal productSlug={product.slug} onClose={closeBookingModal} />

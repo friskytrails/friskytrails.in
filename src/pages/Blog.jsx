@@ -55,9 +55,9 @@ const Blog = () => {
 
       {/* TRENDING */}
       <div className="trends">
-        <h1 className="text-3xl md:text-4xl tracking-tighter pt-10 md:pt-20 font-semibold pl-4 md:pl-32">
+        <h2 className="text-3xl md:text-4xl tracking-tighter pt-10 md:pt-20 font-semibold pl-4 md:pl-32">
           Trending Blogs
-        </h1>
+        </h2>
 
         <div className="mt-6">
           <Box />
