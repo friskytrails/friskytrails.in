@@ -45,7 +45,7 @@ const EditStateForm = ({ stateId, onClose, onUpdate }) => {
         const res = await getAllCountries();
         const countriesData = res.data?.data || res.data || [];
         setCountries(countriesData);
-      } catch (err) {
+      } catch {
         setCountries([]);
       } finally {
         setCountriesLoading(false);
@@ -78,7 +78,7 @@ const EditStateForm = ({ stateId, onClose, onUpdate }) => {
 
           setImagePreview(stateData.image || "");
         }
-      } catch (err) {
+      } catch {
         setMessage("Failed to load state data");
       } finally {
         setLoading(false);

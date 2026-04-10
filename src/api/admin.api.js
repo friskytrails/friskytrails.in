@@ -289,7 +289,7 @@ const createProductType = async (formData) => {
 
 const getProductTypeBySlug = async (slug) => {
   try{
-    const response = await axiosInstance.get(`/api/v1/admin/productTypes/${slug}`);
+    const response = await axiosInstance.get(`/api/v1/admin/tags/${slug}`);
     return response.data;
   } catch (error){
     throw error.response ? error.response.data : error.message;
@@ -305,7 +305,7 @@ const getProductTypeById = async (id) => {
 }
 const getProductTypeBySlugWithProduct = async (slug) => {
   try{
-    const response = await axiosInstance.get(`/api/v1/admin/productTypes/${slug}/product`);
+    const response = await axiosInstance.get(`/api/v1/admin/tags/${slug}/product`);
     return response.data;
   } catch (error){
     throw error.response ? error.response.data : error.message;

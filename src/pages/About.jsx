@@ -80,11 +80,11 @@ const About = () => {
         <div className="w-full md:w-[70vw] mx-auto flex justify-center px-4">
           <p className="text-center mt-2 md:mt-8 text-base md:text-xl text-gray-600">
             <b>
-              At FriskyTrails, we believe that travel isn't just about reaching a
+              At FriskyTrails, we believe that travel isn&apos;t just about reaching a
               destination—
             </b>
-            it's about the thrill of the journey, the experiences that shape us,
-            and the stories we create along the way. Whether you're an adrenaline
+            it&apos;s about the thrill of the journey, the experiences that shape us,
+            and the stories we create along the way. Whether you&apos;re an adrenaline
             junkie, a nature lover, or someone looking to escape the ordinary, we
             bring you 100+ adventure activities and 500+ tour packages across
             200+ breathtaking locations in India.
@@ -147,7 +147,7 @@ const About = () => {
       {/* CAREER SECTION */}
       <div className="px-4 pb-12 md:px-8">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mt-12 md:mt-24 text-center">
-          Let's Redefine Adventure,{" "}
+          Let&apos;s Redefine Adventure,{" "}
           <span className="text-[rgb(255,99,33)] font-bold">TOGETHER!</span>
         </h2>
 

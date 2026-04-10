@@ -9,6 +9,11 @@
       "source": "/product-type/:slug",
       "destination": "/tags/:slug",
       "statusCode": 301
+    },
+    {
+      "source": "/productType/:slug/product",
+      "destination": "/tags/:slug",
+      "statusCode": 301
     }
   ],
   "rewrites": [

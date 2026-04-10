@@ -98,7 +98,7 @@ const Content = ({
         const paragraphText = paragraph.textContent?.trim() || "";
         if (!paragraphText || paragraph.children.length > 0) return;
 
-        const isNumberedHeading = /^\d+[\).\s-]+.+/.test(paragraphText);
+        const isNumberedHeading = /^\d+[).\s-]+.+/.test(paragraphText);
         if (!isNumberedHeading) return;
 
         const wrapper = doc.createElement("div");

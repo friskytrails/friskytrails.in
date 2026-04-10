@@ -10,7 +10,6 @@ import End from "./sections/End";
 import Last from "./components/Last";
 // import "/src/styles/Class.css";
 import Holidays from "./ServicesPages/Holidays";
-import Newblog from "./Blogpages/Newblog";
 import Scrolltotop from "./components/Scrolltotop";
 import Hiring from "./pages/Hiring";
 import Dashboard from "./admin/Dashboard";
@@ -62,7 +61,6 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/hiring" element={<Hiring />} />
-          <Route path="/blog/newblog" element={<Newblog />} />
           <Route path="/blog/:slug" element={<Newlog />} />
           <Route path="/country/:slug/" element={<CountryPage />} />
           <Route path="/state/:slug/" element={<StatePage />} />

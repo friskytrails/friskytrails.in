@@ -53,7 +53,7 @@ const FriskyLoader = ({ size = "lg", text = "Loading" }) => {
       </div>
 
       {/* ANIMATIONS */}
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           from {
             transform: rotate(0deg);

@@ -43,7 +43,6 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
   const [cities, setCities] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAllowed, setIsAllowed] = useState(true);
 
@@ -116,7 +115,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         
         setImages(product.images || []);
         setSliderImages(product.sliderImages || []);
-      } catch (err) {
+      } catch {
         // Error handled silently
       } finally {
         setLoading(false);
@@ -131,7 +130,9 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
       try {
         const res = await getCountries();
         setCountries(res.data);
-      } catch (err) {}
+      } catch {
+        // ignore
+      }
     };
     fetchCountries();
   }, []);
@@ -150,12 +151,12 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
           setFormData(prev => ({ ...prev, state: "", city: "" }));
           setCities([]);
         }
-      } catch (err) {
+      } catch {
         setStates([]);
       }
     };
     fetchStates();
-  }, [formData.country]);
+  }, [formData.country, formData.state]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -170,19 +171,21 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
         if (!hasValidCity) {
           setFormData(prev => ({ ...prev, city: "" }));
         }
-      } catch (err) {
+      } catch {
         setCities([]);
       }
     };
     fetchCities();
-  }, [formData.state]);
+  }, [formData.state, formData.city]);
 
   useEffect(() => {
     const fetchProductTypes = async () => {
       try {
         const res = await getAllProductTypes();
         setProductTypes(res.data);
-      } catch (err) {}
+      } catch {
+        // ignore
+      }
     };
     fetchProductTypes();
   }, []);
@@ -326,7 +329,7 @@ const EditProductForm = ({ productId, onClose, onUpdate }) => {
       
       if (onUpdate) onUpdate();
       if (onClose) onClose();
-    } catch (err) {
+    } catch {
       toast.error('❌ Failed to update product', {
         duration: 4000,
         position: 'top-right',

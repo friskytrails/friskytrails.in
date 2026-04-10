@@ -121,7 +121,7 @@ const PackageCard = ({ package: pkg, isSelected = false, onSelect }) => {
               <div>
                 <h4 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">
                   <Check className="w-4 h-4" />
-                  What's Included:
+                  What&apos;s Included:
                 </h4>
                 <ul className="space-y-2">
                   {pkg.included?.length ? (
@@ -146,7 +146,7 @@ const PackageCard = ({ package: pkg, isSelected = false, onSelect }) => {
                 <div>
                   <h4 className="text-sm font-semibold text-red-700 mb-3 flex items-center gap-2">
                     <X className="w-4 h-4" />
-                    What's Not Included:
+                    What&apos;s Not Included:
                   </h4>
                   <ul className="space-y-2">
                     {pkg.excluded.map((feature, index) => (

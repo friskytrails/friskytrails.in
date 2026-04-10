@@ -89,7 +89,7 @@ const AllProductTypes = () => {
               </p>
 
               <a
-                href={`/productType/${productType.slug}/product`}
+                href={`/tags/${productType.slug}`}
                 className="text-blue-600 hover:text-blue-800 text-sm font-medium"
               >
                 View Products →

@@ -200,7 +200,7 @@ const LoginModal = ({ onClose }) => {
             {signupStep === 2 && (
               <form onSubmit={handleVerifyOtp}>
                 <p className="text-sm text-gray-600 mb-3">
-                  We've sent an OTP to <strong>{form.email}</strong>
+                  We&apos;ve sent an OTP to <strong>{form.email}</strong>
                 </p>
                 <input
                   type="text"
@@ -335,7 +335,6 @@ const LoginModal = ({ onClose }) => {
               onClick={() => {
                 setIsLogin(!isLogin);
                 setSignupStep(1);
-                setOtpSent(false);
                 setForm({
                   userName: "",
                   firstName: "",

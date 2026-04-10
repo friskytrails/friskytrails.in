@@ -82,7 +82,7 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
           });
           setImagePreview(city.image || "");
         }
-      } catch (err) {
+      } catch {
         setMessage("Failed to load city data");
       } finally {
         setLoading(false);
@@ -108,12 +108,12 @@ const EditCityForm = ({ cityId, onClose, onUpdate }) => {
         if (!hasValidState) {
           setFormData(prev => ({ ...prev, state: "" }));
         }
-      } catch (err) {
+      } catch {
         setStates([]);
       }
     };
     fetchStates();
-  }, [formData.country]);
+  }, [formData.country, formData.state]);
 
   /* ---------------- INPUT CHANGE ---------------- */
   const handleChange = (e) => {

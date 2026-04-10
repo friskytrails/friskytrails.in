@@ -148,8 +148,8 @@ router.get("/bookings", verifyJWT, verifyAdmin, getAllBookings);
 router.get("/bookings/:slug", verifyJWT, verifyAdmin, getBookingsByProduct);
 
 router.post("/create-productType", upload.single("image"), verifyJWT, verifyAdmin, createProductType);
-router.get("/productTypes/:slug", getProductTypeBySlug);
-router.get("/productTypes/:slug/product", getProductTypeBySlugWithProduct);
+router.get("/tags/:slug", getProductTypeBySlug);
+router.get("/tags/:slug/product", getProductTypeBySlugWithProduct);
 router.get("/productType/:id", getProductTypeById);
 router.get("/all-productTypes", getAllProductTypes);
 

@@ -102,7 +102,7 @@ const ActivitiesSer = () => {
               </h3>
               <p className="pt-2 text-sm sm:text-base">
                 Nothing beats the sun, sand, and sea! Discover: <br />
-                ✔ Goa's Pristine Beaches – Beach parties, sunsets & water sports. <br />
+                ✔ Goa&apos;s Pristine Beaches – Beach parties, sunsets & water sports. <br />
                 ✔ Lakshadweep & Andaman – Crystal-clear waters & secluded escapes. <br />
                 ✔ Pondicherry’s French Vibes – A blend of culture & relaxation.
               </p>

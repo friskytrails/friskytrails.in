@@ -7,18 +7,17 @@ const ProductType = () => {
   const [productTypeData, setProductTypeData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProductType = async () => {
-    try {
-      const res = await getProductTypeBySlugWithProduct(slug);
-      setProductTypeData(res.data); // { productType, products }
-    } catch (error) {
-      console.error("Error fetching product type:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchProductType = async () => {
+      try {
+        const res = await getProductTypeBySlugWithProduct(slug);
+        setProductTypeData(res.data); // { productType, products }
+      } catch (error) {
+        console.error("Error fetching product type:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchProductType();
   }, [slug]);
 

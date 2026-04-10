@@ -47,13 +47,13 @@ const Hiring = () => {
 
       {/* Main Heading */}
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold mt-6 md:mt-12 text-center px-4">
-        Let's Redefine Adventure, <span className="text-[rgb(255,99,33)] font-bold">TOGETHER!</span>
+        Let&apos;s Redefine Adventure, <span className="text-[rgb(255,99,33)] font-bold">TOGETHER!</span>
       </h1>
 
       {/* Subtext */}
       <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
         <p className="text-center mt-4 md:mt-8 text-sm sm:text-base md:text-lg text-gray-600 px-4">
-          FriskyTrails isn't just a career opportunity—it's a launchpad for bold ideas, passionate individuals, and
+          FriskyTrails isn&apos;t just a career opportunity—it&apos;s a launchpad for bold ideas, passionate individuals, and
           limitless growth.
         </p>
       </div>

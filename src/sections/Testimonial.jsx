@@ -50,7 +50,7 @@ const Testimonial = ({ className = "" }) => {
       
       {/* Small Top Orange Heading */}
       <h3 className="text-orange-500 font-semibold text-lg md:text-xl mb-2">
-        Customer's Feedback
+        Customer&apos;s Feedback
       </h3>
 
       {/* Main Bold Black Heading */}

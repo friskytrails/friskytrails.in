@@ -73,7 +73,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
 
         setCoverImagePreview(blog.coverImage || "");
 
-      } catch (err) {
+      } catch {
         // Error handled silently
       } finally {
         setLoading(false);
@@ -171,7 +171,7 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
       setMessage(res.message || "Blog updated successfully!");
       if (onUpdate) onUpdate();
       if (onClose) onClose();
-    } catch (err) {
+    } catch {
       setMessage("Failed to update blog");
     }
   };

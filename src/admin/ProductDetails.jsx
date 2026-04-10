@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
@@ -38,7 +38,7 @@ const ProductDetails = () => {
       const url = `https://www.friskytrails.in/tours/${slug}`;
       await navigator.clipboard.writeText(url);
       toast.success("Link copied to clipboard!");
-    } catch (error) {
+    } catch {
       toast.error("Failed to copy link");
     }
   };
@@ -82,10 +82,12 @@ const ProductDetails = () => {
   };
 
   // Images used for the small-device slider
-  const sliderImages =
+  const sliderImages = useMemo(() => 
     product?.sliderImages && product.sliderImages.length > 0
       ? product.sliderImages
-      : product?.images || [];
+      : product?.images || [],
+    [product]
+  );
 
   /* =====================
      AUTO IMAGE SLIDER (unchanged)
