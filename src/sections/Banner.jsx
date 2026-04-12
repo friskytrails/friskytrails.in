@@ -1,6 +1,11 @@
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+
 import Mobile1 from "/bannerimages/1_result.webp";
 import Mobile2 from "/bannerimages/2_result.webp";
 import Mobile3 from "/bannerimages/3_result.webp";
@@ -31,12 +36,12 @@ const Banner = () => {
   return (
     <div className="banner h-auto w-full md:w-[90vw] lg:w-[80vw] mx-auto flex justify-center items-center px-4 md:px-0">
       {/* Mobile Swiper */}
-      <div className="block md:hidden w-full">
-        <Swiper {...swiperSettings} slidesPerView={1}>
+      <div className="block md:hidden w-full h-[150px]">
+        <Swiper {...swiperSettings} slidesPerView={1} className="w-full h-full">
           {mobileData.map((item, index) => (
             <SwiperSlide key={index}>
               <div
-                className="h-[150px] bg-contain bg-center bg-no-repeat"
+                className="w-full h-full bg-cover bg-center bg-no-repeat rounded-xl shadow-lg"
                 style={{ backgroundImage: `url(${item})` }}
               ></div>
             </SwiperSlide>
@@ -45,12 +50,12 @@ const Banner = () => {
       </div>
 
       {/* Desktop Swiper */}
-      <div className="hidden md:block w-full">
-        <Swiper {...swiperSettings} slidesPerView={"auto"}>
+      <div className="hidden md:block w-full h-[300px]">
+        <Swiper {...swiperSettings} slidesPerView={1} className="w-full h-full">
           {desktopData.map((item, index) => (
             <SwiperSlide key={index}>
               <div
-                className="h-[300px] bg-contain bg-center bg-no-repeat"
+                className="w-full h-full bg-cover bg-center bg-no-repeat rounded-2xl shadow-xl"
                 style={{ backgroundImage: `url(${item})` }}
               ></div>
             </SwiperSlide>
