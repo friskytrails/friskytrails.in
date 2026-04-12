@@ -7,26 +7,42 @@ const AllBlogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
 
-  const fetchBlogs = async () => {
-  try {
-    setLoading(true);
+  const fetchBlogs = async (page = 1) => {
+    try {
+      setIsFetching(true);
+      if (page === 1) setLoading(true);
 
-    const response = await getAllBlogs(); 
+      const response = await getAllBlogs({ page, limit: 12 });
 
-    const result = response;
+      if (!response.status) {
+        throw new Error(response.message || "Failed to fetch blogs");
+      }
 
-    if (!result.status) {
-      throw new Error(result.message || "Failed to fetch blogs");
+      setBlogs(response.data || []);
+      if (response.pagination) {
+        setTotalPages(response.pagination.totalPages);
+        setCurrentPage(response.pagination.currentPage);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      setIsFetching(false);
     }
+  };
 
-    setBlogs(result.data || []);
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages && !isFetching) {
+      fetchBlogs(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const handleDeleteBlog = async (blogId, blogTitle) => {
     if (!window.confirm(`Are you sure you want to delete "${blogTitle}"? This action cannot be undone.`)) {
@@ -37,7 +53,7 @@ const AllBlogs = () => {
       const response = await deleteBlog(blogId);
       if (response.status) {
         // Refresh the blogs list
-        await fetchBlogs();
+        await fetchBlogs(currentPage);
         alert("Blog deleted successfully!");
       } else {
         throw new Error(response.message || "Failed to delete blog");
@@ -49,7 +65,7 @@ const AllBlogs = () => {
   };
 
   useEffect(() => {
-    fetchBlogs();
+    fetchBlogs(1);
   }, []);
 
   if (loading) {
@@ -162,6 +178,74 @@ if (selectedBlog) {
           </div>
         ))}
       </div>
+
+      {/* Pagination UI */}
+      {totalPages > 1 && (
+        <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || isFetching}
+              className={`px-4 py-2 rounded-md transition ${
+                currentPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+              }`}
+            >
+              Previous
+            </button>
+            
+            <div className="flex items-center gap-1">
+              {[...Array(totalPages)].map((_, i) => {
+                const pageNum = i + 1;
+                // Simple logic to show only some page numbers if there are too many
+                if (
+                  totalPages <= 7 ||
+                  pageNum === 1 ||
+                  pageNum === totalPages ||
+                  (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-10 h-10 rounded-md transition ${
+                        currentPage === pageNum
+                          ? "bg-[rgb(255,99,33)] text-white shadow-md"
+                          : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                } else if (
+                  (pageNum === 2 && currentPage > 4) ||
+                  (pageNum === totalPages - 1 && currentPage < totalPages - 3)
+                ) {
+                  return <span key={pageNum} className="px-1 text-gray-400">...</span>;
+                }
+                return null;
+              })}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || isFetching}
+              className={`px-4 py-2 rounded-md transition ${
+                currentPage === totalPages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+              }`}
+            >
+              Next
+            </button>
+          </div>
+          
+          <p className="text-sm text-gray-500">
+            Showing Page {currentPage} of {totalPages}
+          </p>
+        </div>
+      )}
     </section>
   );
 };

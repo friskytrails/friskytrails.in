@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true, trim: true },
     slug: { type: String, required: true, unique: true },
-    productType: { type: String, required: true, trim: true },
+    productType: { type: String, required: true, trim: true, index: true },
     rating: { type: Number, default: 0, min: 0, max: 5 },
     reviews: { type: Number, default: 0, min: 0 },
 
@@ -52,16 +52,19 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Country",
       required: true,
+      index: true,
     },
     state: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "State",
       required: false,
+      index: true,
     },
     city: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "City",
       required: false,
+      index: true,
     },
 
     // 👇 NEW FIELDS ADDED

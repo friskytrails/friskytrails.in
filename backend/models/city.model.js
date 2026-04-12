@@ -20,8 +20,8 @@ const citySchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    country: { type: mongoose.Schema.Types.ObjectId, ref: "Country" },
-    state: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
+    country: { type: mongoose.Schema.Types.ObjectId, ref: "Country", index: true },
+    state: { type: mongoose.Schema.Types.ObjectId, ref: "State", index: true },
   },
   { timestamps: true }
 );

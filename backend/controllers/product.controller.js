@@ -138,16 +138,38 @@ export const createProduct = asyncHandler(async (req, res) => {
 // Get All Products
 // ============================
 export const getProducts = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 12;
+  const skip = (page - 1) * limit;
+
+  const totalProducts = await Product.countDocuments();
+  const totalPages = Math.ceil(totalProducts / limit);
+
   const products = await Product.find()
     .populate("country state city", "name slug")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
     .select(
       "name slug productType rating reviews images city packages createdAt"
     )
     .lean();
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, products, "Products fetched successfully"));
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        products,
+        pagination: {
+          totalItems: totalProducts,
+          totalPages,
+          currentPage: page,
+          limit,
+        },
+      },
+      "Products fetched successfully"
+    )
+  );
 });
 
 // ============================

@@ -16,9 +16,9 @@ const createBlog = async (formData) => {
     throw error.response ? error.response.data : error.message;
   }
 };
-const getAllBlogs = async () => {
+const getAllBlogs = async (params = { page: 1, limit: 12 }) => {
   try {
-    const response = await axiosInstance.get("/api/v1/admin/blogs");
+    const response = await axiosInstance.get("/api/v1/admin/blogs", { params });
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -177,9 +177,11 @@ const createProduct = async (formData) => {
 };
 
 // Get all products
-const getProducts = async () => {
+const getProducts = async (params = { page: 1, limit: 12 }) => {
   try {
-    const response = await axiosInstance.get("/api/v1/admin/products");
+    const response = await axiosInstance.get("/api/v1/admin/products", {
+      params,
+    });
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;

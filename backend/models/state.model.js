@@ -16,7 +16,7 @@ const stateSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    country: { type: mongoose.Schema.Types.ObjectId, ref: "Country" },
+    country: { type: mongoose.Schema.Types.ObjectId, ref: "Country", index: true },
   },
   { timestamps: true }
 );

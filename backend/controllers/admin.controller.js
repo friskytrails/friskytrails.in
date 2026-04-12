@@ -97,31 +97,32 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const getAllBlogs = asyncHandler(async (req, res) => {
   try {
-    console.log("hello")
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const totalBlogs = await CreateBlog.countDocuments();
+    const totalPages = Math.ceil(totalBlogs / limit);
+
     const blogs = await CreateBlog.find()
-  .populate("country", "name _id")
-  .populate("state", "name _id")
-  .populate("city", "name _id")
-  .sort({ createdAt: -1 })
-  .select("title slug authorName coverImage country state city intro createdAt")
-  .lean();
+      .populate("country", "name _id")
+      .populate("state", "name _id")
+      .populate("city", "name _id")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select("title slug authorName coverImage country state city intro createdAt")
+      .lean();
 
-  console.log("blogs", blogs)
-    // Handle empty case
-    if (!blogs || blogs.length === 0) {
-      return res.status(200).json({  
-        status: true,
-        count: 0,
-        data: [],
-        message: "No blogs yet",
-      });
-    }
-
-    // Return response
     res.status(200).json({
       status: true,
-      count: blogs.length,
       data: blogs,
+      pagination: {
+        totalItems: totalBlogs,
+        totalPages,
+        currentPage: page,
+        limit,
+      },
     });
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -231,12 +232,30 @@ const getCountryWithBlogs = asyncHandler(async (req, res) => {
 
 export const getPublicBlogs = asyncHandler(async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const totalBlogs = await CreateBlog.countDocuments();
+    const totalPages = Math.ceil(totalBlogs / limit);
+
     const blogs = await CreateBlog.find()
       .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
       .select("title slug authorName coverImage country state city intro createdAt")
       .lean();
 
-    return res.status(200).json({ status: true, count: blogs.length, data: blogs });
+    return res.status(200).json({
+      status: true,
+      data: blogs,
+      pagination: {
+        totalItems: totalBlogs,
+        totalPages,
+        currentPage: page,
+        limit,
+      },
+    });
   } catch (err) {
     console.error("Error fetching public blogs:", err);
     return res.status(500).json({ status: false, message: "Server error" });

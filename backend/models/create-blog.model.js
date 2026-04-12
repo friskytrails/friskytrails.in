@@ -43,16 +43,19 @@ const createBlogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Country",
       required: true,
+      index: true,
     },
     state: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "State",
       required: false,
+      index: true,
     },
     city: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "City",
       required: false,
+      index: true,
     },
     coverImage: {
       type: String,
