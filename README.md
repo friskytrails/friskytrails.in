@@ -2,7 +2,7 @@
 
 FriskyTrails is a premium adventure and tour booking platform designed to redefine how people explore India. We offer a curated selection of 100+ adventure activities and 500+ tour packages across 200+ breathtaking locations.
 
-![FriskyTrails Banner](/logo.PNG)
+![FriskyTrails Banner](public/logo.PNG)
 
 ## ✨ Features
 

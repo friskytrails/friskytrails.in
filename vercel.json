@@ -23,11 +23,11 @@
     },
     {
       "source": "/sitemap-tours-listing.xml",
-      "destination": "https://api.friskytrails.in/sitemap-products.xml"
+      "destination": "https://api.friskytrails.in/sitemap-tours-listing.xml"
     },
     {
       "source": "/sitemap-tags-listing.xml",
-      "destination": "https://api.friskytrails.in/sitemap-productTypes.xml"
+      "destination": "https://api.friskytrails.in/sitemap-tags-listing.xml"
     },
     {
       "source": "/sitemap-static.xml",

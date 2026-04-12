@@ -21,4 +21,8 @@ router.get("/sitemap-cities.xml", sitemapCities);
 router.get("/sitemap-tours-listing.xml", sitemapToursListing);
 router.get("/sitemap-tags-listing.xml", sitemapTagsListing);
 
+// Backward compatibility aliases
+router.get("/sitemap-products.xml", sitemapToursListing);
+router.get("/sitemap-productTypes.xml", sitemapTagsListing);
+
 export default router;
