@@ -39,7 +39,7 @@ const Hiring = () => {
   ]
 
   return (
-    <div className="min-h-screen mt-23 md:mt-28 lg:mt-30 xl:mt-28 w-full">
+    <div className="min-h-screen mt-23 md:mt-28 lg:mt-28 xl:mt-26 w-full">
       {/* Banner */}
       <div className="w-full h-[40vh] sm:h-[50vh] md:h-[60vh]">
         <img src="/images/hiring.png" alt="Hiring Banner" className="w-full h-full object-cover object-center" />
@@ -53,7 +53,7 @@ const Hiring = () => {
       {/* Subtext */}
       <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
         <p className="text-center mt-4 md:mt-8 text-sm sm:text-base md:text-lg text-gray-600 px-4">
-          FriskyTrails isn&apos;t just a career opportunity—it&apos;s a launchpad for bold ideas, passionate individuals, and
+          FriskyTrails isn&apos;t just a career opportunity, it&apos;s a launchpad for bold ideas, passionate individuals, and
           limitless growth.
         </p>
       </div>
@@ -87,19 +87,25 @@ const Hiring = () => {
 
       {/* Jointeam Modal */}
       {showJointeam && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 px-3 sm:px-4 py-4 sm:py-6 z-50">
+        <div className="fixed inset-0 flex items-start justify-center bg-black/60 backdrop-blur-sm px-3 sm:px-4 pt-28 pb-10 z-50">
           <div
             ref={formRef}
-            className="bg-white w-full max-w-md max-h-[85vh] sm:max-h-[90vh] rounded-lg shadow-lg p-4 sm:p-6 relative overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+            className="bg-white w-full max-w-lg max-h-full rounded-2xl shadow-2xl relative flex flex-col overflow-y-auto scrollbar-hide"
           >
+            {/* Close Button */}
             <button
               onClick={() => setShowJointeam(false)}
-              className="absolute top-3 p-1 right-3 text-gray-500 hover:text-gray-700 font-bold text-lg z-10"
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all z-20"
+              aria-label="Close"
             >
-              ✕
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            <Jointeam onClose={() => setShowJointeam(false)} />
+            <div className="p-1 sm:p-2">
+              <Jointeam onClose={() => setShowJointeam(false)} />
+            </div>
           </div>
         </div>
       )}
