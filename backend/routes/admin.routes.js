@@ -16,20 +16,20 @@ console.log("🔥 ROUTER FILE EXECUTED");
 
 router.route("/create-blog").post(upload.single("image"), verifyJWT, verifyAdmin, createBlog)
 console.log("Router file loaded");
-router.get("/blogs", verifyJWT, verifyAdmin, getAllBlogs);
-router.route("/blog/:id").get(verifyJWT, verifyAdmin, getBlogById);
+router.get("/blogs", getAllBlogs);
+router.route("/blog/:id").get(getBlogById);
 router.put("/blog/:id", upload.single("image"), verifyJWT, verifyAdmin, updateBlog);
 router.delete("/blog/:id", verifyJWT, verifyAdmin, deleteBlog);
 
 router.post("/upload-editor-image", upload.single("image"), verifyJWT, verifyAdmin, uploadEditorImage);
 router.post("/create-country", upload.single("image"), verifyJWT, verifyAdmin, createCountry);
-router.get("/country/:slug", verifyJWT, getCountries);
+router.get("/country/:slug", getCountries);
 router.post("/create-state", upload.single("image"), verifyJWT, verifyAdmin, createState);
-router.get("/countries", verifyJWT, getCountries);
-router.get("/states/:countryId", verifyJWT, getStates);
+router.get("/countries", getCountries);
+router.get("/states/:countryId", getStates);
 router.post("/create-city", upload.single("image"), verifyJWT, verifyAdmin, createCity);
-router.get("/cities/:stateId", verifyJWT, getCities);
-router.get("/country/:slug", verifyJWT, getCountryBySlug);
+router.get("/cities/:stateId", getCities);
+router.get("/country/:slug", getCountryBySlug);
 router.get("/country/:slug/blogs", getCountryWithBlogs);
 router.get("/state/:slug/blogs", getStateWithBlogs);
 router.get("/city/:slug/blogs", getCityWithBlogs);
@@ -38,12 +38,10 @@ router.get("/city/:slug/blogs", getCityWithBlogs);
 
 // ================= STATES ROUTES =================
 
-router.get("/states", verifyJWT, verifyAdmin, getAllStates);
+router.get("/states", getAllStates);
 
 router.get(
   "/state/:id",
-  verifyJWT,
-  verifyAdmin, 
   getStateById
 );
 
@@ -51,15 +49,11 @@ router.get(
 
 router.get(
   "/allcountries",
-  verifyJWT,
-  verifyAdmin, 
   getAllCountries
 );
 
 router.get(
   "/country/:id",
-  verifyJWT,
-  verifyAdmin, 
   getCountryById
 );
 
@@ -81,9 +75,9 @@ router.put(
 
 // ==========  CITIES ROUTES ============
 
-router.get("/cities", verifyJWT, verifyAdmin, getAllCities);
+router.get("/cities", getAllCities);
 
-router.get("/city/:id", verifyJWT, verifyAdmin, getCityById);
+router.get("/city/:id", getCityById);
 
 router.put(
   "/city/:id",
@@ -124,7 +118,7 @@ router.put(
 router.delete("/product/:slug", verifyJWT, verifyAdmin, deleteProduct);
 
 router.post("/bookings", verifyJWT, verifyAdmin, createBooking);
-router.get("/bookings", verifyJWT, verifyAdmin, getAllBookings);
+router.get("/bookings", verifyJWT, getAllBookings);
 router.get("/bookings/:slug", verifyJWT, verifyAdmin, getBookingsByProduct);
 
 router.post("/create-productType", upload.single("image"), verifyJWT, verifyAdmin, createProductType);
