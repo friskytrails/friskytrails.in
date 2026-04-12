@@ -14,7 +14,7 @@ const BusSer = () => {
         <div
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] w-full"
           style={{
-            backgroundImage: `url('/bus.png')`,
+            backgroundImage: `url('/bus.webp')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

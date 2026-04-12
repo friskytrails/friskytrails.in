@@ -63,7 +63,7 @@ export const getCities = asyncHandler(async (req, res) => {
 
   const cities = await City.find({ state: stateId }).select(
     "name slug _id image state country howToReach createdAt"
-  );
+  ).lean();
 
   if (!cities.length) {
     throw new ApiError(404, "No cities found for this state");
@@ -79,7 +79,7 @@ export const getCityWithBlogs = asyncHandler(async (req, res) => {
 
   const city = await City.findOne({ slug }).select(
     "name slug image state country howToReach"
-  );
+  ).lean();
   if (!city) {
     throw new ApiError(404, "City not found");
   }
@@ -105,7 +105,7 @@ export const getCityById = asyncHandler(async (req, res) => {
 
   const city = await City.findById(id).select(
     "name slug image state country howToReach"
-  );
+  ).lean();
 
   if (!city) {
     throw new ApiError(404, "City not found");

@@ -62,7 +62,7 @@ export const getStates = asyncHandler(async (req, res) => {
 
   const states = await State.find({ country: countryId }).select(
     "name slug _id image country createdAt"
-  );
+  ).lean();
 
   if (!states.length) {
     throw new ApiError(404, "No states found for this country");
@@ -81,7 +81,7 @@ export const getStateWithBlogs = asyncHandler(async (req, res) => {
       throw new ApiError(400, "State slug is required");
     }
 
-    const state = await State.findOne({ slug }).select("name slug image country");
+    const state = await State.findOne({ slug }).select("name slug image country").lean();
     if (!state) {
       throw new ApiError(404, "State not found");
     }
@@ -89,7 +89,8 @@ export const getStateWithBlogs = asyncHandler(async (req, res) => {
     const blogs = await CreateBlog.find({ state: state._id })
       .populate("country", "name slug")
       .populate("city", "name slug")
-      .select("title slug coverImage content authorName country city createdAt");
+      .select("title slug coverImage content authorName country city createdAt")
+      .lean();
 
     res.status(200).json(
       new ApiResponse(200, { state, blogs }, "State with blogs fetched successfully")

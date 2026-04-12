@@ -142,7 +142,8 @@ export const getProducts = asyncHandler(async (req, res) => {
     .populate("country state city", "name slug")
     .select(
       "name slug productType rating reviews images city packages createdAt"
-    );
+    )
+    .lean();
 
   res
     .status(200)
@@ -157,7 +158,8 @@ export const getProductBySlug = asyncHandler(async (req, res) => {
 
   const product = await Product.findOne({ slug })
     .populate("country state city productType", "name slug")
-    .select("-__v"); // 👈 Now includes itineraries automatically
+    .select("-__v")
+    .lean();
 
   if (!product) throw new ApiError(404, "Product not found");
 

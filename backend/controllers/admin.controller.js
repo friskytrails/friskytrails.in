@@ -168,7 +168,7 @@ const createCountry = asyncHandler(async (req, res) => {
 
 const getCountries = asyncHandler(async (req, res) => {
   try {
-    const countries = await Country.find().select("name slug image createdAt");
+    const countries = await Country.find().select("name slug image createdAt").lean();
 
     res
       .status(200)
@@ -189,7 +189,7 @@ export const getCountryBySlug = asyncHandler(async (req, res) => {
 
     const country = await Country.findOne({ slug }).select(
       "name slug image createdAt"
-    );
+    ).lean();
 
     if (!country) {
       throw new ApiError(404, "Country not found");
@@ -207,7 +207,7 @@ export const getCountryBySlug = asyncHandler(async (req, res) => {
 const getCountryWithBlogs = asyncHandler(async (req, res) => {
   const { slug } = req.params;
 
-  const country = await Country.findOne({ slug }).select("name slug image");
+  const country = await Country.findOne({ slug }).select("name slug image").lean();
   if (!country) {
     throw new ApiError(404, "Country not found");
   }
@@ -215,7 +215,8 @@ const getCountryWithBlogs = asyncHandler(async (req, res) => {
   const blogs = await CreateBlog.find({ country: country._id })
     .populate("state", "name slug")
     .populate("city", "name slug")
-    .select("title slug coverImage  content authorName state city createdAt");
+    .select("title slug coverImage  content authorName state city createdAt")
+    .lean();
 
   res
     .status(200)
@@ -253,6 +254,7 @@ const getBlogBySlug = async (req, res) => {
     const blog = await CreateBlog.findOne({ slug })
       .populate("country state city", "name _id slug")
   .select("-__v")
+  .lean();
 
     if (!blog)
       return res.status(404).json({ status: false, message: "Blog not found" });
@@ -280,7 +282,8 @@ const getBlogById = asyncHandler(async (req, res) => {
     const blog = await CreateBlog.findById(id)
       .populate("country", "name")
       .populate("state", "name")
-      .populate("city", "name");
+      .populate("city", "name")
+      .lean();
 
     if (!blog) {
       return res.status(404).json({ status: false, message: "Blog not found" });
@@ -438,8 +441,10 @@ const deleteBlog = asyncHandler(async (req, res) => {
  const getAllStates = async (req, res) => {
   try {
     const states = await State.find({})
-      .populate("country") // agar country ka pura data chahiye
-      .sort({ createdAt: -1 }); // latest first, optional
+      .populate("country", "name _id slug") 
+      .select("name slug image country createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({
       success: true,
@@ -469,7 +474,8 @@ const getStateById = async (req, res) => {
     }
 
     const state = await State.findById(id)
-      .populate("country", "_id name slug");
+      .populate("country", "_id name slug")
+      .lean();
 
     if (!state) {
       return res.status(404).json({
@@ -496,7 +502,8 @@ const getAllCountries = async (req, res) => {
   try {
     const countries = await Country.find()
       .select("_id name slug image")
-      .sort({ name: 1 });
+      .sort({ name: 1 })
+      .lean();
 
     return res.status(200).json({
       status: true,
@@ -645,7 +652,9 @@ const getAllCities = async (req, res) => {
     const cities = await City.find({})
       .populate("country", "_id name slug")
       .populate("state", "_id name slug")
-      .sort({ createdAt: -1 }); // latest first, optional
+      .select("name slug image country state createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({
       success: true,
@@ -674,7 +683,8 @@ const getCityById = async (req, res) => {
 
     const city = await City.findById(id)
       .populate("country", "_id name slug")
-      .populate("state", "_id name slug");
+      .populate("state", "_id name slug")
+      .lean();
 
     if (!city) {
       return res.status(404).json({

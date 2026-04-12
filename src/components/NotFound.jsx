@@ -79,7 +79,7 @@ const NotFound = () => {
             {/* Right Section - Image */}
             <div className="flex-1 flex justify-center">
               <img
-                src="/NotFound.png"
+                src="/NotFound.webp"
                 alt="Travelers with map"
                 className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
               />

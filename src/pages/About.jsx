@@ -47,7 +47,7 @@ const About = () => {
         className="hidden lg:block"
         style={{
           height: "370px",
-          backgroundImage: `url('/about.png')`,
+          backgroundImage: `url('/about.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

@@ -74,7 +74,8 @@ const getProductTypeBySlugWithProduct = asyncHandler(async (req, res) => {
 
   const products = await Product.find({ productType: productType._id })
     .select("name slug image price description createdAt")
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .lean();
 
   res.status(200).json(
     new ApiResponse(
@@ -90,7 +91,7 @@ const getAllProductTypes = asyncHandler(async (req, res) => {
   try {
     const productTypes = await ProductType.find().select(
       "name slug image thingsToCarry createdAt"
-    ); // include thingsToCarry
+    ).lean(); // include thingsToCarry
     res
       .status(200)
       .json(new ApiResponse(200, productTypes, "Product Types fetched successfully"));
@@ -110,7 +111,7 @@ const getProductTypeById = asyncHandler(async (req, res) => {
   // Find the product type by _id
   const productType = await ProductType.findById(id).select(
     "name slug image thingsToCarry createdAt"
-  );
+  ).lean();
 
   if (!productType) {
     return res.status(404).json({ message: "Product Type not found" });

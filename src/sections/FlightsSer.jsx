@@ -15,7 +15,7 @@ const FlightsSer = () => {
         <div
           className="h-[40vh] sm:h-[50vh] md:h-[60vh] w-full"
           style={{
-            backgroundImage: `url(/flight.png)`,
+            backgroundImage: `url(/flight.webp)`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
