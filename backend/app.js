@@ -1,4 +1,4 @@
-import express from "express";
+import express from "express"; // Security hardened build
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
