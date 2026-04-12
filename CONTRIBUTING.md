@@ -51,4 +51,5 @@ By participating in this project, you agree to abide by our code of conduct. Ple
 ## 📞 Questions?
 If you have any questions, feel free to reach out to us at [contact@friskytrails.in](mailto:contact@friskytrails.in).
 
-Happy Coding! 🚀
+With love,
+Team FriskyTrails! 💙

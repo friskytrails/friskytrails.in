@@ -34,7 +34,7 @@ export const protect = async (req, res, next) => {
     }
 
     // 🔐 JWT secret — must match user.controller.js (sign uses JWT_SECRET || ACCESS_TOKEN_SECRET || 'my-sec')
-    const JWT_SECRET = process.env.JWT_SECRET || process.env.ACCESS_TOKEN_SECRET || '123g56a'
+    const JWT_SECRET = process.env.JWT_SECRET || process.env.ACCESS_TOKEN_SECRET;
 
     if (!JWT_SECRET) {
       console.error('❌ JWT_SECRET is UNDEFINED in ENV');
