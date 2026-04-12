@@ -16,10 +16,7 @@ console.log("🔥 ROUTER FILE EXECUTED");
 
 router.route("/create-blog").post(upload.single("image"), verifyJWT, verifyAdmin, createBlog)
 console.log("Router file loaded");
-router.get("/blogs", (req, res, next) => {
-  console.log("Route matched, going to next");
-  next();
-}, getAllBlogs);
+router.get("/blogs", verifyJWT, verifyAdmin, getAllBlogs);
 router.route("/blog/:id").get(verifyJWT, verifyAdmin, getBlogById);
 router.put("/blog/:id", upload.single("image"), verifyJWT, verifyAdmin, updateBlog);
 router.delete("/blog/:id", verifyJWT, verifyAdmin, deleteBlog);
@@ -41,14 +38,7 @@ router.get("/city/:slug/blogs", getCityWithBlogs);
 
 // ================= STATES ROUTES =================
 
-router.get(
-  "/states",
-  (req, res, next) => {
-    console.log(" state Route matched, going to next");
-    next();
-  },
-  getAllStates
-);
+router.get("/states", verifyJWT, verifyAdmin, getAllStates);
 
 router.get(
   "/state/:id",
@@ -91,19 +81,9 @@ router.put(
 
 // ==========  CITIES ROUTES ============
 
-router.get(
-  "/cities",
-  (req, res, next) => {
-    console.log("Cities route matched, going to next");
-    next();
-  },
-  getAllCities
-);
+router.get("/cities", verifyJWT, verifyAdmin, getAllCities);
 
-router.get(
-  "/city/:id",
-  getCityById
-);
+router.get("/city/:id", verifyJWT, verifyAdmin, getCityById);
 
 router.put(
   "/city/:id",
@@ -133,15 +113,15 @@ router.route("/product/id/:id").get(getProductById);
 router.get("/product/slug/:slug", getProductBySlug);
 router.put(
   "/product/:slug",
+  verifyJWT,
+  verifyAdmin,
   upload.fields([
     { name: "images", maxCount: 5 },
     { name: "sliderImages", maxCount: 5 },
   ]),
-  updateProduct,
-  verifyJWT,
-  verifyAdmin
+  updateProduct
 );
-router.delete("/product/:slug", deleteProduct);
+router.delete("/product/:slug", verifyJWT, verifyAdmin, deleteProduct);
 
 router.post("/bookings", verifyJWT, verifyAdmin, createBooking);
 router.get("/bookings", verifyJWT, verifyAdmin, getAllBookings);
