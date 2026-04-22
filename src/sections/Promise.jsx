@@ -42,17 +42,17 @@ const Promise = () => {
 const data = [
   {
     title: "Unmatched Experience",
-    image: "/promiseimages/1.png",
+    image: "/promiseimages/1.webp",
     des: "From trekking in the Himalayas to Sky Diving in NCR, we curate unique adventures for every traveller.",
   },
   {
     title: "Trusted Expertise",
-    image: "/promiseimages/2.png",
+    image: "/promiseimages/2.webp",
     des: "With 4+ years of experience in the travel industry, we ensure safety, quality, and unforgettable moments.",
   },
   {
     title: "For Every Explorer",
-    image: "/promiseimages/3.png",
+    image: "/promiseimages/3.webp",
     des: "Whether you're a solo traveler, a couple, or a group of friends, we have something for everyone.",
   },
 ];

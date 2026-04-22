@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 const Next = () => {
   const data = [
-    { image: "/nextimages/1.png", name: "Meghalaya", slug: "meghalaya" },
-    { image: "/nextimages/2.png", name: "Kashmir", slug: "jammu-and-kashmir" },
-    { image: "/nextimages/3.png", name: "Ladakh", slug: "ladakh" },
-    { image: "/nextimages/4.png", name: "Goa", slug: "goa" },
-    { image: "/nextimages/5.png", name: "Himachal", slug: "himachal-pradesh" },
-    { image: "/nextimages/6.png", name: "Kerala", slug: "kerala" },
+    { image: "/nextimages/1.webp", name: "Meghalaya", slug: "meghalaya" },
+    { image: "/nextimages/2.webp", name: "Kashmir", slug: "jammu-and-kashmir" },
+    { image: "/nextimages/3.webp", name: "Ladakh", slug: "ladakh" },
+    { image: "/nextimages/4.webp", name: "Goa", slug: "goa" },
+    { image: "/nextimages/5.webp", name: "Himachal", slug: "himachal-pradesh" },
+    { image: "/nextimages/6.webp", name: "Kerala", slug: "kerala" },
   ];
 
   return (

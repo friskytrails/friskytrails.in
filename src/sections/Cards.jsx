@@ -56,11 +56,15 @@ const Cards = () => {
               >
                 <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden h-full flex flex-col min-h-[350px]">
                   
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-60 sm:h-64 md:h-72 object-top object-cover"
-                  />
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-60 sm:h-64 md:h-72 object-top object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-60 sm:h-64 md:h-72 bg-gray-200 animate-pulse" />
+                  )}
 
                   <div className="p-4 sm:p-5 flex flex-col gap-2 flex-1">
                     <p className="text-gray-500 text-sm flex items-center gap-1">

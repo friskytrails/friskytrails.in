@@ -14,6 +14,9 @@ export default defineConfig([
         ...globals.node,
       },
     },
+    rules: {
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
+    }
   },
   pluginReact.configs.flat.recommended,
 ]);

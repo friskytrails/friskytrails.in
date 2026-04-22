@@ -247,7 +247,7 @@ export const getMe = async (req, res) => {
  * @route   POST /api/auth/logout
  * @access  Private
  */
-export const logout = (req, res) => {
+export const logout = (_req, res) => {
     const clearCookieOptions = {
       expires: new Date(Date.now() + 10 * 1000), // Expires in 10 seconds
       httpOnly: true,

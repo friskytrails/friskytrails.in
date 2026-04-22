@@ -84,19 +84,19 @@ const Rewards = () => {
 const data = [
   {
     title: "Find Your Perfect Gateway",
-    image: "/rewardsimages/trolly.png",
+    image: "/rewardsimages/trolly.webp",
     des: "Explore our handpicked travel packages and thrilling adventures tailored just for you.",
     button: "Book Now",
   },
   {
     title: "Save More, Travel More",
-    image: "/rewardsimages/money.png",
+    image: "/rewardsimages/money.webp",
     des: "Earn rewards when you book and leave a review – because great trips deserve great perks!",
     button: "How FriskyTrailsCash works",
   },
   {
     title: "Refer Joy & Earn",
-    image: "/rewardsimages/refer.png",
+    image: "/rewardsimages/refer.webp",
     des: "Share the joy of travel! Invite a friend, and when they complete a booking, you get ₹300 as a thank-you.",
     button: "Invite friends",
   },

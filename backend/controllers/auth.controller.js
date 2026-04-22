@@ -73,7 +73,7 @@ export const sendOtp = async (req, res) => {
     // 🔐 Generate OTP
     const otp = generateOTP();
     user.otp = hashOTP(otp);
-    user.otpExpiry = Date.now() + 5 * 60 * 1000;
+    user.otpExpiry = Date.now() + OTP_EXPIRY_TIME;
     user.otpAttempts = 0;
 
     await user.save();

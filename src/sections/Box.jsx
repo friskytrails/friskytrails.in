@@ -3,33 +3,33 @@ import { Link } from "react-router-dom";
 const Box = () => {
   const data = [
     {
-      image: "/TrendingBlog/Kodaikanal.png",
+      image: "/TrendingBlog/Kodaikanal.webp",
       des: "Places to Visit in Kodaikanal in 1 Day",
       link: "/blog/places-to-visit-in-kodaikanal-in-1-day",
     },
     {
-      image: "/TrendingBlog/Calangute.png",
+      image: "/TrendingBlog/Calangute.webp",
       des: "Places to Visit Near Calangute",
       link: "/blog/places-to-visit-near-calangute",
     },
   
     {
-      image: "/TrendingBlog/Pelling.png",
+      image: "/TrendingBlog/Pelling.webp",
       des: "Places to Visit in Pelling",
       link: "/blog/places-to-visit-in-pelling",
     },
     {
-      image: "/TrendingBlog/Havelock.png",
+      image: "/TrendingBlog/Havelock.webp",
       des: "Places to Visit in Havelock Island",
       link: "/blog/places-to-visit-in-havelock",
     },
     {
-      image: "/TrendingBlog/SouthGoa.png",
+      image: "/TrendingBlog/SouthGoa.webp",
       des: "Best Places to Visit in South Goa",
       link: "/blog/best-places-to-visit-in-south-goa",
     },
     {
-      image: "/TrendingBlog/Ahemdabad.png",
+      image: "/TrendingBlog/Ahemdabad.webp",
       des: "Places to Visit Near Ahmedabad Within 100 Km",
       link: "/blog/places-to-visit-near-ahmedabad-within-100-km",
     },

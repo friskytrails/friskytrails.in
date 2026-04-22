@@ -121,7 +121,7 @@ const RailSer = () => {
             <div
               className="w-full lg:w-1/2 h-[250px] sm:h-[350px] lg:h-auto rounded-2xl shadow-2xl"
               style={{
-                backgroundImage: `url('/holidaysimages/holiday.png')`,
+                backgroundImage: `url('/holidaysimages/holiday.webp')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",

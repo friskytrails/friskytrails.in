@@ -42,7 +42,7 @@ const Hiring = () => {
     <div className="min-h-screen mt-14 md:mt-28 lg:mt-28 xl:mt-26 w-full">
       {/* Banner */}
       <div className="w-full h-[40vh] sm:h-[50vh] md:h-[60vh]">
-        <img src="/images/hiring.png" alt="Hiring Banner" className="w-full h-full object-cover object-center" />
+        <img src="/images/hiring.webp" alt="Hiring Banner" className="w-full h-full object-cover object-center" />
       </div>
 
       {/* Main Heading */}

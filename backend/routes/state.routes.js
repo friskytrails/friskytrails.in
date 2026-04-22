@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { createState,  getStates, getStateWithBlogs } from "../controllers/state.controller.js"
+import { createState, getStateWithBlogs } from "../controllers/state.controller.js"
 
 import { verifyJWT } from "../middlewares/verifyJWT.js"
 import { verifyAdmin } from "../middlewares/verifyAdmin.js"

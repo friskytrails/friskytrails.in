@@ -77,7 +77,7 @@ const Newlog = () => {
         <img
           className="mx-auto rounded-2xl mt-6 w-[90vw] h-[32vh] md:h-[40vh] max-w-5xl"
           src={blog.coverImage}
-          alt="image"
+          alt={blog.title}
         />
         {/* Blog Section */}
         <div className="w-full flex justify-center flex-col lg:flex-row pt-0 md:pt-10">
@@ -114,7 +114,7 @@ const Newlog = () => {
               </a>
 
           </div>
-            <div className="hidden xl:block w-[100%] h-[200px] sm:h-[300px] lg:h-[78vh] mt-4 bg-[url('/blogimages/blogbanner.png')] bg-cover bg-center rounded-lg shadow-lg" />
+            <div className="hidden xl:block w-[100%] h-[200px] sm:h-[300px] lg:h-[78vh] mt-4 bg-[url('/blogimages/blogbanner.webp')] bg-cover bg-center rounded-lg shadow-lg" />
                   </div> */}
 
           {/* Middle content */}

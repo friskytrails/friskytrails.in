@@ -38,7 +38,7 @@ const FriskyLoader = ({ size = "lg", text = "Loading" }) => {
             }}
           >
             <img
-              src="/logo.PNG"
+              src="/logo.webp"
               alt="Frisky Trails Loading"
               className="w-full h-full object-contain p-1 scale-125"
             />

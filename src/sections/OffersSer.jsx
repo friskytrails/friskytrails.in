@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import HillImage from "/images/hilly.png";
+import HillImage from "/images/hilly.webp";
 import Deals from "./Deals";
 import OffersForm from "../components/OffersForm";
 
@@ -102,7 +102,7 @@ const OffersSer = () => {
             <div
               className="w-full lg:w-1/2 h-[250px] sm:h-[350px] lg:h-auto rounded-2xl shadow-2xl"
               style={{
-                backgroundImage: `url('/holidaysimages/holiday.png')`,
+                backgroundImage: `url('/holidaysimages/holiday.webp')`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",

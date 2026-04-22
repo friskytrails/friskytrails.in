@@ -17,7 +17,7 @@ const End = () => {
               {/* LEFT COLUMN */}
               <div className="w-full">
                 <div className="flex items-center gap-4">
-                  <img className="h-20 w-20 bg-white rounded-full object-cover" src="/logo.PNG" alt="logo" />
+                  <img className="h-20 w-20 bg-white rounded-full object-cover" src="/logo.webp" alt="FriskyTrails Logo" />
                   <h2 className="text-3xl font-bold text-white">FriskyTrails</h2>
                 </div>
 
@@ -199,7 +199,7 @@ const End = () => {
           <div className="flex mt-6 md:mt-8 justify-center items-center gap-2">
             <img
               className="h-8 sm:h-10 w-8 sm:w-10 bg-white rounded-full object-cover"
-              src="/logo.PNG"
+              src="/logo.webp"
               alt="FriskyTrails Logo"
             />
             <h2 className="text-xl sm:text-2xl md:text-2xl font-bold text-white">FriskyTrails</h2>

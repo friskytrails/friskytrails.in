@@ -41,7 +41,7 @@ router.use((req, res) => {
 });
 
 // Error handler for this router
-router.use((err, req, res, next) => {
+router.use((err, req, res, _next) => {
   console.error('Adventure Routes Error:', {
     url: req.originalUrl,
     method: req.method,

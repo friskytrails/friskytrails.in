@@ -51,11 +51,13 @@ const Smallbox = () => {
             transition-transform duration-300
             hover:scale-[1.03]
           "
-          style={{
+          style={item.image ? {
             backgroundImage: `url(${item.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
+          } : {
+            backgroundColor: "#2a2a2a"
           }}
         >
           {/* overlay */}

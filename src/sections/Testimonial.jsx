@@ -18,7 +18,7 @@ import { TestimonialMarquee } from './TestimonialMarquee';
   },
   {
     name: "Harsh Choudhary",
-    image: "/feedback/Harsh-Chaudhary.png",
+    image: "/feedback/Harsh-Chaudhary.webp",
     review: "Thank you so much for your kind words! 🌟 We're thrilled to hear that you had a wonderful holiday with FriskyTrails",
     rating: 5
   },

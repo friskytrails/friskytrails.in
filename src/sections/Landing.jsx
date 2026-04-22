@@ -18,7 +18,7 @@ const Landing = () => {
     }
   };
 
-  // 🔥 AUTO MUTE WHEN USER SCROLLS
+  // AUTO MUTE WHEN USER SCROLLS
   useEffect(() => {
     const handleScroll = () => {
       if (!isMuted) {
@@ -44,6 +44,7 @@ const Landing = () => {
           className="absolute md:block h-[62vh] top-0 w-full left-0 object-cover"
           ref={desktopVideoRef}
           src="/images/Webvi.mp4"
+          poster="/images/video-poster.webp"
           autoPlay
           loop
           muted
@@ -53,6 +54,7 @@ const Landing = () => {
           className="absolute md:hidden top-0 w-full h-[72vh] left-0 object-cover"
           ref={mobileVideoRef}
           src="/images/mobile.webm"
+          poster="/images/video-poster.webp"
           autoPlay
           loop
           muted
@@ -61,6 +63,7 @@ const Landing = () => {
         <button
           onClick={toggleMute}
           className="absolute mt-4 md:mt-0 z-20 top-4 right-4 bg-white/20 backdrop-blur-md text-black p-2 md:p-3 rounded-full hover:bg-white/30 transition shadow-md"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
         >
           {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
         </button>
@@ -80,8 +83,8 @@ const Landing = () => {
 ">
               <img
                 className="h-20 w-20 md:h-40 md:w-40"
-                src="/logo.PNG"
-                alt=""
+                src="/logo.webp"
+                alt="FriskyTrails Adventure Logo"
               />
               <h2 className="md:text-6xl text-3xl">
                 Explore every destination, Every season – with FriskyTrails!
@@ -101,8 +104,8 @@ const Landing = () => {
 ">
               <img
                 className="h-20 w-20 md:h-40 md:w-40"
-                src="/logo.PNG"
-                alt=""
+                src="/logo.webp"
+                alt="FriskyTrails Adventure Logo"
               />
               <h2 className="md:text-6xl text-3xl">
                 Explore every destination, Every season – with FriskyTrails!

@@ -42,7 +42,7 @@ const createBlog = asyncHandler(async (req, res) => {
     if (typeof blocks === "string") {
       try {
         parsedBlocks = JSON.parse(blocks);
-      } catch (err) {
+      } catch {
         return res.status(400).json({ message: "Invalid blocks format" });
       }
     }
@@ -256,8 +256,8 @@ export const getPublicBlogs = asyncHandler(async (req, res) => {
         limit,
       },
     });
-  } catch (err) {
-    console.error("Error fetching public blogs:", err);
+  } catch (_err) {
+    console.error("Error fetching public blogs:", _err);
     return res.status(500).json({ status: false, message: "Server error" });
   }
 });
@@ -331,8 +331,8 @@ const getBlogById = asyncHandler(async (req, res) => {
     };
 
     res.status(200).json({ status: true, data: frontendBlog });
-  } catch (err) {
-    console.error(err);
+  } catch (_err) {
+    console.error(_err);
     res.status(500).json({ status: false, message: "Server error" });
   }
 });

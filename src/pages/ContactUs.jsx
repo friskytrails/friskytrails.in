@@ -76,7 +76,7 @@ const ContactUs = () => {
               <img
                 className="w-full sm:w-[90%] lg:w-[85%] xl:w-[80%] h-auto rounded-3xl shadow-lg"
                 src="/images/office.webp"
-                alt="Office"
+                alt="FriskyTrails Office In India"
               />
             </div>
 

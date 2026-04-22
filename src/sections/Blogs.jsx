@@ -5,22 +5,22 @@ import { Link } from "react-router-dom"
 const Blogs = () => {
   const data = [
     {
-      image: "/TravelBlog/Vacation.png",
+      image: "/TravelBlog/Vacation.webp",
       des: "Places to Visit in India in Winter",
       link: "/blog/places-to-visit-in-india-in-winter",
     },
     {
-      image: "/TravelBlog/Goa.png",
+      image: "/TravelBlog/Goa.webp",
       des: "Places to Visit Near Calangute",
       link: "/blog/places-to-visit-near-calangute",
     },
     {
-      image: "/TravelBlog/Chattisgarh.png",
+      image: "/TravelBlog/Chattisgarh.webp",
       des: "Offbeat Places to Visit in India",
       link: "/blog/offbeat-places-to-visit-in-india",
     },
     {
-      image: "/TravelBlog/Delhi.png",
+      image: "/TravelBlog/Delhi.webp",
       des: "Places to Visit Near Delhi within 300 km",
       link: "/blog/places-to-visit-near-delhi-within-300-km",
     },

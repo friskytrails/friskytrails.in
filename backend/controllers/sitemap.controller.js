@@ -1,4 +1,3 @@
-import { Router } from "express";
 import { CreateBlog } from "../models/create-blog.model.js";
 import { Country } from "../models/country.model.js";
 import { State } from "../models/state.model.js";
@@ -6,7 +5,7 @@ import { City } from "../models/city.model.js";
 import { Product } from "../models/product.model.js";
 import { ProductType } from "../models/productType.model.js";
 
-const router = Router();
+
 
 // Frontend base URL for <loc> entries
 const SITE_BASE_URL = "https://www.friskytrails.in";

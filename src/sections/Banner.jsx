@@ -6,13 +6,13 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-import Mobile1 from "/bannerimages/1_result.webp";
-import Mobile2 from "/bannerimages/2_result.webp";
-import Mobile3 from "/bannerimages/3_result.webp";
+import Mobile1 from "/bannerimages/mobile/1.webp";
+import Mobile2 from "/bannerimages/mobile/2.webp";
+import Mobile3 from "/bannerimages/mobile/3.webp";
 
-import Desktop1 from "/bannerimages/1.png";
-import Desktop2 from "/bannerimages/2.png";
-import Desktop3 from "/bannerimages/3.png";
+import Desktop1 from "/bannerimages/desktop/1.webp";
+import Desktop2 from "/bannerimages/desktop/2.webp";
+import Desktop3 from "/bannerimages/desktop/3.webp";
 
 const Banner = () => {
   const mobileData = [Mobile1, Mobile2, Mobile3];

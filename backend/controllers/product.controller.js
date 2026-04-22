@@ -29,8 +29,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     state,
     city,
     packages,
-    existingImages,
-    existingSliderImages,
   } = req.body;
 
   if (!name || !slug || !productType) {
@@ -100,7 +98,7 @@ export const createProduct = asyncHandler(async (req, res) => {
             : []),
         excluded: Array.isArray(pkg.excluded) ? pkg.excluded : [],
       }));
-    } catch (err) {
+    } catch {
       throw new ApiError(400, "Invalid packages format");
     }
   }
@@ -263,7 +261,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
         throw new ApiError(400, "You can upload up to 5 images only");
       }
       product.images = parsed;
-    } catch (err) {
+    } catch {
       throw new ApiError(400, "Invalid existingImages format");
     }
   }
@@ -287,7 +285,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
         );
       }
       product.sliderImages = parsed;
-    } catch (err) {
+    } catch {
       throw new ApiError(400, "Invalid existingSliderImages format");
     }
   }
@@ -380,7 +378,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
             : []),
         excluded: Array.isArray(pkg.excluded) ? pkg.excluded : [],
       }));
-    } catch (err) {
+    } catch {
       throw new ApiError(400, "Invalid packages format");
     }
   }

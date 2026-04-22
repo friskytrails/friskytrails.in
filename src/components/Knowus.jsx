@@ -3,12 +3,12 @@ import Email from '../assets/email.svg';
 
 // Example data array with image URLs and LinkedIn URLs
 const teamMembers = [
-  { img: '/members/manasvi.png', linkedin: 'https://www.linkedin.com/in/manasvi-singh-9392aa24b/' },
-  { img: '/members/kanish.jpg', linkedin: 'https://www.linkedin.com/in/kanish-das-9bb268282/' },
-  { img: '/members/sathi.jpg', linkedin: 'https://www.linkedin.com/in/sathi-maity/' },
-  { img: '/members/khushboo.jpg', linkedin: 'https://www.linkedin.com/in/khushboo-bishnoi-8534672b7/' },
-  { img: '/members/tushar.jpg', linkedin: 'https://www.linkedin.com/in/tushar-sharma-8003a836b/' },
-  { img: '/members/sanya.jpg', linkedin: 'https://www.linkedin.com/in/sanya-batra-b22a0628a/' },
+  { name: 'Manasvi Singh', img: '/members/manasvi.webp', linkedin: 'https://www.linkedin.com/in/manasvi-singh-9392aa24b/' },
+  { name: 'Kanish Das', img: '/members/kanish.jpg', linkedin: 'https://www.linkedin.com/in/kanish-das-9bb268282/' },
+  { name: 'Sathi Maity', img: '/members/sathi.jpg', linkedin: 'https://www.linkedin.com/in/sathi-maity/' },
+  { name: 'Khushboo Bishnoi', img: '/members/khushboo.jpg', linkedin: 'https://www.linkedin.com/in/khushboo-bishnoi-8534672b7/' },
+  { name: 'Tushar Sharma', img: '/members/tushar.jpg', linkedin: 'https://www.linkedin.com/in/tushar-sharma-8003a836b/' },
+  { name: 'Sanya Batra', img: '/members/sanya.jpg', linkedin: 'https://www.linkedin.com/in/sanya-batra-b22a0628a/' },
 ];
 
 const Knowus = () => {
@@ -72,7 +72,7 @@ const Knowus = () => {
             >
               <img
                 src={member.img}
-                alt={`Team member ${index + 1}`}
+                alt={member.name}
                 className="h-[60px] sm:h-[70px] w-[60px] sm:w-[70px] rounded-full border-2 border-white object-cover shadow-md"
               />
             </a>

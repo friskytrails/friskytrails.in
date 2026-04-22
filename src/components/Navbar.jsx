@@ -117,7 +117,7 @@ border-none shadow-none
               <Link to="/">
                 <img
                   className="h-8 w-10 sm:h-10 sm:w-11 md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-20 xl:w-20 object-contain flex-shrink-0"
-                  src="/logo.PNG"
+                  src="/logo.webp"
                   alt="FriskyTrails Logo"
                 />
               </Link>

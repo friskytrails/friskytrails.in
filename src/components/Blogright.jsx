@@ -26,7 +26,7 @@ const Blogright = () => {
         style={{
           height: "200px",
           weight: "400px",
-          backgroundImage: "url('/blogimages/trip.png')",
+          backgroundImage: "url('/blogimages/trip.webp')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
@@ -47,7 +47,7 @@ const Blogright = () => {
           {showForm && <Form onClose={() => setShowForm(false)} />}
         </div>
       </div>
-      <div className="w-[400px] h-[400px] mt-6 rounded-2xl mx-auto bg-[url('/blogimages/banner2.png')] bg-cover bg-center">
+      <div className="w-[400px] h-[400px] mt-6 rounded-2xl mx-auto bg-[url('/blogimages/banner2.webp')] bg-cover bg-center">
       </div>
     </>
   );

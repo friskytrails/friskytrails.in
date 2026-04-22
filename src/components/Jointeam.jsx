@@ -40,7 +40,7 @@ const Jointeam = ({ onClose }) => {
       <div className="mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Join Our Team</h2>
         <p className="text-gray-500 text-sm sm:text-base mt-2">
-          Fill out the form below and we'll get back to you soon.
+          Fill out the form below and we&apos;ll get back to you soon.
         </p>
       </div>
 

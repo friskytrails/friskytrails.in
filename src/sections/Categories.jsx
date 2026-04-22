@@ -5,22 +5,22 @@ import { Link } from "react-router-dom";
 export default function HoverRevealButton() {
   const data = [
     {
-      image: "/images/1.png",
+      image: "/images/1.webp",
       name: "Japan",
       link: "/services/activities",
     },
     {
-      image: "/images/2.png",
+      image: "/images/2.webp",
       name: "Maldives",
       link: "services/holidays",
     },
     {
-      image: "/images/4.png",
+      image: "/images/4.webp",
       name: "Dubai",
       link: "/services/transport",
     },
     {
-      image: "/images/6.png",
+      image: "/images/6.webp",
       name: "Manali",
       link: "/services/hotels",
     },

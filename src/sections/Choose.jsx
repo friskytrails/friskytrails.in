@@ -1,7 +1,7 @@
-import Deals from '../assets/deals.png';
-import Work from '../assets/24.png';
-import Price from '../assets/price.png';
-import Booking from '../assets/booking.png';
+import Deals from '../assets/deals.webp';
+import Work from '../assets/24.webp';
+import Price from '../assets/price.webp';
+import Booking from '../assets/booking.webp';
 
 const Choose = () => {
   return (
