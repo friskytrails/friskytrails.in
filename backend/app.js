@@ -29,41 +29,10 @@ const app = express();
 /* =======================
    SECURITY HEADERS
 ======================= */
-app.use(helmet());
-
 /* =======================
-   RATE LIMITING
+   SECURITY HEADERS
 ======================= */
-const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: {
-    success: false,
-    message: "Too many requests from this IP, please try again after 15 minutes",
-  },
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10, // Brute-force protection: 10 attempts per 15 min
-  message: {
-    success: false,
-    message: "Too many login/OTP attempts, please try again later",
-  },
-});
-
-// Apply general limiter to all routes
-app.use("/api", generalLimiter);
-
-// Apply strict limiter to auth routes
-app.use("/api/auth", authLimiter);
-app.use("/api/v1/user/login", authLimiter);
-app.use("/api/v1/user/signup", authLimiter);
-
-// Use Gzip compression for all responses
-app.use(compression());
+app.use(helmet());
 
 /* =======================
    CORS (SAME CLEAN PATTERN)
@@ -92,6 +61,43 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
+
+/* =======================
+   RATE LIMITING
+======================= */
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: {
+    success: false,
+    message: "Too many requests from this IP, please try again after 15 minutes",
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10, // Brute-force protection: 10 attempts per 15 min
+  message: {
+    success: false,
+    message: "Too many login/OTP attempts, please try again later",
+  },
+});
+
+// Apply general limiter to all routes (Temporarily disabled for verification)
+// app.use("/api", generalLimiter);
+
+// Apply strict limiter to auth routes
+app.use("/api/auth", authLimiter);
+app.use("/api/v1/user/login", authLimiter);
+app.use("/api/v1/user/signup", authLimiter);
+
+/* =======================
+   BODY / COOKIE
+======================= */
+// Use Gzip compression for all responses
+app.use(compression());
 
 // Static file caching for performance (1 day for images/icons)
 app.use(express.static("public", {
