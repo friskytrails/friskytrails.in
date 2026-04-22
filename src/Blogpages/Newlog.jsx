@@ -88,7 +88,7 @@ const Newlog = () => {
             alt={blog?.title}
             width="1200"
             height="600"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         )}
         

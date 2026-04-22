@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import Skeleton from "../components/Skeleton";
 import "/src/styles/Class.css";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -8,6 +10,43 @@ import HillImage from "/services/holiday.webp";
 import Deals from "./Deals";
 
 const Ser = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen w-full bg-white">
+        {/* Banner Skeleton */}
+        <div className="h-[40vh] sm:h-[50vh] md:h-[60vh] w-full">
+           <Skeleton height="100%" width="100%" borderRadius="0" />
+        </div>
+
+        {/* Form Placeholder Skeleton */}
+        <div className="max-w-4xl mx-auto -mt-10 md:-mt-20 px-4 relative z-10">
+           <Skeleton height="300px" width="100%" borderRadius="1.5rem" />
+        </div>
+
+        <main className="max-w-7xl mx-auto px-4 py-20 space-y-10">
+           <Skeleton height="3rem" width="40%" />
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <Skeleton height="400px" width="100%" borderRadius="1rem" />
+              <div className="space-y-4">
+                 <Skeleton height="2rem" width="80%" />
+                 <Skeleton height="1.5rem" width="100%" />
+                 <Skeleton height="1.5rem" width="90%" />
+                 <Skeleton height="1.5rem" width="95%" />
+              </div>
+           </div>
+        </main>
+      </div>
+    );
+  }
   return (
     <>
    <div className="min-h-screen mt-12 md:mt-20 w-full">

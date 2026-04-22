@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * A reusable Skeleton component for UI loading states.
@@ -7,7 +6,7 @@ import React from "react";
 const Skeleton = ({ className = "", width, height, borderRadius = "0.5rem" }) => {
   return (
     <div
-      className={`animate-pulse bg-gray-200 ${className}`}
+      className={`animate-pulse bg-gray-300 ${className}`}
       style={{
         width: width || "100%",
         height: height || "1rem",

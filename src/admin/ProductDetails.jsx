@@ -4,7 +4,6 @@ import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
 import Call from "../assets/calling.svg";
 import { Star, StarHalf, MapPin } from "lucide-react";
-import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
 import {
@@ -199,7 +198,7 @@ const ProductDetails = () => {
                         alt={`${product.name} - View ${idx + 1}`} 
                         className="w-full h-full object-center object-cover"
                         loading={idx === 0 ? "eager" : "lazy"}
-                        fetchpriority={idx === 0 ? "high" : "low"}
+                        fetchPriority={idx === 0 ? "high" : "low"}
                         width="800"
                         height="400"
                        />
@@ -222,7 +221,7 @@ const ProductDetails = () => {
                     src={optimizeUrl(product.images[2] || product.images[0], 1000)} 
                     alt={`${product.name} Hero View`} 
                     className="w-full h-full object-top object-cover hover:scale-105 transition-transform duration-500"
-                    fetchpriority="high"
+                    fetchPriority="high"
                     width="1000"
                     height="500"
                    />

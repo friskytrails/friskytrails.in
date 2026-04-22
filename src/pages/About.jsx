@@ -4,7 +4,7 @@ import Arrow from "../assets/rightarrow.svg";
 import Choose from "../sections/Choose";
 import Promise from "../sections/Promise";
 import { useNavigate } from "react-router-dom";
-import FriskyLoader from "../components/Loader";
+import Skeleton from "../components/Skeleton";
 
 const About = () => {
   const navigate = useNavigate();
@@ -31,11 +31,26 @@ const About = () => {
     };
   }, []);
 
-  // 🔥 LOADER
+  // 🔥 SKELETON LOADER
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[70vh] py-20 px-4">
-        <FriskyLoader size="md" text="" />
+      <div className="min-h-screen w-full bg-white">
+        {/* Hero Image Skeleton */}
+        <div className="mt-14 md:mt-20 lg:mt-24 xl:mt-[98px]">
+          <Skeleton height="370px" width="100%" borderRadius="0" />
+        </div>
+        
+        {/* Main Heading Skeleton */}
+        <div className="max-w-4xl mx-auto mt-12 flex flex-col items-center space-y-6 px-4">
+           <Skeleton height="4rem" width="60%" />
+           <Skeleton height="3rem" width="40%" />
+           <Skeleton height="10rem" width="100%" />
+           
+           <div className="flex gap-4 w-full justify-center">
+              <Skeleton height="3.5rem" width="200px" borderRadius="9999px" />
+              <Skeleton height="3.5rem" width="200px" borderRadius="9999px" />
+           </div>
+        </div>
       </div>
     );
   }

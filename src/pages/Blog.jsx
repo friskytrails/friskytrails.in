@@ -3,7 +3,7 @@ import HillImage from "/images/blog.webp";
 import Box from "../sections/Box";
 import Latestblog from "../sections/Latestblog";
 import Cards from "../sections/Cards";
-import FriskyLoader from "../components/Loader";
+import Skeleton from "../components/Skeleton";
 
 const Blog = () => {
   const [loading, setLoading] = useState(true);
@@ -16,11 +16,31 @@ const Blog = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 🔥 LOADER
+  // SKELETON LOADER
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[70vh] py-20 px-4">
-        <FriskyLoader size="md" text="" />
+      <div className="w-full mt-12 md:mt-20 lg:mt-26 xl:mt-24">
+        {/* Hero Skeleton */}
+        <div className="w-full h-[400px] bg-gray-300">
+           <div className="max-w-4xl mx-auto pt-20 px-4 space-y-4">
+              <Skeleton height="3.5rem" width="80%" />
+              <Skeleton height="1.5rem" width="60%" />
+              <Skeleton height="3rem" width="200px" borderRadius="0.5rem" />
+           </div>
+        </div>
+
+        {/* Trending Blogs Skeleton */}
+        <div className="max-w-7xl mx-auto px-4 py-10">
+           <Skeleton height="2.5rem" width="30%" className="mb-6" />
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                 <div key={i} className="space-y-4">
+                    <Skeleton height="250px" width="100%" borderRadius="1rem" />
+                    <Skeleton height="1.5rem" width="80%" />
+                 </div>
+              ))}
+           </div>
+        </div>
       </div>
     );
   }

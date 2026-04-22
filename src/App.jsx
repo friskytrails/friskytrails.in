@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import End from "./sections/End";
 import Last from "./components/Last";
 import Scrolltotop from "./components/Scrolltotop";
-import FriskyLoader from "./components/Loader";
+import Skeleton from "./components/Skeleton";
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Lazy load page components
@@ -59,7 +59,7 @@ const App = () => {
       {/*  MAIN CONTENT AREA - flex-1 pushes footer down */}
       <main className="flex-1"> 
         <Scrolltotop />
-        <Suspense fallback={<FriskyLoader size="md" />}>
+        <Suspense fallback={<div className="p-4 md:p-10"><Skeleton height="80vh" width="100%" borderRadius="1rem" /></div>}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />

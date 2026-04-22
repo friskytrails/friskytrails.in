@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { getProducts, getProductBySlug } from "../api/admin.api";
+import { getProducts } from "../api/admin.api";
 
 
 const Cards = () => {
@@ -104,7 +104,7 @@ const Cards = () => {
   };
 
   //  INLINE PREFETCH FUNCTION
-  const prefetchTourPage = (slug) => {
+  const prefetchTourPage = () => {
     // You can implement more advanced prefetching here if needed
   };
 

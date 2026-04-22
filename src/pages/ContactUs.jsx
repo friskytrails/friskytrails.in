@@ -4,7 +4,7 @@ import Call from "../assets/calling.svg";
 import Email from "../assets/email.svg";
 import Location from "../assets/location.avif";
 import Knowus from "../components/Knowus";
-import FriskyLoader from "../components/Loader";
+import Skeleton from "../components/Skeleton";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(true);
@@ -17,11 +17,26 @@ const ContactUs = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 🔥 LOADER
+  // SKELETON LOADER
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[70vh] py-20 px-4">
-        <FriskyLoader size="md" text="" />
+      <div className="min-h-screen w-full bg-white px-4">
+         <div className="mt-20 md:mt-32 lg:mt-40 xl:mt-24 space-y-10">
+            {/* Title Skeleton */}
+            <div className="flex flex-col items-center space-y-6">
+               <Skeleton height="5rem" width="60%" />
+               <Skeleton height="2rem" width="80%" />
+            </div>
+
+            {/* Split Content Skeleton */}
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 pt-16">
+               <Skeleton height="400px" width="100%" borderRadius="2rem" />
+               <div className="space-y-6">
+                  <Skeleton height="3rem" width="70%" />
+                  <Skeleton height="300px" width="100%" borderRadius="1rem" />
+               </div>
+            </div>
+         </div>
       </div>
     );
   }

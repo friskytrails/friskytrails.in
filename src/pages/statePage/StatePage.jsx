@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
-
 import { getStateWithBlogs } from "../../api/admin.api"
 import CardCarousel from "../components/Carousel"
-import FriskyLoader from "../../components/Loader"
+import Skeleton from "../../components/Skeleton"
 
 const StatePage = () => {
   const { slug } = useParams()
@@ -41,7 +40,39 @@ const StatePage = () => {
     }
   }, [slug])
 
-  if (loading) return <FriskyLoader />
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        {/* Hero Skeleton */}
+        <div className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24">
+          <Skeleton height="384px" width="100%" borderRadius="0" />
+        </div>
+        
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
+          {/* Header Skeleton */}
+          <div className="border-b pb-4 space-y-3">
+             <Skeleton height="3rem" width="40%" />
+             <Skeleton height="1.5rem" width="60%" />
+          </div>
+
+          {/* Carousel Title Skeleton */}
+          <div className="mt-8 mb-6">
+             <Skeleton height="2.5rem" width="30%" />
+          </div>
+
+          {/* Carousel Skeletons */}
+          <div className="flex gap-4 overflow-hidden">
+             {[...Array(4)].map((_, i) => (
+                <div key={i} className="min-w-[300px] space-y-4">
+                   <Skeleton height="200px" width="100%" borderRadius="1rem" />
+                   <Skeleton height="1.5rem" width="80%" />
+                </div>
+             ))}
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   if (error || !state) {
     return (

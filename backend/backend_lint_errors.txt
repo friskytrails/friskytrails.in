@@ -1,0 +1,29 @@
+node.exe : Warning: React 
+version not specified in 
+eslint-plugin-react 
+settings. See https://gith
+ub.com/jsx-eslint/eslint-p
+lugin-react#configuration 
+.
+At C:\Program 
+Files\nodejs\npx.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (W  
+  arning: React ...conf   
+ iguration .:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+
+C:\Users\choud\OneDrive\Desktop\friskytrails.in\backend\app.js
+  68:7  error  'generalLimiter' is assigned a value but never used. Allowed unused vars must match /^_/u  no-unused-vars
+
+??? 1 problem (1 error, 0 warnings)
+
