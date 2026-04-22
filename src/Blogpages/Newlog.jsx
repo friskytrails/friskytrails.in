@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Right from "../assets/right.svg";
 import Blogleft from "../components/Blogleft";
 import Blogright from "../components/Blogright";
 import { getSingleBlog } from "../api/blog.api";
-import { useParams } from "react-router-dom";
-import FriskyLoader from "../components/Loader";
+import Skeleton from "../components/Skeleton";
+  import { Helmet } from "react-helmet-async";
 
 const Newlog = () => {
   const { slug } = useParams();
@@ -26,112 +27,99 @@ const Newlog = () => {
     fetchBlog();
   }, [slug]);
 
-  if (loading || !blog) {
-    return (
-      <div 
-        className="flex items-center justify-center min-h-[70vh] py-20 px-4"
-       
-      >
-        <FriskyLoader />
-      </div>
-    );
-  }
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
-  if (!blog) return null;
+  if (error) return (
+    <div className="min-h-screen flex items-center justify-center">
+       <p className="text-red-500 font-semibold">{error}</p>
+    </div>
+  );
+
+  // Function to optimize Cloudinary URL
+  const optimizeUrl = (url) => {
+    if (!url || !url.includes("cloudinary.com")) return url;
+    return url.replace("/upload/", "/upload/f_auto,q_auto,w_1200/");
+  };
 
   return (
     <div className="min-h-screen mt-12 md:mt-20 lg:mt-24 w-full">
+      <Helmet>
+        <title>{blog ? `${blog.title} | FriskyTrails Blog` : "Blog | FriskyTrails"}</title>
+        <link rel="canonical" href={`https://www.friskytrails.in/blog/${slug}`} />
+        <meta name="description" content={blog?.intro?.replace(/<[^>]+>/g, "").slice(0, 160)} />
+      </Helmet>
+
       <div
         className="w-full min-h-[460px] bg-no-repeat md:bg-contain"
         style={{
           backgroundImage: "url('/images/bgbanner.svg')",
         }}
       >
-        {/* <div className="flex items-center gap-2 px-4 xl:pl-20 pt-6 text-sm sm:text-base">
-          <h3 className="font-semibold">{blog.country.name}</h3>
-          <img className="h-4 w-4 mt-1" src={Right} alt="rightarrow" />
-          <h3 className="font-semibold">{blog.state.name}</h3>
-          <img className="h-4 w-4 mt-1" src={Right} alt="rightarrow" />
-          <h3 className="font-semibold text-gray-600">{blog.city.name}</h3>
-        </div> */}
         <div className="flex items-center gap-2 px-4 xl:pl-20 pt-8 md:pt-6 text-sm sm:text-base">
-          {blog.country && (
-            <h3 className="font-semibold">{blog.country?.name}</h3>
-          )}
-          {blog.country && blog.state && (
-            <img className="h-4 w-4 mt-1" src={Right} alt="rightarrow" />
-          )}
-          {blog.state && <h3 className="font-semibold">{blog.state?.name}</h3>}
-          {blog.state && blog.city && (
-            <img className="h-4 w-4 mt-1" src={Right} alt="rightarrow" />
-          )}
-          {blog.city && (
-            <h3 className="font-semibold text-gray-600">{blog.city?.name}</h3>
+          {loading ? (
+             <Skeleton width="200px" height="1.5rem" />
+          ) : (
+            <>
+              {blog?.country && <h3 className="font-semibold">{blog.country?.name}</h3>}
+              {blog?.country && blog?.state && (
+                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" />
+              )}
+              {blog?.state && <h3 className="font-semibold">{blog.state?.name}</h3>}
+              {blog?.state && blog?.city && (
+                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" />
+              )}
+              {blog?.city && (
+                <h3 className="font-semibold text-gray-600">{blog.city?.name}</h3>
+              )}
+            </>
           )}
         </div>
 
         <h1 className="text-2xl sm:text-3xl xl:pl-20 md:text-4xl font-semibold tracking-tighter px-4 pt-4 md:pt-4">
-          {blog.title}
+          {loading ? <Skeleton width="80%" height="2.5rem" /> : blog?.title}
         </h1>
 
-        <img
-          className="mx-auto rounded-2xl mt-6 w-[90vw] h-[32vh] md:h-[40vh] max-w-5xl"
-          src={blog.coverImage}
-          alt={blog.title}
-        />
+        {loading ? (
+          <div className="mx-auto mt-6 w-[90vw] max-w-5xl">
+            <Skeleton height="40vh" borderRadius="1rem" />
+          </div>
+        ) : (
+          <img
+            className="mx-auto rounded-2xl mt-6 w-[90vw] h-[32vh] md:h-[40vh] max-w-5xl object-cover"
+            src={optimizeUrl(blog?.coverImage)}
+            alt={blog?.title}
+            width="1200"
+            height="600"
+            fetchpriority="high"
+          />
+        )}
+        
         {/* Blog Section */}
         <div className="w-full flex justify-center flex-col lg:flex-row pt-0 md:pt-10">
-          {/* Left sidebar */}
-
-          {/* <div className="lg:w-[15%] hidden xl:flex flex-col pl-6 items-center sticky top-0">
-            <div className="flex gap-4 pt-6">
-              <a href="https://www.facebook.com/friskytrails/" target="_blank">
-                <img
-                  className="w-8 h-8 sm:w-10 sm:h-10"
-                  src={Facebook}
-                  alt=""
-                  />
-              </a>
-              <a href="https://x.com/frisky_trails" target="_blank">
-                <img className="w-8 h-8 sm:w-10 sm:h-10" src={Twitter} alt="" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/friskytrails/"
-                target="_blank"
-                >
-                <img
-                  className="w-8 h-8 sm:w-10 sm:h-10"
-                  src={Linkedin}
-                  alt=""
-                  />
-              </a>
-              <a href="https://www.instagram.com/friskytrails/" target="_blank">
-                <img
-                  className="w-8 h-8 sm:w-10 sm:h-10"
-                  src={Instagram}
-                  alt=""
-                  />
-              </a>
-
-          </div>
-            <div className="hidden xl:block w-[100%] h-[200px] sm:h-[300px] lg:h-[78vh] mt-4 bg-[url('/blogimages/blogbanner.webp')] bg-cover bg-center rounded-lg shadow-lg" />
-                  </div> */}
-
-          {/* Middle content */}
-          {/* <div className="flex w-full gap-6"> */}
-          {/* Left content */}
-          <div className="lg:w-[60%] pt-3 w-full">
-            <Blogleft blog={blog} />
+          <div className="lg:w-[60%] pt-3 w-full px-4">
+            {loading ? (
+              <div className="space-y-4">
+                <Skeleton height="1.5rem" width="100%" />
+                <Skeleton height="1.5rem" width="90%" />
+                <Skeleton height="1.5rem" width="95%" />
+                <Skeleton height="1.5rem" width="80%" />
+                <Skeleton height="20rem" width="100%" borderRadius="1rem" />
+              </div>
+            ) : (
+              <Blogleft blog={blog} />
+            )}
           </div>
 
           {/* Right sidebar */}
-          <div className="hidden lg:block lg:w-[30%]">
+          <div className="hidden lg:block lg:w-[30%] px-4">
             <div className="sticky top-26">
-              {" "}
-              {/* adjust top spacing if you have a navbar */}
-              <Blogright />
+              {loading ? (
+                <div className="space-y-6">
+                   <Skeleton height="15rem" width="100%" borderRadius="1rem" />
+                   <Skeleton height="15rem" width="100%" borderRadius="1rem" />
+                </div>
+              ) : (
+                <Blogright />
+              )}
             </div>
-            {/* </div> */}
           </div>
         </div>
       </div>

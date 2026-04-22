@@ -38,7 +38,7 @@ const Choose = () => {
               key={index}
               className="rounded-lg bg-white border border-[#FF6321] shadow-lg px-4 pt-6 pb-6 text-center flex flex-col items-center mt-3"
             >
-              <img className="h-16 w-16 mb-6" src={item.image} alt="img" />
+              <img className="h-16 w-16 mb-6" src={item.image} alt="img" width="64" height="64" loading="lazy" />
               <h2 className="text-lg font-semibold mb-3">{item.title}</h2>
               <p className="text-sm text-gray-600 tracking-tight">
                 {item.des}

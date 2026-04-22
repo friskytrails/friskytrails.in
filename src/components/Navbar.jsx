@@ -119,6 +119,9 @@ border-none shadow-none
                   className="h-8 w-10 sm:h-10 sm:w-11 md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-20 xl:w-20 object-contain flex-shrink-0"
                   src="/logo.webp"
                   alt="FriskyTrails Logo"
+                  width="80"
+                  height="80"
+                  fetchpriority="high"
                 />
               </Link>
               <h2 className="text-lg sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold whitespace-nowrap text-gray-800 flex-shrink-0">

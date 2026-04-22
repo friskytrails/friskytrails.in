@@ -139,29 +139,29 @@ const Content = ({
 
     return (
       <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
-        <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
+        <div className="blog-content bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm mt-1 max-w-none">
           {showTitle && (
-            <h2 className="mb-2 sm:mb-3 ml-4 not-prose leading-[1.1] sm:leading-tight">
+            <h2 className="mb-4 sm:mb-6 not-prose leading-[1.1] sm:leading-tight">
               {showProductName && (
-                <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">
                   {product.name}{" "}
                 </span>
               )}
-              <span className="text-xl sm:text-xl md:text-2xl font-semibold text-black whitespace-nowrap">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900 whitespace-nowrap">
                 {title}
               </span>
             </h2>
           )}
 
           <div
-            className="prose prose-headings:font-bold prose-headings:text-gray-900 max-w-none"
+            className="prose prose-headings:font-bold prose-headings:text-gray-900 max-w-none text-gray-700 leading-relaxed"
             dangerouslySetInnerHTML={{ __html: displayContent }}
           />
 
           {shouldTruncate && (
             <button
               onClick={() => toggleSection(key)}
-              className="text-orange-500 font-semibold mt-2 ml-6"
+              className="text-orange-500 font-semibold mt-4 hover:underline transition-all"
             >
               {isExpanded ? "Read Less" : "Read More"}
             </button>
@@ -179,27 +179,27 @@ const Content = ({
       {product.productOverview &&
         renderSection("overview", "Overview", product.productOverview)}
 
-      {/* Things to Carry, Contact, FAQ, etc. - ALL UNCHANGED */}
+      {/* Things to Carry */}
       {thingsToCarry && (
         <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
-          <div className="blog-content bg-white p-4 rounded-lg prose prose-lg mt-1 max-w-none">
-            <h2 className="mb-1 sm:mb-3 not-prose ml-3 leading-[1.1] sm:leading-tight">
-              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-black">
+          <div className="blog-content bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm mt-1 max-w-none">
+            <h2 className="mb-4 sm:mb-6 not-prose leading-[1.1] sm:leading-tight">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">
                 {product.name}{" "}
               </span>
-              <span className="text-xl sm:text-xl md:text-2xl font-semibold text-orange-500 whitespace-nowrap">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900 whitespace-nowrap">
                 Things to Carry
               </span>
             </h2>
             {Array.isArray(thingsToCarry) ? (
-              <ul className="list-disc pl-5 ml-4">
+              <ul className="list-disc pl-5 space-y-2 text-gray-700">
                 {(expandedSections["carry"] ? thingsToCarry : thingsToCarry.slice(0, 10)).map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
             ) : (
               <div
-                className="prose prose-headings:font-bold prose-headings:text-gray-900 ml-4"
+                className="prose prose-headings:font-bold prose-headings:text-gray-900 text-gray-700"
                 dangerouslySetInnerHTML={{
                   __html: processHtmlContent(
                     countWords(thingsToCarry) > MAX_WORDS && !expandedSections["carry"]
@@ -210,7 +210,7 @@ const Content = ({
               />
             )}
             {countWords(Array.isArray(thingsToCarry) ? thingsToCarry.join(" ") : thingsToCarry) > MAX_WORDS && (
-              <button onClick={() => toggleSection("carry")} className="text-orange-500 font-semibold mt-2 ml-4">
+              <button onClick={() => toggleSection("carry")} className="text-orange-500 font-semibold mt-4 hover:underline">
                 {expandedSections["carry"] ? "Read Less" : "Read More"}
               </button>
             )}
@@ -218,20 +218,21 @@ const Content = ({
         </div>
       )}
 
-      <div className="md:hidden bg-white border border-orange-500 rounded-lg shadow-md p-4 mb-6 md:mb-8 lg:mb-10 md:mt-10 sm:p-5">
-        <h2 className="text-orange-500 text-lg sm:text-xl md:text-2xl font-semibold">Got a Question?</h2>
-        <p className="text-sm sm:text-base md:text-lg mt-2">Our destination expert will be happy to help you resolve your queries for this tour.</p>
-        <div className="flex gap-3 sm:gap-4 items-center w-full mt-4">
-          <div className="flex items-center justify-center bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 h-9 w-9 sm:h-10 sm:w-10 rounded-full">
-            <img className="h-4 w-4 sm:h-5 sm:w-5 invert" src={Call} alt="call" />
+      {/* Mobile Question Card */}
+      <div className="md:hidden bg-white border border-gray-200 rounded-xl shadow-lg p-6 mb-6">
+        <h2 className="text-gray-900 text-xl font-bold">Got a Question?</h2>
+        <p className="text-gray-600 mt-2 text-sm">Our destination expert will be happy to help you with your queries for this tour.</p>
+        <div className="flex gap-4 items-center w-full mt-6">
+          <div className="flex items-center justify-center bg-orange-500 h-11 w-11 rounded-full shrink-0">
+            <img className="h-5 w-5 invert" src={Call} alt="Call us icon" />
           </div>
           <div>
-            <a className="text-base sm:text-lg md:text-xl font-semibold block" href="tel:+91-7877979193">
+            <a className="text-lg font-bold text-gray-900 block" href="tel:+91-7877979193">
               +91-78779 79193
             </a>
-            <h3 className="text-xs sm:text-sm">Mon-Sun: 9AM-8PM</h3>
-            <h3 className="text-xs sm:text-sm break-all">
-              <a href="mailto:contact@friskytrails.in" className="text-black">contact@friskytrails.in</a>
+            <h3 className="text-gray-500 text-xs">Mon-Sun: 9AM-8PM</h3>
+            <h3 className="text-gray-500 text-xs break-all mt-0.5">
+              <a href="mailto:contact@friskytrails.in" className="text-orange-500 font-medium">contact@friskytrails.in</a>
             </h3>
           </div>
         </div>

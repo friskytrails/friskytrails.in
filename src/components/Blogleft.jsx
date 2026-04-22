@@ -69,7 +69,7 @@ const Blogleft = ({ blog }) => {
               <div className="flex justify-center mt-4">
                 <img
                   src={block.image}
-                  alt={`Block ${block.order} Image`}
+                  alt={`${blog.title} - ${block.heading ? block.heading.replace(/<[^>]+>/g, "") : "Section " + (index + 1)}`}
                   className="rounded-lg max-w-full"
                 />
               </div>
