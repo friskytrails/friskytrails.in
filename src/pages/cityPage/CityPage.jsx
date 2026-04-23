@@ -42,9 +42,9 @@ const CityPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen">
-        {/* Responsive Hero Skeleton */}
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <Skeleton height="0" className="pb-[56.25%] sm:pb-[62.5%] md:pb-[75%] lg:pb-[70%] xl:pb-[66.67%]" width="100%" borderRadius="1rem" />
+        {/* Hero Skeleton */}
+        <div className="w-full">
+          <Skeleton height="384px" width="100%" borderRadius="0" />
         </div>
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
@@ -91,19 +91,14 @@ const CityPage = () => {
 
   return (
     <div className="min-h-screen">
-      {/* HERO - PERFECT RESPONSIVE IMAGE */}
+      {/* HERO */}
       <div className="w-full">
-        {/* Responsive Container with Fixed Aspect Ratios */}
-        <div className="relative overflow-hidden rounded-lg mx-4 sm:mx-6 lg:mx-8">
-          <div className="w-full pt-[56.25%] sm:pt-[62.5%] md:pt-[75%] lg:pt-[70%] xl:pt-[66.67%]">
-            <img
-              src={city.image}
-              alt={city.name}
-              className="absolute inset-0 w-full h-full object-cover object-center hover:object-right transition-all duration-300"
-              loading="eager"
-            />
-          </div>
-        </div>
+        <img
+          src={city.image}
+          alt={city.name}
+          className="w-full h-64 sm:h-80 md:h-96 object-cover object-center"
+          loading="eager"
+        />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
