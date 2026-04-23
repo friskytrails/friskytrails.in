@@ -42,7 +42,7 @@ const Newlog = () => {
   };
 
   return (
-    <div className="min-h-screen mt-12 md:mt-20 lg:mt-24 w-full">
+    <div className="min-h-screen w-full">
       <Helmet>
         <title>{blog ? `${blog.title} | FriskyTrails Blog` : "Blog | FriskyTrails"}</title>
         <link rel="canonical" href={`https://www.friskytrails.in/blog/${slug}`} />

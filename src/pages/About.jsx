@@ -36,7 +36,7 @@ const About = () => {
     return (
       <div className="min-h-screen w-full bg-white">
         {/* Hero Image Skeleton */}
-        <div className="mt-14 md:mt-20 lg:mt-24 xl:mt-[98px]">
+        <div className="w-full">
           <Skeleton height="370px" width="100%" borderRadius="0" />
         </div>
         
@@ -56,7 +56,7 @@ const About = () => {
   }
 
   return (
-    <div className="min-h-screen mt-14 md:mt-20 lg:mt-24 xl:mt-[98px] w-full">
+    <div className="min-h-screen w-full">
       {/* HERO IMAGE DESKTOP */}
       <div
         className="hidden lg:block"

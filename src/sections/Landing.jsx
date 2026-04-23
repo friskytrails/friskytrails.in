@@ -37,7 +37,7 @@ const Landing = () => {
   }, [isMuted]);
 
   return (
-    <div className="relative mt-9 md:mt-20 lg:mt-[102px] xl:mt-[96px] w-full h-auto bg-[rgb(247, 241, 231)] overflow-hidden">
+    <div className="relative w-full h-auto bg-[rgb(247, 241, 231)] overflow-hidden">
       {/* Background Video */}
       <div className="h-[72vh] md:h-[62vh] w-full ">
         <video

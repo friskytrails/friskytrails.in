@@ -43,7 +43,7 @@ const CountryPage = () => {
     return (
       <div className="min-h-screen">
         {/* Hero Skeleton */}
-        <div className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24">
+        <div className="w-full">
           <Skeleton height="384px" width="100%" borderRadius="0" />
         </div>
         
@@ -92,19 +92,7 @@ const CountryPage = () => {
   return (
     <div className="min-h-screen">
       {/* HERO */}
-      <div
-  className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24"
-        style={{
-          marginTop:
-            typeof window !== "undefined"
-              ? window.innerWidth === 1024 && window.innerHeight === 600
-                ? "4.8rem" // Nest Hub → less gap
-                : window.innerWidth === 1024 && window.innerHeight === 1366
-                ? "10.5rem" // iPad Pro/Tall Screens → more gap
-                : undefined
-              : undefined,
-        }}
-      >
+      <div className="w-full">
         <img
           src={country.image}
           alt={country.name}

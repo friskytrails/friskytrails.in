@@ -21,7 +21,7 @@ const ContactUs = () => {
   if (loading) {
     return (
       <div className="min-h-screen w-full bg-white px-4">
-         <div className="mt-20 md:mt-32 lg:mt-40 xl:mt-24 space-y-10">
+         <div className="space-y-10">
             {/* Title Skeleton */}
             <div className="flex flex-col items-center space-y-6">
                <Skeleton height="5rem" width="60%" />
@@ -43,7 +43,7 @@ const ContactUs = () => {
 
   return (
     <>
-      <div className="relative min-h-screen mt-20 md:mt- lg:mt-40 xl:mt-24 w-full px-4 sm:px-6">
+      <div className="relative min-h-screen w-full px-4 sm:px-6">
         {/* Title */}
         <h1 className="font-bold  text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight text-center md:py-6 lg:mt-0 ">
           Contact Us

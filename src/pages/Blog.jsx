@@ -19,7 +19,7 @@ const Blog = () => {
   // SKELETON LOADER
   if (loading) {
     return (
-      <div className="w-full mt-12 md:mt-20 lg:mt-26 xl:mt-24">
+    <div className="w-full">
         {/* Hero Skeleton */}
         <div className="w-full h-[400px] bg-gray-300">
            <div className="max-w-4xl mx-auto pt-20 px-4 space-y-4">
@@ -46,7 +46,7 @@ const Blog = () => {
   }
 
   return (
-    <div className="w-full mt-12 md:mt-20 lg:mt-26 xl:mt-24">
+    <div className="w-full">
       {/* HERO */}
       <div
         style={{

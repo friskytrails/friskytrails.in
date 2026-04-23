@@ -43,7 +43,7 @@ const CityPage = () => {
     return (
       <div className="min-h-screen">
         {/* Responsive Hero Skeleton */}
-        <div className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <Skeleton height="0" className="pb-[56.25%] sm:pb-[62.5%] md:pb-[75%] lg:pb-[70%] xl:pb-[66.67%]" width="100%" borderRadius="1rem" />
         </div>
 
@@ -92,19 +92,7 @@ const CityPage = () => {
   return (
     <div className="min-h-screen">
       {/* HERO - PERFECT RESPONSIVE IMAGE */}
-      <div
-        className="w-full mt-12 lg:mt-[6.7rem] xl:mt-24"
-        style={{
-          marginTop:
-            typeof window !== "undefined"
-              ? window.innerWidth === 1024 && window.innerHeight === 600
-                ? "3.9rem"     // Nest Hub → kam gap
-                : window.innerWidth === 1024 && window.innerHeight === 1366
-                ? "9.5rem"     // 1024×1366 → thoda zyada gap
-                : undefined    // baaki sab Tailwind se
-              : undefined,
-        }}
-      >
+      <div className="w-full">
         {/* Responsive Container with Fixed Aspect Ratios */}
         <div className="relative overflow-hidden rounded-lg mx-4 sm:mx-6 lg:mx-8">
           <div className="w-full pt-[56.25%] sm:pt-[62.5%] md:pt-[75%] lg:pt-[70%] xl:pt-[66.67%]">

@@ -92,10 +92,10 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Header Spacer - Reduced for small devices */}
-      <div className="h-[5vh] sm:h-[5.5vh] md:h-[6vh] lg:h-0" />
+      {/* Global Layout Spacer - Account for Header + Navbar total height */}
+      <div className="h-[10vh] lg:h-[14vh]" />
       
-      <div className="fixed top-[5vh] sm:top-[5.5vh] md:top-[6vh] left-0 right-0 z-[999] w-full">
+      <div className="fixed top-[5vh] lg:top-[6vh] left-0 right-0 z-[999] w-full">
         <div className="
           h-auto 
           min-h-[28px] xs:min-h-[30px]           

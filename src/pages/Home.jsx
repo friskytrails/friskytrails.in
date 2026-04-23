@@ -29,7 +29,7 @@ const Home = () => {
     return (
       <div className="min-h-screen w-full bg-white">
         {/* Landing Hero Skeleton */}
-        <div className="mt-9 md:mt-20 lg:mt-[102px] xl:mt-[96px] w-full">
+        <div className="w-full">
            <Skeleton height="72vh" width="100%" borderRadius="0" />
            {/* Animated Ticker Skeleton */}
            <div className="py-8 bg-gray-100 flex gap-10 overflow-hidden">

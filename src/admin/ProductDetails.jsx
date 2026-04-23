@@ -150,7 +150,7 @@ const ProductDetails = () => {
       </Helmet>
 
       {/* Breadcrumb Area */}
-      <div className="w-full max-w-7xl mx-auto mt-10 md:mt-16 lg:mt-24 px-4 md:py-2">
+      <div className="w-full max-w-7xl mx-auto px-4 md:py-2">
         <h1 className="text-xl sm:text-2xl md:text-3xl tracking-tighter font-bold pt-6">
           {loading ? <Skeleton width="60%" height="2.5rem" /> : product.name}
         </h1>

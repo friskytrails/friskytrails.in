@@ -5,7 +5,6 @@ const NotFound = () => {
   return (
     <div
       className="
-        pt-[110px]              /* top info bar + navbar */
         min-h-screen
         px-4 py-10
         sm:px-6
