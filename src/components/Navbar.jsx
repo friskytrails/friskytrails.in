@@ -6,6 +6,7 @@ import LoginModal from "./LoginModal";
 import { useAuth } from "../context/AuthContext";
 import Arrow from "../assets/arrow.svg";
 import { FaChevronDown, FaUser } from "react-icons/fa";
+import { LogOut } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -92,31 +93,24 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Global Layout Spacer - Account for Header + Navbar total height */}
-      <div className="h-[10vh] lg:h-[14vh]" />
+      {/* Global Layout Spacer - Account for Header (5vh/6vh) + Navbar (7.5vh/8vh) total height */}
+      <div className="h-[12.5vh] lg:h-[14vh]" />
       
       <div className="fixed top-[5vh] lg:top-[6vh] left-0 right-0 z-[999] w-full">
         <div className="
-          h-auto 
-          min-h-[28px] xs:min-h-[30px]           
-          sm:min-h-[40px] 
-          md:min-h-[50px]
-          lg:h-[8vh]            
-w-full bg-white
-border-none shadow-none
-
-        flex flex-col lg:flex-row 
+          h-[7.5vh] lg:h-[8vh]            
+          w-full bg-white
+          border-none shadow-sm
+          flex flex-col lg:flex-row 
           justify-between items-center
           px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12
-          py-2 sm:py-2.5 md:py-3 lg:py-0
-   
         ">
           {/* Logo and Hamburger */}
-          <div className="flex justify-between items-center w-full lg:w-auto py-1.5 lg:py-0">
-            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
-              <Link to="/">
+          <div className="flex justify-between items-center w-full lg:w-auto h-full">
+            <div className="flex items-center gap-0.5 sm:gap-1 lg:gap-3 flex-shrink-0">
+              <Link to="/" className="flex items-center">
                 <img
-                  className="h-8 w-10 sm:h-10 sm:w-11 md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-20 xl:w-20 object-contain flex-shrink-0"
+                  className="h-12 xs:h-14 w-auto sm:h-12 md:h-14 lg:h-16 lg:w-16 xl:h-20 xl:w-20 object-contain flex-shrink-0"
                   src="/logo.webp"
                   alt="FriskyTrails Logo"
                   width="80"
@@ -124,7 +118,7 @@ border-none shadow-none
                   fetchPriority="high"
                 />
               </Link>
-              <h2 className="text-lg sm:text-base md:text-xl lg:text-2xl xl:text-3xl font-bold whitespace-nowrap text-gray-800 flex-shrink-0">
+              <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-3xl font-bold tracking-tight whitespace-nowrap text-gray-800 flex-shrink-0">
                 FriskyTrails
               </h2>
             </div>
@@ -201,11 +195,12 @@ border-none shadow-none
                   <FaChevronDown className="text-sm transition-transform" style={{ transform: showDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }} />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-[1000] py-1">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-[1000] py-2 overflow-hidden">
                     <button
                       onClick={handleLogout}
-                      className="w-full px-4 py-3 text-left text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="w-full px-4 py-3 text-left text-sm font-semibold text-red-600 hover:bg-red-50 flex items-center gap-2 transition-all duration-200"
                     >
+                      <LogOut className="w-4 h-4" />
                       Logout
                     </button>
                   </div>
@@ -214,7 +209,7 @@ border-none shadow-none
             ) : (
               <button
                 onClick={() => setShowLogin(true)}
-                className="bg-black text-white font-semibold px-8 py-3 rounded-full hover:bg-amber-500 active:scale-95 transition-all duration-200 shadow-lg"
+                className="bg-gradient-to-r from-orange-600 to-amber-500 text-white font-bold px-7 py-2 rounded-xl shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
               >
                 Login
               </button>
@@ -378,22 +373,27 @@ border-none shadow-none
 
             {/* Login/Logout Section */}
             {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="block w-full p-4 rounded-xl text-center hover:bg-red-50 hover:text-red-600 transition-all text-lg font-semibold border-t border-gray-200 mt-2 pt-6"
-              >
-                Logout
-              </button>
+              <div className="px-4 mt-8 pt-6 border-t border-gray-100">
+                <button
+                  onClick={handleLogout}
+                  className="w-full py-3.5 flex items-center justify-center gap-2 rounded-2xl text-lg font-bold text-red-600 bg-red-50 active:bg-red-100 transition-all duration-200 shadow-sm"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Logout
+                </button>
+              </div>
             ) : (
-              <button
-                onClick={() => {
-                  handleNavigation();
-                  setShowLogin(true);
-                }}
-                className="block w-full p-4 text-center rounded-xl   hover:bg-amber-50 hover:text-amber-600 transition-all text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white border-t border-gray-200 mt-4 pt-6 shadow-lg"
-              >
-                Login
-              </button>
+              <div className="px-4 mt-6">
+                <button
+                  onClick={() => {
+                    handleNavigation();
+                    setShowLogin(true);
+                  }}
+                  className="w-full py-3 text-center rounded-xl text-lg font-bold bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-lg active:scale-95 transition-all duration-200"
+                >
+                  Login
+                </button>
+              </div>
             )}
           </div>
         </div>
