@@ -61,10 +61,12 @@ const Smallbox = () => {
   }, [isVisible]);
 
   return (
-    <div ref={containerRef} className="contents">
+    <>
       {data.map((item, index) => (
         <Link
           key={index}
+          // Use the first item as the trigger for visibility
+          ref={index === 0 ? containerRef : null}
           to={`/state/${item.slug}`}
           className="
             group relative overflow-hidden
@@ -94,7 +96,7 @@ const Smallbox = () => {
           </div>
         </Link>
       ))}
-    </div>
+    </>
   );
 };
 
