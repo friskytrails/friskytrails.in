@@ -28,10 +28,10 @@ const End = () => {
 
                 <div className="mt-6 space-y-2">
                   <h3 className="text-gray-400 font-bold">
-                    <a href="tel:+917877979193" className="hover:text-white">+91-78779 79193</a>
+                    <a href="tel:+917877979193" className="hover:text-white transition-colors">+91-78779 79193</a>
                   </h3>
                   <h3 className="text-gray-400 font-bold">
-                    <a href="mailto:friskytrails@gmail.com" className="hover:text-white">contact@friskytrails.in</a>
+                    <a href="mailto:contact@friskytrails.in" className="hover:text-white transition-colors">contact@friskytrails.in</a>
                   </h3>
                 </div>
 

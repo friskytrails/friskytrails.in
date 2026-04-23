@@ -27,6 +27,7 @@ const ProductType = lazy(() => import("./admin/ProductType"));
 const AllBlogs = lazy(() => import("./admin/AllBlogs"));
 const Unauthorized = lazy(() => import("./components/Unauthorized"));
 const NotFound = lazy(() => import("./components/NotFound"));
+const ComingSoon = lazy(() => import("./components/ComingSoon"));
 
 // Admin forms
 const Dashboard = lazy(() => import("./admin/Dashboard"));
@@ -75,6 +76,12 @@ const App = () => {
             <Route path="/tours/:slug" element={<ProductDetails />} />
             <Route path="/tags/:slug" element={<ProductType />} />
             <Route path="/get-blogs" element={<AllBlogs />} />
+
+            {/* Coming Soon Routes */}
+            <Route path="/adventures" element={<ComingSoon />} />
+            <Route path="/partners" element={<ComingSoon />} />
+            <Route path="/partner" element={<ComingSoon />} />
+            <Route path="/reviews" element={<ComingSoon />} />
 
             {/* Protected Routes - SAME AS BEFORE */}
             <Route

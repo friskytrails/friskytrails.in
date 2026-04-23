@@ -1,7 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const NotFound = () => {
+const ComingSoon = () => {
   return (
     <div
       className="
@@ -22,11 +22,12 @@ const NotFound = () => {
             {/* Left Section */}
             <div className="flex-1 max-w-xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Looking for something?
+                Coming Soon...
               </h1>
 
               <p className="text-gray-700 text-base md:text-lg mb-8 leading-relaxed">
-                We&apos;re sorry. The Web address you entered is not a functioning page on our site.
+                We are currently working hard to bring you new and exciting adventures. 
+                Our team is busy crafting perfect experiences for your next journey.
               </p>
 
               {/* Contact Info */}
@@ -37,16 +38,13 @@ const NotFound = () => {
                   <div className="flex items-center gap-2">
                     <Phone className="w-5 h-5 text-gray-800" />
                     <span className="font-bold text-gray-800">
-                      Call Us for details :
+                      Inquiries :
                     </span>
                   </div>
                   <div className="flex items-center gap-2 sm:ml-2">
                     <a href="tel:+917877979193" className="text-gray-700 font-semibold hover:text-amber-600 transition-colors">
                       +91-78779 79193
                     </a>
-                    <span className="bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 bg-clip-text text-transparent font-bold">
-                      (Toll Free)
-                    </span>
                   </div>
                 </div>
 
@@ -55,7 +53,7 @@ const NotFound = () => {
                   <div className="flex items-center gap-2">
                     <Mail className="w-5 h-5 text-gray-800" />
                     <span className="font-bold text-gray-800">
-                      Mail Us for details :
+                      Email :
                     </span>
                   </div>
                   <a
@@ -71,12 +69,12 @@ const NotFound = () => {
               <div className="flex flex-wrap gap-4">
                 <Link to="/">
                   <button className="px-7 py-3 bg-gray-900 text-white font-semibold rounded-md hover:bg-gray-800 transition shadow-lg">
-                    Back to Home
+                    Explore Home
                   </button>
                 </Link>
                 <Link to="/contact">
                   <button className="px-7 py-3 bg-gradient-to-r from-[rgb(255,99,33)] to-amber-400 text-white font-semibold rounded-md hover:opacity-90 transition shadow-lg">
-                    Enquire Now
+                    Contact Us
                   </button>
                 </Link>
               </div>
@@ -86,22 +84,20 @@ const NotFound = () => {
             <div className="flex-1 flex justify-center">
               <img
                 src="/NotFound.webp"
-                alt="Travelers with map"
-                className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain"
+                alt="Coming Soon"
+                className="w-full max-w-sm sm:max-w-md lg:max-w-lg object-contain opacity-80"
               />
             </div>
           </div>
         </div>
       </div>
 
-      {/* FOOTER NOTE (naturally near bottom) */}
+      {/* FOOTER NOTE */}
       <div className="mt-16 pt-8 border-t border-gray-200 max-w-5xl">
         <p className="text-sm md:text-base leading-relaxed text-gray-800">
-          <span className="font-bold">Please Note : </span>
-          <span className="font-semibold">
-            The prices shown are reference pricing and based on previous foreign exchange rates.
-            The exact foreign exchange rate will be applicable at the time of booking.
-            The tour price may vary.
+          <span className="font-bold">Stay Tuned! </span>
+          <span className="font-semibold text-gray-600">
+            We are launching some amazing tours and features soon. Follow us on social media for updates.
           </span>
         </p>
       </div>
@@ -109,4 +105,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default ComingSoon;
