@@ -105,7 +105,8 @@ const Cards = () => {
 
   //  INLINE PREFETCH FUNCTION
   const prefetchTourPage = () => {
-    // You can implement more advanced prefetching here if needed
+    // Prefetch the ProductDetails component code on hover
+    import("../admin/ProductDetails");
   };
 
   return (
@@ -148,6 +149,7 @@ const Cards = () => {
                         <img
                           src={item.images[2] || item.images[0]}
                           alt={item.name}
+                          loading="lazy"
                           className="w-full h-60 sm:h-64 md:h-72 object-top object-cover hover:scale-105 transition-transform duration-500"
                         />
                       ) : (

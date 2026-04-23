@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, lazy } from "react";
 import { useParams } from "react-router-dom";
 import Share from "../assets/share.svg";
 import Payment from "../assets/payment.svg";
@@ -13,8 +13,9 @@ import {
 } from "../api/admin.api";
 import Content from "../Productpage/Content";
 import BookingModal from "../components/BookingModal";
-import Choose from "../sections/Choose";
-import Testimonial from "../sections/Testimonial";
+import LazySection from "../components/LazySection";
+const Choose = lazy(() => import("../sections/Choose"));
+const Testimonial = lazy(() => import("../sections/Testimonial"));
 import Skeleton from "../components/Skeleton";
 
 const ProductDetails = () => {
@@ -312,10 +313,12 @@ const ProductDetails = () => {
 
       {!loading && (
         <>
-          <div className="mt-20">
+          <LazySection height="400px" className="mt-20">
             <Testimonial />
-          </div>
-          <Choose />
+          </LazySection>
+          <LazySection height="400px">
+            <Choose />
+          </LazySection>
         </>
       )}
 

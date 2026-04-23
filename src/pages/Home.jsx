@@ -1,16 +1,19 @@
 
 
-import Cards from "../sections/Cards";
-import Categories from "../sections/Categories";
-import Banner from "../sections/Banner";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Landing from "../sections/Landing";
-import Next from "../sections/Next";
-import Choose from "../sections/Choose";
-import Rewards from "../sections/Rewards";
-import Blogs from "../sections/Blogs";
-import Testimonial from "../sections/Testimonial";
+import LazySection from "../components/LazySection";
+
+// Lazy load sections below the fold
+const Categories = lazy(() => import("../sections/Categories"));
+const Banner = lazy(() => import("../sections/Banner"));
+const Cards = lazy(() => import("../sections/Cards"));
+const Next = lazy(() => import("../sections/Next"));
+const Choose = lazy(() => import("../sections/Choose"));
+const Blogs = lazy(() => import("../sections/Blogs"));
+const Rewards = lazy(() => import("../sections/Rewards"));
+const Testimonial = lazy(() => import("../sections/Testimonial"));
 import Skeleton from "../components/Skeleton";
-import { useEffect, useState } from "react";
 
 
 const Home = () => {
@@ -71,14 +74,30 @@ const Home = () => {
     <>
       <h1 className="sr-only">Home</h1>
       <Landing />
-      <Categories />
-      <Banner />
-      <Cards />
-      <Next />
-      <Choose />
-      <Blogs />
-      <Rewards />
-      <Testimonial />
+      <LazySection height="200px">
+        <Categories />
+      </LazySection>
+      <LazySection height="400px">
+        <Banner />
+      </LazySection>
+      <LazySection height="600px">
+        <Cards />
+      </LazySection>
+      <LazySection height="400px">
+        <Next />
+      </LazySection>
+      <LazySection height="400px">
+        <Choose />
+      </LazySection>
+      <LazySection height="500px">
+        <Blogs />
+      </LazySection>
+      <LazySection height="400px">
+        <Rewards />
+      </LazySection>
+      <LazySection height="400px">
+        <Testimonial />
+      </LazySection>
     </>
   );
 };

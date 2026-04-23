@@ -50,6 +50,7 @@ export default function HoverRevealButton() {
               <motion.img
                 src={item.image}
                 alt={item.name}
+                loading="lazy"
                 className="absolute w-full h-full rounded-lg shadow-lg object-cover"
                 animate={{ y: hoveredIndex === index ? -30 : 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
@@ -90,6 +91,7 @@ export default function HoverRevealButton() {
             <Link to={item.link}> <img
                 src={item.image}
                 alt={item.name}
+                loading="lazy"
                 className="w-full h-full rounded-lg shadow-lg object-cover"
               />
               </Link>

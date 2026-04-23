@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy } from "react";
 import { useParams } from "react-router-dom";
 import Right from "../assets/right.svg";
 import Blogleft from "../components/Blogleft";
-import Blogright from "../components/Blogright";
+import LazySection from "../components/LazySection";
+const Blogright = lazy(() => import("../components/Blogright"));
 import { getSingleBlog } from "../api/blog.api";
 import Skeleton from "../components/Skeleton";
   import { Helmet } from "react-helmet-async";
@@ -121,7 +122,9 @@ const Newlog = () => {
                    <Skeleton height="15rem" width="100%" borderRadius="1rem" />
                 </div>
               ) : (
-                <Blogright />
+                <LazySection height="300px">
+                  <Blogright />
+                </LazySection>
               )}
             </div>
           </div>

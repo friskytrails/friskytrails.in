@@ -28,13 +28,10 @@ const Blogs = () => {
   ]
 
 
-  const preloadPage = (url) => {
-    const link = document.createElement("link")
-    link.rel = "preload"
-    link.as = "document"
-    link.href = url
-    document.head.appendChild(link)
-  }
+  const preloadPage = () => {
+    // Prefetch the blog details component code on hover
+    import("../Blogpages/Newlog");
+  };
 
   return (
     <div className="w-full md:mt-8 max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto py-2">
@@ -61,6 +58,7 @@ const Blogs = () => {
                 <img
                   src={item.image || "/placeholder.svg"}
                   alt={item.des}
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
@@ -88,6 +86,7 @@ const Blogs = () => {
               <img
                 src={item.image || "/placeholder.svg"}
                 alt={item.des}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
