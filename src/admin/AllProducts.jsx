@@ -13,7 +13,13 @@ const AllProducts = () => {
       setLoading(true);
       const res = await getProducts();
       if (!res.status && !res.success) throw new Error(res.message || "Failed to fetch products");
-      setProducts(res.data || []);
+      
+      // Handle both paginated ({ products: [] }) and direct array ([]) responses
+      const productList = Array.isArray(res.data) 
+        ? res.data 
+        : (res.data?.products || []);
+        
+      setProducts(productList);
     } catch (err) {
       console.error("Error fetching products:", err);
       setError(err.message);
