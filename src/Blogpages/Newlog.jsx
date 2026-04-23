@@ -36,7 +36,9 @@ const Newlog = () => {
   // Function to optimize Cloudinary URL
   const optimizeUrl = (url) => {
     if (!url || !url.includes("cloudinary.com")) return url;
-    return url.replace("/upload/", "/upload/f_auto,q_auto,w_1200/");
+    // Using 800px width instead of 1200px for better mobile performance
+    // f_auto,q_auto handles format and quality automatically
+    return url.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
   };
 
   return (
@@ -45,7 +47,6 @@ const Newlog = () => {
         <title>{blog ? `${blog.title} | FriskyTrails Blog` : "Blog | FriskyTrails"}</title>
         <link rel="canonical" href={`https://www.friskytrails.in/blog/${slug}`} />
         <meta name="description" content={blog?.intro?.replace(/<[^>]+>/g, "").slice(0, 160)} />
-        <link rel="preconnect" href="https://api.friskytrails.in" />
         <link rel="preload" as="image" href="/images/bgbanner.svg" fetchPriority="high" />
       </Helmet>
 
@@ -88,8 +89,8 @@ const Newlog = () => {
             className="mx-auto rounded-2xl mt-6 w-[90vw] h-[32vh] md:h-[40vh] max-w-5xl object-cover"
             src={optimizeUrl(blog?.coverImage)}
             alt={blog?.title}
-            width="1200"
-            height="600"
+            width="800"
+            height="450"
             fetchPriority="high"
             loading="eager"
           />

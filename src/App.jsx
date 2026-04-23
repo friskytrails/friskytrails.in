@@ -5,8 +5,8 @@ import { Toaster } from 'react-hot-toast';
 // Layout components (Keep these static for better layout stability)
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
-import End from "./sections/End";
-import Last from "./components/Last";
+const End = lazy(() => import("./sections/End"));
+const Last = lazy(() => import("./components/Last"));
 import Scrolltotop from "./components/Scrolltotop";
 import Skeleton from "./components/Skeleton";
 import ProtectedRoute from './components/ProtectedRoute';
@@ -119,8 +119,10 @@ const App = () => {
         </Suspense>
       </main>
       
-      <End />
-      <Last />
+      <Suspense fallback={null}>
+        <End />
+        <Last />
+      </Suspense>
     </div>
   );
 };

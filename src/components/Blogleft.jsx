@@ -65,16 +65,26 @@ const Blogleft = ({ blog }) => {
             )}
 
             {/* Block Image */}
-            {block.image && (
-              <div className="flex justify-center mt-4">
-                <img
-                  src={block.image}
-                  alt={block.heading ? block.heading.replace(/<[^>]+>/g, "") : `${blog.title} - Section ${block.order}`}
-                  className="rounded-lg max-w-full"
-                  loading="lazy"
-                />
-              </div>
-            )}
+            {block.image && (() => {
+              const optimizeUrl = (url) => {
+                if (!url || !url.includes("cloudinary.com")) return url;
+                // For content images, we can use a smaller width like 800px
+                return url.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
+              };
+              
+              return (
+                <div className="flex justify-center mt-4">
+                  <img
+                    src={optimizeUrl(block.image)}
+                    alt={block.heading ? block.heading.replace(/<[^>]+>/g, "") : `${blog.title} - Section ${block.order}`}
+                    className="rounded-lg max-w-full"
+                    loading="lazy"
+                    width="800"
+                    height="450"
+                  />
+                </div>
+              );
+            })()}
           </div>
         ))}
 

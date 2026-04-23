@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getAllStates } from "../api/admin.api";
 
@@ -14,9 +14,32 @@ const Smallbox = () => {
     { name: "Rajasthan", slug: "rajasthan" },
     { name: "Uttarakhand", slug: "uttarakhand" },
   ];
+
   const [data, setData] = useState(defaultData);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const fetchStateImages = async () => {
       try {
         const result = await getAllStates();
@@ -35,10 +58,10 @@ const Smallbox = () => {
     };
 
     fetchStateImages();
-  }, []);
+  }, [isVisible]);
 
   return (
-    <>
+    <div ref={containerRef} className="contents">
       {data.map((item, index) => (
         <Link
           key={index}
@@ -71,7 +94,7 @@ const Smallbox = () => {
           </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 };
 
