@@ -104,12 +104,15 @@ const StatePage = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
         {/* HEADER */}
-        <section className="border-b pb-4">
+        <section className="pb-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
             {state.name}
           </h1>
-          <p className="mt-3 text-gray-600 max-w-2xl">
-            Experiential journeys will make you a storyteller
+          <p className="mt-6 text-gray-700 leading-relaxed max-w-4xl text-xl italic border-l-4 border-orange-500 pl-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+            "Leave the paved roads behind and find the places that make your heart beat a little faster.
+            There’s a certain magic that happens when you step away from the noise and let the landscape take the lead. 
+            From the quiet majesty of hidden trails to the vibrant pulse of local markets, every corner of this land 
+            has a secret to share with those who are willing to listen. We’re here to help you find it."
           </p>
         </section>
 
@@ -129,15 +132,24 @@ const StatePage = () => {
               renderItem={(blog) => (
                 <Link
                   to={`/blog/${blog.slug}`}
-                  className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-all duration-300"
+                  className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-all duration-300 group"
                 >
-                  <img
-                    src={blog.imageUrl}
-                    alt={blog.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-4 font-semibold line-clamp-2">
-                    {blog.title}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={blog.imageUrl}
+                      alt={blog.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg line-clamp-2 mb-4 h-12">
+                      {blog.title}
+                    </h3>
+                    <div className="flex justify-end items-center mt-2">
+                      <span className="text-sm font-semibold text-gray-800 bg-gray-100 px-3 py-1 rounded-lg">
+                        Read More →
+                      </span>
+                    </div>
                   </div>
                 </Link>
               )}
@@ -173,15 +185,12 @@ const StatePage = () => {
                   to={`/tours/${tour.slug}`}
                   className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-all duration-300 group"
                 >
-                  <div className="relative">
+                  <div className="relative overflow-hidden">
                     <img
                       src={tour.imageUrl}
                       alt={tour.name}
                       className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-orange-600 shadow-sm">
-                      {tour.productType}
-                    </div>
                   </div>
                   <div className="p-4">
                     <h3 className="font-bold text-lg line-clamp-1 mb-2">
@@ -195,7 +204,7 @@ const StatePage = () => {
                         </p>
                       </div>
                       <span className="text-sm font-semibold text-gray-800 bg-gray-100 px-3 py-1 rounded-lg">
-                        View →
+                        Check Now →
                       </span>
                     </div>
                   </div>
