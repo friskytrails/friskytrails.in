@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -5,6 +6,7 @@ import { State } from "../models/state.model.js";
 import { Country } from "../models/country.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { CreateBlog } from "../models/create-blog.model.js";
+import { Product } from "../models/product.model.js";
 
 export const createState = asyncHandler(async (req, res) => {
   try {
@@ -92,14 +94,20 @@ export const getStateWithBlogs = asyncHandler(async (req, res) => {
       .select("title slug coverImage content authorName country city createdAt")
       .lean();
 
+    const tours = await Product.find({ 
+      state: new mongoose.Types.ObjectId(state._id) 
+    })
+      .select("name slug images packages productType rating reviews")
+      .lean();
+
     res.status(200).json(
-      new ApiResponse(200, { state, blogs }, "State with blogs fetched successfully")
+      new ApiResponse(200, { state, blogs, tours: tours || [] }, "State with blogs and tours fetched successfully")
     );
   } catch (error) {
     console.error("Error in getStateWithBlogs:", error);
     if (error instanceof ApiError) {
       throw error;
     }
-    throw new ApiError(500, "Failed to fetch state with blogs");
+    throw new ApiError(500, "Failed to fetch state with blogs and tours");
   }
 });

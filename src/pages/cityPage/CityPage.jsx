@@ -9,6 +9,7 @@ const CityPage = () => {
 
   const [city, setCity] = useState(null)
   const [blogs, setBlogs] = useState([])
+  const [tours, setTours] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -23,6 +24,7 @@ const CityPage = () => {
         if (result?.data) {
           setCity(result.data.city)
           setBlogs(result.data.blogs || [])
+          setTours(result.data.tours || [])
         } else {
           setError("City data not found")
         }
@@ -113,43 +115,106 @@ const CityPage = () => {
         </section>
 
         {/* BLOGS */}
-        <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-6">
-          Top Blogs in {city.name}
-        </h2>
+        {blogs.length > 0 && (
+          <>
+            <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-6">
+              Top Blogs in {city.name}
+            </h2>
 
-        <CardCarousel
-          className="mt-2"
-          items={blogs.map((blog) => ({
-            ...blog,
-            imageUrl: blog.image || blog.coverImage || "/placeholder.png",
-          }))}
-          renderItem={(blog) => (
-            <Link
-              to={`/blog/${blog.slug}`}
-              className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-shadow duration-300"
-            >
-              <img
-                src={blog.imageUrl}
-                alt={blog.title}
-                className="w-full h-48 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4 font-semibold line-clamp-2 leading-tight">
-                {blog.title}
-              </div>
-            </Link>
-          )}
-        />
+            <CardCarousel
+              className="mt-2"
+              items={blogs.map((blog) => ({
+                ...blog,
+                imageUrl: blog.image || blog.coverImage || "/placeholder.png",
+              }))}
+              renderItem={(blog) => (
+                <Link
+                  to={`/blog/${blog.slug}`}
+                  className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img
+                    src={blog.imageUrl}
+                    alt={blog.title}
+                    className="w-full h-48 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-4 font-semibold line-clamp-2 leading-tight">
+                    {blog.title}
+                  </div>
+                </Link>
+              )}
+            />
 
-        {/* CTA */}
-        <div className="flex justify-center mt-10">
-          <Link
-            to="/blog"
-            className="px-10 py-4 font-semibold bg-white border-2 border-orange-500 shadow-xl rounded-full hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-400 hover:text-white hover:border-transparent transition-all duration-300 text-orange-500 hover:shadow-2xl"
-          >
-            More Blogs
-          </Link>
-        </div>
+            {/* CTA */}
+            <div className="flex justify-center mt-8 pb-8 border-b border-gray-100">
+              <Link
+                to="/blog"
+                className="px-10 py-3.5 font-semibold bg-white border shadow-xl rounded-full hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-400 hover:text-white transition-all duration-300 text-orange-500"
+              >
+                More Blogs
+              </Link>
+            </div>
+          </>
+        )}
+
+        {/* TOURS */}
+        {tours.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-6">
+              Top Tour Packages in {city.name}
+            </h2>
+
+            <CardCarousel
+              className="mt-2"
+              items={tours.map((tour) => ({
+                ...tour,
+                imageUrl: tour.images?.[0] || "/placeholder.png",
+              }))}
+              renderItem={(tour) => (
+                <Link
+                  to={`/tours/${tour.slug}`}
+                  className="bg-white rounded-2xl shadow overflow-hidden block h-full hover:shadow-xl transition-all duration-300 group"
+                >
+                  <div className="relative">
+                    <img
+                      src={tour.imageUrl}
+                      alt={tour.name}
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-orange-600 shadow-sm">
+                      {tour.productType}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg line-clamp-1 mb-2">
+                      {tour.name}
+                    </h3>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-xs text-gray-500">Starting from</p>
+                        <p className="text-lg font-extrabold text-[rgb(255,99,33)]">
+                          ₹{tour.packages?.[0]?.discountedPrice?.toLocaleString("en-IN") || "N/A"}
+                        </p>
+                      </div>
+                      <span className="text-sm font-semibold text-gray-800 bg-gray-100 px-3 py-1 rounded-lg">
+                        View →
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+            />
+
+            <div className="flex justify-center mt-10">
+              <Link
+                to="/products"
+                className="px-10 py-4 font-semibold bg-[rgb(255,99,33)] text-white shadow-xl rounded-full hover:bg-orange-600 transition-all duration-300 hover:scale-105"
+              >
+                View All Tours
+              </Link>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )

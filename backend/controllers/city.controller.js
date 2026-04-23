@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
@@ -6,6 +7,7 @@ import { City } from "../models/city.model.js";
 import { Country } from "../models/country.model.js";
 import { State } from "../models/state.model.js";
 import { CreateBlog } from "../models/create-blog.model.js";
+import { Product } from "../models/product.model.js";
 
 export const createCity = asyncHandler(async (req, res) => {
   const { name, slug, country, state, howToReach } = req.body;
@@ -89,10 +91,16 @@ export const getCityWithBlogs = asyncHandler(async (req, res) => {
     .populate("state", "name slug")
     .select("title slug coverImage content authorName state country createdAt");
 
+  const tours = await Product.find({ 
+    city: new mongoose.Types.ObjectId(city._id) 
+  })
+    .select("name slug images packages productType rating reviews")
+    .lean();
+
   res
     .status(200)
     .json(
-      new ApiResponse(200, { city, blogs }, "City with blogs fetched successfully")
+      new ApiResponse(200, { city, blogs, tours: tours || [] }, "City with blogs and tours fetched successfully")
     );
 });
 
