@@ -69,8 +69,9 @@ const Blogleft = ({ blog }) => {
               <div className="flex justify-center mt-4">
                 <img
                   src={block.image}
-                  alt={`${blog.title} - ${block.heading ? block.heading.replace(/<[^>]+>/g, "") : "Section " + (index + 1)}`}
+                  alt={block.heading ? block.heading.replace(/<[^>]+>/g, "") : `${blog.title} - Section ${block.order}`}
                   className="rounded-lg max-w-full"
+                  loading="lazy"
                 />
               </div>
             )}
@@ -80,15 +81,13 @@ const Blogleft = ({ blog }) => {
       {/* Conclusion */}
       {blog.conclusion && (
         <div className="blog-content bg-white p-4 rounded-lg prose prose-lg max-w-none w-[90%] mx-auto mt-6">
-          <h2 className="hidden md:block text-2xl font-semibold mb-4 text-orange-500">Conclusion</h2>
-          <h4 className="md:hidden text-xl font-semibold mb-4 text-orange-500">Conclusion</h4>
+          <h2 className="text-2xl font-semibold mb-4 text-[#d64a00]">Conclusion</h2>
           <div dangerouslySetInnerHTML={{ __html: blog.conclusion }} />
         </div>
       )}
       {blog.faq && (
         <div className="blog-content bg-white p-4 rounded-lg prose prose-lg max-w-none w-[90%] mx-auto mt-6">
-          <h2 className="hidden md:block text-2xl font-semibold mb-4 text-orange-500">Frequently Asked Questions</h2>
-          <h4 className="md:hidden text-xl font-semibold mb-4 text-orange-500">Frequently Asked Questions</h4>
+          <h2 className="text-2xl font-semibold mb-4 text-[#d64a00]">Frequently Asked Questions</h2>
           <div dangerouslySetInnerHTML={{ __html: blog.faq }} className="faq-content" />
         </div>
       )}

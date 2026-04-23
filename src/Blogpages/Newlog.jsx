@@ -45,6 +45,8 @@ const Newlog = () => {
         <title>{blog ? `${blog.title} | FriskyTrails Blog` : "Blog | FriskyTrails"}</title>
         <link rel="canonical" href={`https://www.friskytrails.in/blog/${slug}`} />
         <meta name="description" content={blog?.intro?.replace(/<[^>]+>/g, "").slice(0, 160)} />
+        <link rel="preconnect" href="https://api.friskytrails.in" />
+        <link rel="preload" as="image" href="/images/bgbanner.svg" fetchPriority="high" />
       </Helmet>
 
       <div
@@ -60,11 +62,11 @@ const Newlog = () => {
             <>
               {blog?.country && <h3 className="font-semibold">{blog.country?.name}</h3>}
               {blog?.country && blog?.state && (
-                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" />
+                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
               )}
               {blog?.state && <h3 className="font-semibold">{blog.state?.name}</h3>}
               {blog?.state && blog?.city && (
-                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" />
+                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
               )}
               {blog?.city && (
                 <h3 className="font-semibold text-gray-600">{blog.city?.name}</h3>
@@ -89,6 +91,7 @@ const Newlog = () => {
             width="1200"
             height="600"
             fetchPriority="high"
+            loading="eager"
           />
         )}
         
