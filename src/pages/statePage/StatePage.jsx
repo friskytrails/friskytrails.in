@@ -108,7 +108,7 @@ const StatePage = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
             {state.name}
           </h1>
-          <p className="mt-6 text-gray-700 leading-relaxed max-w-4xl text-xl italic border-l-4 border-orange-500 pl-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <p className="mt-6 text-gray-700 leading-relaxed max-w-5xl text-2xl italic border-l-4 border-orange-500 pl-6 text-justify" style={{ fontFamily: "'Lora', serif" }}>
             "Leave the paved roads behind and find the places that make your heart beat a little faster.
             There’s a certain magic that happens when you step away from the noise and let the landscape take the lead. 
             From the quiet majesty of hidden trails to the vibrant pulse of local markets, every corner of this land 
@@ -212,14 +212,7 @@ const StatePage = () => {
               )}
             />
 
-            <div className="flex justify-center mt-10">
-              <Link
-                to="/products"
-                className="px-10 py-4 font-semibold bg-[rgb(255,99,33)] text-white shadow-xl rounded-full hover:bg-orange-600 transition-all duration-300 hover:scale-105"
-              >
-                View All Tours
-              </Link>
-            </div>
+
           </div>
         )}
       </main>
