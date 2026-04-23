@@ -188,17 +188,17 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowDropdown((prev) => !prev)}
-                  className="flex items-center gap-2 px-4 py-2 text-base font-semibold text-gray-700 hover:text-black hover:bg-gray-100 rounded-lg transition-all"
+                  className="flex items-center gap-2 px-4 py-2 text-base font-bold text-gray-800 hover:bg-gray-50 border border-gray-100 rounded-xl transition-all duration-200"
                 >
-                  <FaUser className="text-lg" />
+                  <FaUser className="text-sm text-gray-600" />
                   Hi, {storedFirstName}
-                  <FaChevronDown className="text-sm transition-transform" style={{ transform: showDropdown ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+                  <FaChevronDown className={`text-xs transition-transform duration-300 ${showDropdown ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-[1000] py-2 overflow-hidden">
+                  <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-100 rounded-xl shadow-xl z-[1000] py-1 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                     <button
                       onClick={handleLogout}
-                      className="w-full px-4 py-3 text-left text-sm font-semibold text-red-600 hover:bg-red-50 flex items-center gap-2 transition-all duration-200"
+                      className="w-full px-4 py-2.5 text-left text-sm font-bold text-red-500 hover:bg-red-50 flex items-center gap-2 transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       Logout
