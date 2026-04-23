@@ -6,6 +6,14 @@ const Landing = () => {
   const desktopVideoRef = useRef(null);
   const mobileVideoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const toggleMute = () => {
     if (desktopVideoRef.current) {
@@ -40,26 +48,29 @@ const Landing = () => {
     <div className="relative w-full h-auto bg-[rgb(247, 241, 231)] overflow-hidden">
       {/* Background Video */}
       <div className="h-[72vh] md:h-[62vh] w-full ">
-        <video
-          className="absolute md:block h-[62vh] top-0 w-full left-0 object-cover"
-          ref={desktopVideoRef}
-          src="/images/Webvi.mp4"
-          poster="/images/video-poster.webp"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-        <video
-          className="absolute md:hidden top-0 w-full h-[72vh] left-0 object-cover"
-          ref={mobileVideoRef}
-          src="/images/mobile.webm"
-          poster="/images/video-poster.webp"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
+        {isMobile ? (
+          <video
+            className="absolute top-0 w-full h-[72vh] left-0 object-cover"
+            ref={mobileVideoRef}
+            src="/images/mobile.webm"
+            poster="/images/video-poster.webp"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : (
+          <video
+            className="absolute h-[62vh] top-0 w-full left-0 object-cover"
+            ref={desktopVideoRef}
+            src="/images/Webvi.mp4"
+            poster="/images/video-poster.webp"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        )}
         <button
           onClick={toggleMute}
           className="absolute mt-4 md:mt-0 z-20 top-4 right-4 bg-white/20 backdrop-blur-md text-black p-2 md:p-3 rounded-full hover:bg-white/30 transition shadow-md"
