@@ -13,6 +13,7 @@ const Choose = lazy(() => import("../sections/Choose"));
 const Blogs = lazy(() => import("../sections/Blogs"));
 const Rewards = lazy(() => import("../sections/Rewards"));
 const Testimonial = lazy(() => import("../sections/Testimonial"));
+import { Helmet } from "react-helmet-async";
 import Skeleton from "../components/Skeleton";
 
 
@@ -72,6 +73,11 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>FriskyTrails | Adventure Tours, Trekking & Seasonal Activities in India</title>
+        <link rel="canonical" href="https://www.friskytrails.in/" />
+        <meta name="description" content="Explore India's most stunning destinations with FriskyTrails. We offer curated adventure tours, trekking, camping, and seasonal activities across India." />
+      </Helmet>
       <h1 className="sr-only">Home</h1>
       <Landing />
       <LazySection height="200px">
