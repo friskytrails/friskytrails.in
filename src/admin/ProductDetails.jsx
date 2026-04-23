@@ -240,8 +240,8 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row px-4 gap-8 mt-5">
-        <div className="w-full lg:w-[68%]">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 pt-0 md:pt-10 px-4 sm:px-6 lg:px-8 gap-8">
+        <div className="lg:col-span-2">
           {loading ? (
              <div className="space-y-4 pt-10">
                 <Skeleton height="2rem" width="40%" />
@@ -254,8 +254,8 @@ const ProductDetails = () => {
           )}
         </div>
 
-        <div className="w-full lg:w-[32%] pt-4 lg:pt-8">
-          <div className="lg:sticky lg:top-28 space-y-6">
+        <div className="pt-4 lg:pt-8">
+          <div className="lg:sticky lg:top-[120px] space-y-6 h-fit">
             {loading ? (
               <div className="space-y-4">
                  <Skeleton height="15rem" width="100%" borderRadius="1rem" />

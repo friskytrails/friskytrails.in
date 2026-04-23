@@ -49,8 +49,8 @@ const Blog = () => {
     <div className="w-full">
       {/* HERO */}
       <div
+        className="h-[300px] md:h-[400px] w-full"
         style={{
-          height: "400px",
           backgroundImage: `url(${HillImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -58,7 +58,7 @@ const Blog = () => {
         }}
       >
         <div className="text-white text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight pt-20 md:pt-34">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight pt-12 md:pt-32">
             Your Ultimate Companion for Everywhere!
           </h1>
 
@@ -74,8 +74,8 @@ const Blog = () => {
       </div>
 
       {/* TRENDING */}
-      <div className="trends">
-        <h2 className="text-3xl md:text-4xl tracking-tighter pt-10 md:pt-20 font-semibold pl-4 md:pl-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl md:text-4xl tracking-tighter pt-10 md:pt-20 font-semibold">
           Trending Blogs
         </h2>
 
@@ -83,13 +83,13 @@ const Blog = () => {
           <Box />
         </div>
 
-        <div className="LatestBlog md:p-10">
+        <div className="LatestBlog py-10">
           <Latestblog />
         </div>
       </div>
 
       {/* CARDS */}
-      <div className="mt-[-30px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Cards />
       </div>
     </div>

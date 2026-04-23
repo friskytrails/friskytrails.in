@@ -52,34 +52,36 @@ const Newlog = () => {
       </Helmet>
 
       <div
-        className="w-full min-h-[460px] bg-no-repeat md:bg-contain"
+        className="w-full min-h-[300px] md:min-h-[460px] bg-no-repeat md:bg-contain"
         style={{
           backgroundImage: "url('/images/bgbanner.svg')",
         }}
       >
-        <div className="flex items-center gap-2 px-4 xl:pl-20 pt-8 md:pt-6 text-sm sm:text-base">
-          {loading ? (
-             <Skeleton width="200px" height="1.5rem" />
-          ) : (
-            <>
-              {blog?.country && <h3 className="font-semibold">{blog.country?.name}</h3>}
-              {blog?.country && blog?.state && (
-                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
-              )}
-              {blog?.state && <h3 className="font-semibold">{blog.state?.name}</h3>}
-              {blog?.state && blog?.city && (
-                <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
-              )}
-              {blog?.city && (
-                <h3 className="font-semibold text-gray-600">{blog.city?.name}</h3>
-              )}
-            </>
-          )}
-        </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-2 px-4 sm:px-6 lg:px-8 pt-8 md:pt-6 text-sm sm:text-base">
+            {loading ? (
+               <Skeleton width="200px" height="1.5rem" />
+            ) : (
+              <>
+                {blog?.country && <h3 className="font-semibold">{blog.country?.name}</h3>}
+                {blog?.country && blog?.state && (
+                  <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
+                )}
+                {blog?.state && <h3 className="font-semibold">{blog.state?.name}</h3>}
+                {blog?.state && blog?.city && (
+                  <img className="h-4 w-4 mt-1" src={Right} alt="Breadcrumb separator" width="16" height="16" />
+                )}
+                {blog?.city && (
+                  <h3 className="font-semibold text-gray-600">{blog.city?.name}</h3>
+                )}
+              </>
+            )}
+          </div>
 
-        <h1 className="text-2xl sm:text-3xl xl:pl-20 md:text-4xl font-semibold tracking-tighter px-4 pt-4 md:pt-4">
-          {loading ? <Skeleton width="80%" height="2.5rem" /> : blog?.title}
-        </h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tighter px-4 sm:px-6 lg:px-8 pt-4 md:pt-4">
+            {loading ? <Skeleton width="80%" height="2.5rem" /> : blog?.title}
+          </h1>
+        </div>
 
         {loading ? (
           <div className="mx-auto mt-6 w-[90vw] max-w-5xl">
@@ -98,8 +100,8 @@ const Newlog = () => {
         )}
         
         {/* Blog Section */}
-        <div className="w-full flex justify-center flex-col lg:flex-row pt-0 md:pt-10">
-          <div className="lg:w-[60%] pt-3 w-full px-4">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 pt-0 md:pt-10 px-4 sm:px-6 lg:px-8">
+          <div className="lg:col-span-2 pt-3 w-full px-4">
             {loading ? (
               <div className="space-y-4">
                 <Skeleton height="1.5rem" width="100%" />
@@ -114,8 +116,8 @@ const Newlog = () => {
           </div>
 
           {/* Right sidebar */}
-          <div className="hidden lg:block lg:w-[30%] px-4">
-            <div className="sticky top-26">
+          <div className="hidden lg:block lg:col-span-1 px-4">
+            <div className="sticky top-[120px] h-fit">
               {loading ? (
                 <div className="space-y-6">
                    <Skeleton height="15rem" width="100%" borderRadius="1rem" />

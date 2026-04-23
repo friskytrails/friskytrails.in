@@ -83,6 +83,7 @@ const Navbar = () => {
   };
 
   const handleNavigation = () => {
+    window.scrollTo(0, 0);
     setShowModal(false);
     setShowAdmodal(false);
     setIsMenuOpen(false);
@@ -94,16 +95,16 @@ const Navbar = () => {
   return (
     <>
       {/* Global Layout Spacer - Account for Header (5vh/6vh) + Navbar (7.5vh/8vh) total height */}
-      <div className="h-[12.5vh] lg:h-[14vh]" />
+      <div className="h-[104px] lg:h-[120px]" />
       
-      <div className="fixed top-[5vh] lg:top-[6vh] left-0 right-0 z-[999] w-full">
+      <div className="fixed top-[40px] lg:top-[48px] left-0 right-0 z-[999] bg-white shadow-sm">
         <div className="
-          h-[7.5vh] lg:h-[8vh]            
-          w-full bg-white
-          border-none shadow-sm
-          flex flex-col lg:flex-row 
+          max-w-7xl mx-auto
+          h-[64px] lg:h-[72px]            
+          w-full 
+          flex flex-row 
           justify-between items-center
-          px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12
+          px-4 sm:px-6 lg:px-8
         ">
           {/* Logo and Hamburger */}
           <div className="flex justify-between items-center w-full lg:w-auto h-full">

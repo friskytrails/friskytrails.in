@@ -52,7 +52,7 @@ const Hotels = lazy(() => import("./ServicesPages/Hotels"));
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen"> {/* 👈 THIS WAS MISSING */}
+    <div className="flex flex-col min-h-screen overflow-x-clip"> {/* 👈 THIS WAS MISSING */}
       <Header />
       <Navbar />
 

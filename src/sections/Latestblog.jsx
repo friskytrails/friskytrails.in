@@ -39,7 +39,7 @@ const Latestblog = () => {
         >
           Best Places to Travel in India by Season
         </h2>
-        <div className="h-px ml-28 md:ml-0  sm:h-[5px] w-24 sm:w-32 lg:w-48 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-400 rounded-full shadow-sm "></div>
+        <div className="h-px mx-auto lg:ml-0 sm:h-[5px] w-24 sm:w-32 lg:w-48 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-400 rounded-full shadow-sm "></div>
       </div>
 
       {/* Grid */}

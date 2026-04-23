@@ -22,16 +22,16 @@ const Blogright = () => {
   return (
     <>
       <div
-        className="w-[400px] h-[260px] flex items-center m-auto mt-10"
+        className="w-full max-w-[400px] h-[260px] flex items-center mx-auto mt-4 lg:mt-0"
         style={{
           height: "200px",
-          weight: "400px",
+          width: "100%",
           backgroundImage: "url('/blogimages/trip.webp')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="bg-white opacity-90 h-[160px] w-[370px] flex flex-col justify-center gap-2 p-4 rounded-lg m-auto">
+        <div className="bg-white opacity-90 h-[160px] w-[92%] flex flex-col justify-center gap-2 p-4 rounded-lg m-auto">
           <h2 className="text-xl text-orange-500 font-bold tracking-tight">
             Looking for a perfect trip?
           </h2>
@@ -47,7 +47,7 @@ const Blogright = () => {
           {showForm && <Form onClose={() => setShowForm(false)} />}
         </div>
       </div>
-      <div className="w-[400px] h-[400px] mt-6 rounded-2xl mx-auto bg-[url('/blogimages/banner2.webp')] bg-cover bg-center">
+      <div className="w-full max-w-[400px] h-[400px] mt-6 rounded-2xl mx-auto bg-[url('/blogimages/banner2.webp')] bg-cover bg-center">
       </div>
     </>
   );

@@ -72,7 +72,7 @@ const End = () => {
                               strokeLinejoin="round"
                             />
                           </svg>
-                          <Link to={item.path}>
+                          <Link to={item.path} onClick={() => window.scrollTo(0, 0)}>
                             <h3 className="text-gray-400 font-semibold hover:text-white">{item.text}</h3>
                           </Link>
                         </div>
@@ -98,7 +98,7 @@ const End = () => {
                               strokeLinejoin="round"
                             />
                           </svg>
-                          <Link to={item.path}>
+                          <Link to={item.path} onClick={() => window.scrollTo(0, 0)}>
                             <h3 className="text-gray-400 font-semibold hover:text-white">{item.text}</h3>
                           </Link>
                         </div>
@@ -137,24 +137,24 @@ const End = () => {
           <h2 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Short Links</h2>
           <div className="flex justify-center items-start mt-3 md:mt-4 gap-8 sm:gap-10 md:gap-16">
             <div className="flex flex-col gap-3 sm:gap-4">
-              <Link to="/about">
+              <Link to="/about" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   About Us
                 </h3>
               </Link>
-              <Link to="/adventures">
+              <Link to="/adventures" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Adventures
                 </h3>
               </Link>
             </div>
             <div className="flex flex-col gap-3 sm:gap-4">
-              <Link to="/services/holidays">
+              <Link to="/services/holidays" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Services
                 </h3>
               </Link>
-              <Link to="/reviews">
+              <Link to="/reviews" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Reviews
                 </h3>
@@ -168,24 +168,24 @@ const End = () => {
           <h2 className="text-white text-lg sm:text-xl md:text-2xl font-semibold">Quick Links</h2>
           <div className="flex justify-center items-start mt-3 md:mt-4 gap-8 sm:gap-10 md:gap-16">
             <div className="flex  ml-10 flex-col gap-3 sm:gap-4">
-              <Link to="/contact">
+              <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Contact Us
                 </h3>
               </Link>
-              <Link to="/blog">
+              <Link to="/blog" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Blogs
                 </h3>
               </Link>
             </div>
             <div className="flex flex-col gap-3 sm:gap-4">
-              <Link to="/hiring">
+              <Link to="/hiring" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Hiring
                 </h3>
               </Link>
-              <Link to="/partner">
+              <Link to="/partner" onClick={() => window.scrollTo(0, 0)}>
                 <h3 className="text-gray-400 font-semibold text-sm sm:text-base hover:text-white transition-colors">
                   Partner With Us
                 </h3>

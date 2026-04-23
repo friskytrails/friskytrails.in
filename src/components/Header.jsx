@@ -10,8 +10,9 @@ const Header = () => {
   return (
     <>
       {/* Desktop / Tablet Header - Restored Original Style with New Logos */}
-      <div className="fixed hidden md:flex top-0 z-[1000] h-[5vh] lg:h-[6vh] bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 w-full justify-between items-center px-8 xl:px-12 ">
-        <div className="flex z-50 items-center gap-4 xl:gap-6">
+      <div className="fixed hidden md:flex top-0 left-0 right-0 z-[1000] h-[40px] lg:h-[48px] bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 w-full">
+        <div className="max-w-7xl mx-auto w-full flex justify-between items-center px-4 sm:px-6 lg:px-8">
+          <div className="flex z-50 items-center gap-4 xl:gap-6">
           <div className="flex z-50 items-center gap-1.5 xl:gap-2">
             <Mail className="w-4 h-4 xl:w-5 xl:h-5 text-white" />
             <a href="mailto:contact@friskytrails.in" className="text-white text-xs xl:text-sm font-medium whitespace-nowrap">
@@ -48,9 +49,10 @@ const Header = () => {
           </div>
         </div>
       </div>
+    </div>
 
       {/* Mobile Header - Restored Original Style with New Logos */}
-      <div className="fixed md:hidden flex h-[5vh] bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 z-[1000] w-full justify-between items-center px-4 py-1">
+      <div className="fixed md:hidden flex top-0 left-0 right-0 h-[40px] bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 z-[1000] w-full justify-between items-center px-4 py-1">
         <div className="flex items-center gap-1.5">
           <Phone className="w-3.5 h-3.5 text-white" />
           <a href="tel:+917877979193" className="text-white text-[10px] xs:text-xs font-semibold whitespace-nowrap">
