@@ -48,27 +48,27 @@ const StatePage = () => {
         <div className="w-full">
           <Skeleton height="384px" width="100%" borderRadius="0" />
         </div>
-        
+
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
           {/* Header Skeleton */}
           <div className="border-b pb-4 space-y-3">
-             <Skeleton height="3rem" width="40%" />
-             <Skeleton height="1.5rem" width="60%" />
+            <Skeleton height="3rem" width="40%" />
+            <Skeleton height="1.5rem" width="60%" />
           </div>
 
           {/* Carousel Title Skeleton */}
           <div className="mt-8 mb-6">
-             <Skeleton height="2.5rem" width="30%" />
+            <Skeleton height="2.5rem" width="30%" />
           </div>
 
           {/* Carousel Skeletons */}
           <div className="flex gap-4 overflow-hidden">
-             {[...Array(4)].map((_, i) => (
-                <div key={i} className="min-w-[300px] space-y-4">
-                   <Skeleton height="200px" width="100%" borderRadius="1rem" />
-                   <Skeleton height="1.5rem" width="80%" />
-                </div>
-             ))}
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="min-w-[300px] space-y-4">
+                <Skeleton height="200px" width="100%" borderRadius="1rem" />
+                <Skeleton height="1.5rem" width="80%" />
+              </div>
+            ))}
           </div>
         </main>
       </div>
@@ -98,7 +98,7 @@ const StatePage = () => {
         <img
           src={state.image}
           alt={state.name}
-          className="w-full h-64 sm:h-80 md:h-96 object-cover object-right sm:object-center"
+          className="w-full h-72 sm:h-80 md:h-96 object-cover object-top sm:object-center"
         />
       </div>
 
@@ -110,8 +110,8 @@ const StatePage = () => {
           </h1>
           <p className="mt-6 text-gray-700 leading-relaxed max-w-5xl text-2xl italic border-l-4 border-orange-500 pl-6 text-justify" style={{ fontFamily: "'Lora', serif" }}>
             "Leave the paved roads behind and find the places that make your heart beat a little faster.
-            There’s a certain magic that happens when you step away from the noise and let the landscape take the lead. 
-            From the quiet majesty of hidden trails to the vibrant pulse of local markets, every corner of this land 
+            There’s a certain magic that happens when you step away from the noise and let the landscape take the lead.
+            From the quiet majesty of hidden trails to the vibrant pulse of local markets, every corner of this land
             has a secret to share with those who are willing to listen. We’re here to help you find it."
           </p>
         </section>
