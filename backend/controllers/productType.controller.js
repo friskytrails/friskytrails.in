@@ -122,5 +122,44 @@ const getProductTypeById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, productType, "Product Type fetched successfully"));
 });
 
+// Update Product Type
+const updateProductType = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, slug, thingsToCarry } = req.body;
 
-export { createProductType, getProductTypeBySlug, getProductTypeBySlugWithProduct, getAllProductTypes, getProductTypeById };
+    if (!id) {
+      return res.status(400).json({ message: "ID is required" });
+    }
+
+    const productType = await ProductType.findById(id);
+    if (!productType) {
+      return res.status(404).json({ message: "Product Type not found" });
+    }
+
+    if (name) productType.name = name;
+    if (slug) productType.slug = slug;
+    if (thingsToCarry !== undefined) productType.thingsToCarry = thingsToCarry;
+
+    if (req.file) {
+      const localPath = req.file.buffer;
+      const uploadResult = await uploadOnCloudinary(localPath);
+      if (!uploadResult) {
+        return res.status(500).json({ message: "Image upload failed" });
+      }
+      productType.image = uploadResult.secure_url;
+    }
+
+    await productType.save();
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, productType, "Product Type updated successfully"));
+  } catch (error) {
+    console.error("Error updating product type:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+export { createProductType, getProductTypeBySlug, getProductTypeBySlugWithProduct, getAllProductTypes, getProductTypeById, updateProductType };
