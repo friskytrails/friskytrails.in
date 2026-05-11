@@ -98,7 +98,7 @@ const StatePage = () => {
         <img
           src={state.image}
           alt={state.name}
-          className="w-full h-72 sm:h-80 md:h-96 object-cover object-top sm:object-center"
+          className="w-full h-auto object-contain md:h-[400px] lg:h-[500px] md:object-cover md:object-center shadow-md"
         />
       </div>
 
