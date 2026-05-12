@@ -35,6 +35,13 @@ const AllStates = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages && !loading) {
+      setCurrentPage(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     fetchStates(currentPage);
   }, [currentPage]);
@@ -156,7 +163,7 @@ const AllStates = () => {
         <div className="mt-10 flex flex-col items-center gap-4">
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || loading}
               className={`px-4 py-2 rounded-md transition ${
                 currentPage === 1
@@ -179,7 +186,7 @@ const AllStates = () => {
                   return (
                     <button
                       key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
+                      onClick={() => handlePageChange(pageNum)}
                       className={`w-10 h-10 rounded-md transition ${
                         currentPage === pageNum
                           ? "bg-[rgb(255,99,33)] text-white shadow-md"
@@ -200,7 +207,7 @@ const AllStates = () => {
             </div>
 
             <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages || loading}
               className={`px-4 py-2 rounded-md transition ${
                 currentPage === totalPages
