@@ -155,10 +155,10 @@ export const getProducts = asyncHandler(async (req, res) => {
 
   const totalPages = Math.ceil(totalProducts / limit);
 
-  res.status(200).json(
-    new ApiResponse(
-      200,
-      {
+  res.status(200).json({
+    status: true,
+    success: true,
+    data: {
         products,
         pagination: {
           totalItems: totalProducts,
@@ -167,9 +167,8 @@ export const getProducts = asyncHandler(async (req, res) => {
           limit,
         },
       },
-      "Products fetched successfully"
-    )
-  );
+    message: "Products fetched successfully"
+  });
 });
 
 // ============================

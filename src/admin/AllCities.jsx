@@ -169,15 +169,14 @@ const AllCities = () => {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || loading}
-              className={`px-4 py-2 rounded-md transition ${
-                currentPage === 1
+              className={`px-4 py-2 rounded-md transition ${currentPage === 1
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-              }`}
+                }`}
             >
               Previous
             </button>
-            
+
             <div className="flex items-center gap-1">
               {[...Array(totalPages)].map((_, i) => {
                 const pageNum = i + 1;
@@ -191,11 +190,10 @@ const AllCities = () => {
                     <button
                       key={pageNum}
                       onClick={() => handlePageChange(pageNum)}
-                      className={`w-10 h-10 rounded-md transition ${
-                        currentPage === pageNum
+                      className={`w-10 h-10 rounded-md transition ${currentPage === pageNum
                           ? "bg-[rgb(255,99,33)] text-white shadow-md"
                           : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-                      }`}
+                        }`}
                     >
                       {pageNum}
                     </button>
@@ -213,16 +211,15 @@ const AllCities = () => {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages || loading}
-              className={`px-4 py-2 rounded-md transition ${
-                currentPage === totalPages
+              className={`px-4 py-2 rounded-md transition ${currentPage === totalPages
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-              }`}
+                }`}
             >
               Next
             </button>
           </div>
-          
+
           <p className="text-sm text-gray-500">
             Showing Page {currentPage} of {totalPages}
           </p>
