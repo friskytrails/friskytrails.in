@@ -457,18 +457,38 @@ const deleteBlog = asyncHandler(async (req, res) => {
 // controllers/stateController.ts (ya .js)
 // path apne hisaab se change karein
 
- const getAllStates = async (req, res) => {
+const getAllStates = async (req, res) => {
   try {
-    const states = await State.find({})
-      .populate("country", "name _id slug") 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0; // 0 means no limit
+    const skip = (page - 1) * limit;
+
+    let query = State.find({})
+      .populate("country", "name _id slug")
       .select("name slug image country createdAt")
-      .sort({ createdAt: -1 })
-      .lean();
+      .sort({ createdAt: -1 });
+
+    if (limit > 0) {
+      query = query.skip(skip).limit(limit);
+    }
+
+    const [totalStates, states] = await Promise.all([
+      State.countDocuments(),
+      query.lean()
+    ]);
+
+    const totalPages = limit > 0 ? Math.ceil(totalStates / limit) : 1;
 
     return res.status(200).json({
       success: true,
       count: states.length,
       data: states,
+      pagination: {
+        totalItems: totalStates,
+        totalPages,
+        currentPage: page,
+        limit: limit === 0 ? totalStates : limit,
+      }
     });
   } catch (error) {
     console.error("Error in getAllStates:", error);
@@ -668,17 +688,37 @@ const updateCountry = async (req, res) => {
 
 const getAllCities = async (req, res) => {
   try {
-    const cities = await City.find({})
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0;
+    const skip = (page - 1) * limit;
+
+    let query = City.find({})
       .populate("country", "_id name slug")
       .populate("state", "_id name slug")
       .select("name slug image country state createdAt")
-      .sort({ createdAt: -1 })
-      .lean();
+      .sort({ createdAt: -1 });
+
+    if (limit > 0) {
+      query = query.skip(skip).limit(limit);
+    }
+
+    const [totalCities, cities] = await Promise.all([
+      City.countDocuments(),
+      query.lean()
+    ]);
+
+    const totalPages = limit > 0 ? Math.ceil(totalCities / limit) : 1;
 
     return res.status(200).json({
       success: true,
       count: cities.length,
       data: cities,
+      pagination: {
+        totalItems: totalCities,
+        totalPages,
+        currentPage: page,
+        limit: limit === 0 ? totalCities : limit,
+      }
     });
   } catch (error) {
     console.error("Error in getAllCities:", error);

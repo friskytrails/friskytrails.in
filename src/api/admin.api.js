@@ -100,9 +100,9 @@ const getCountries = async () => {
     throw error.response ? error.response.data : error.message;
   }
 };
-const getCountryBySlug = async () => {
+const getCountryBySlug = async (slug) => {
   try {
-    const response = await axiosInstance.get("/api/v1/admin/country/:slug");
+    const response = await axiosInstance.get(`/api/v1/admin/country/slug/${slug}`);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -147,7 +147,7 @@ const getCities = async (stateId) => {
 
 export const getCityById = async (id) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/admin/city/${id}`);
+    const response = await axiosInstance.get(`/api/v1/admin/city/id/${id}`);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -325,9 +325,9 @@ const getAllProductTypes = async () => {
 
 ///harsh
 
-const getAllStates = async () => {
+const getAllStates = async (params = {}) => {
   try {
-    const response = await axiosInstance.get("/api/v1/admin/states");
+    const response = await axiosInstance.get("/api/v1/admin/states", { params });
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -335,7 +335,7 @@ const getAllStates = async () => {
 };
 const getStateById= async (id) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/admin/state/${id}`);
+    const response = await axiosInstance.get(`/api/v1/admin/state/id/${id}`);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -344,7 +344,7 @@ const getStateById= async (id) => {
 const updateState = async (id, data) => {
   try {
     const res = await axiosInstance.put(
-      `/api/v1/admin/state/${id}`,
+      `/api/v1/admin/state/id/${id}`,
       data,
       {
         headers: {
@@ -366,7 +366,7 @@ const updateState = async (id, data) => {
 
 const getCountryById = async (id) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/admin/country/${id}`);
+    const response = await axiosInstance.get(`/api/v1/admin/country/id/${id}`);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -376,7 +376,7 @@ const getCountryById = async (id) => {
 const updateCountry = async (id, data) => {
   try {
     const res = await axiosInstance.put(
-      `/api/v1/admin/country/${id}`,
+      `/api/v1/admin/country/id/${id}`,
       data,
       {
         headers: {
@@ -392,9 +392,9 @@ const updateCountry = async (id, data) => {
 
 // ==================== CITIES API ====================
 
-const getAllCities = async () => {
+const getAllCities = async (params = {}) => {
   try {
-    const response = await axiosInstance.get("/api/v1/admin/cities");
+    const response = await axiosInstance.get("/api/v1/admin/cities", { params });
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -404,7 +404,7 @@ const getAllCities = async () => {
 // const getCityById = async (id) => {
 //   try {
 //     console.log("Fetching city by ID:", id);
-//     const response = await axiosInstance.get(`/api/v1/admin/city/${id}`);
+//     const response = await axiosInstance.get(`/api/v1/admin/city/id/${id}`);
 //     console.log(response);
 //     return response.data;
 //   } catch (error) {
@@ -415,7 +415,7 @@ const getAllCities = async () => {
 const updateCity = async (id, data) => {
   try {
     const res = await axiosInstance.put(
-      `/api/v1/admin/city/${id}`,
+      `/api/v1/admin/city/id/${id}`,
       data,
       {
         headers: {

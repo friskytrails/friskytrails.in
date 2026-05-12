@@ -23,13 +23,13 @@ router.delete("/blog/:id", verifyJWT, verifyAdmin, deleteBlog);
 
 router.post("/upload-editor-image", upload.single("image"), verifyJWT, verifyAdmin, uploadEditorImage);
 router.post("/create-country", upload.single("image"), verifyJWT, verifyAdmin, createCountry);
-router.get("/country/:slug", getCountries);
+
 router.post("/create-state", upload.single("image"), verifyJWT, verifyAdmin, createState);
 router.get("/countries", getCountries);
 router.get("/states/:countryId", getStates);
 router.post("/create-city", upload.single("image"), verifyJWT, verifyAdmin, createCity);
 router.get("/cities/:stateId", getCities);
-router.get("/country/:slug", getCountryBySlug);
+router.get("/country/slug/:slug", getCountryBySlug);
 router.get("/country/:slug/blogs", getCountryWithBlogs);
 router.get("/state/:slug/blogs", getStateWithBlogs);
 router.get("/city/:slug/blogs", getCityWithBlogs);
@@ -41,7 +41,7 @@ router.get("/city/:slug/blogs", getCityWithBlogs);
 router.get("/states", getAllStates);
 
 router.get(
-  "/state/:id",
+  "/state/id/:id",
   getStateById
 );
 
@@ -53,12 +53,12 @@ router.get(
 );
 
 router.get(
-  "/country/:id",
+  "/country/id/:id",
   getCountryById
 );
 
 router.put(
-  "/country/:id",
+  "/country/id/:id",
   verifyJWT,
   verifyAdmin, 
   upload.single("image"),
@@ -66,7 +66,7 @@ router.put(
 );
 
 router.put(
-  "/state/:id",
+  "/state/id/:id",
   verifyJWT,
   verifyAdmin, 
   upload.single("image"),
@@ -77,10 +77,10 @@ router.put(
 
 router.get("/cities", getAllCities);
 
-router.get("/city/:id", getCityById);
+router.get("/city/id/:id", getCityById);
 
 router.put(
-  "/city/:id",
+  "/city/id/:id",
   verifyJWT,
   verifyAdmin, 
   upload.single("image"),

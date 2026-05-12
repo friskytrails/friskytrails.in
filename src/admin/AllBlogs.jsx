@@ -7,7 +7,7 @@ const AllBlogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
-  
+
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -92,25 +92,25 @@ const AllBlogs = () => {
     );
   }
 
-if (selectedBlog) {
-  return (
-    <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100">
-      <button
-        onClick={() => setSelectedBlog(null)}
-        className="mb-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition"
-      >
-        ⬅ Back to All Blogs
-      </button>
+  if (selectedBlog) {
+    return (
+      <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100">
+        <button
+          onClick={() => setSelectedBlog(null)}
+          className="mb-4 inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition"
+        >
+          ⬅ Back to All Blogs
+        </button>
 
-      <h2 className="text-2xl font-bold mb-4">Edit Blog</h2>
-      <EditBlogForm
-        blogId={selectedBlog._id} // ✅ pass ID, not full object
-        onUpdate={fetchBlogs}
-        onClose={() => setSelectedBlog(null)}
-      />
-    </div>
-  );
-}
+        <h2 className="text-2xl font-bold mb-4">Edit Blog</h2>
+        <EditBlogForm
+          blogId={selectedBlog._id} // ✅ pass ID, not full object
+          onUpdate={fetchBlogs}
+          onClose={() => setSelectedBlog(null)}
+        />
+      </div>
+    );
+  }
 
   return (
     <section className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
@@ -186,15 +186,14 @@ if (selectedBlog) {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || isFetching}
-              className={`px-4 py-2 rounded-md transition ${
-                currentPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-              }`}
+              className={`px-4 py-2 rounded-md transition ${currentPage === 1
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                }`}
             >
               Previous
             </button>
-            
+
             <div className="flex items-center gap-1">
               {[...Array(totalPages)].map((_, i) => {
                 const pageNum = i + 1;
@@ -209,11 +208,10 @@ if (selectedBlog) {
                     <button
                       key={pageNum}
                       onClick={() => handlePageChange(pageNum)}
-                      className={`w-10 h-10 rounded-md transition ${
-                        currentPage === pageNum
-                          ? "bg-[rgb(255,99,33)] text-white shadow-md"
-                          : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-                      }`}
+                      className={`w-10 h-10 rounded-md transition ${currentPage === pageNum
+                        ? "bg-[rgb(255,99,33)] text-white shadow-md"
+                        : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                        }`}
                     >
                       {pageNum}
                     </button>
@@ -231,16 +229,15 @@ if (selectedBlog) {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages || isFetching}
-              className={`px-4 py-2 rounded-md transition ${
-                currentPage === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
-              }`}
+              className={`px-4 py-2 rounded-md transition ${currentPage === totalPages
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                }`}
             >
               Next
             </button>
           </div>
-          
+
           <p className="text-sm text-gray-500">
             Showing Page {currentPage} of {totalPages}
           </p>
