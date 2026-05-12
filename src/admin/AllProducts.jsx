@@ -124,7 +124,7 @@ const AllProducts = () => {
               <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
                 {product.name}
               </h3>
-              <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.productType}</p>
+              <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.productType?.name || product.productType}</p>
 
               <div className="flex items-center justify-between mb-3">
                 {Array.isArray(product.packages) && product.packages.length > 0 ? (
