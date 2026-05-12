@@ -140,18 +140,20 @@ export const getProducts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 12;
   const skip = (page - 1) * limit;
 
-  const totalProducts = await Product.countDocuments();
-  const totalPages = Math.ceil(totalProducts / limit);
+  const [totalProducts, products] = await Promise.all([
+    Product.countDocuments(),
+    Product.find()
+      .populate("country state city productType", "name slug")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select(
+        "name slug productType rating reviews images city packages createdAt"
+      )
+      .lean()
+  ]);
 
-  const products = await Product.find()
-    .populate("country state city", "name slug")
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit)
-    .select(
-      "name slug productType rating reviews images city packages createdAt"
-    )
-    .lean();
+  const totalPages = Math.ceil(totalProducts / limit);
 
   res.status(200).json(
     new ApiResponse(

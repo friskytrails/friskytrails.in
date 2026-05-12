@@ -101,18 +101,20 @@ const getAllBlogs = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 12;
     const skip = (page - 1) * limit;
 
-    const totalBlogs = await CreateBlog.countDocuments();
-    const totalPages = Math.ceil(totalBlogs / limit);
+    const [totalBlogs, blogs] = await Promise.all([
+      CreateBlog.countDocuments(),
+      CreateBlog.find()
+        .populate("country", "name _id")
+        .populate("state", "name _id")
+        .populate("city", "name _id")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select("title slug authorName coverImage country state city intro createdAt")
+        .lean()
+    ]);
 
-    const blogs = await CreateBlog.find()
-      .populate("country", "name _id")
-      .populate("state", "name _id")
-      .populate("city", "name _id")
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .select("title slug authorName coverImage country state city intro createdAt")
-      .lean();
+    const totalPages = Math.ceil(totalBlogs / limit);
 
     res.status(200).json({
       status: true,
@@ -236,15 +238,18 @@ export const getPublicBlogs = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 12;
     const skip = (page - 1) * limit;
 
-    const totalBlogs = await CreateBlog.countDocuments();
-    const totalPages = Math.ceil(totalBlogs / limit);
+    const [totalBlogs, blogs] = await Promise.all([
+      CreateBlog.countDocuments(),
+      CreateBlog.find()
+        .populate("country state city", "name slug")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select("title slug authorName coverImage country state city intro createdAt")
+        .lean()
+    ]);
 
-    const blogs = await CreateBlog.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .select("title slug authorName coverImage country state city intro createdAt")
-      .lean();
+    const totalPages = Math.ceil(totalBlogs / limit);
 
     return res.status(200).json({
       status: true,
