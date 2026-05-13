@@ -38,6 +38,11 @@ export const createProduct = asyncHandler(async (req, res) => {
     );
   }
 
+  // Validate productType is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(productType)) {
+    throw new ApiError(400, "Invalid Product Type ID");
+  }
+
   // Upload images to Cloudinary
   let images = [];
   let sliderImages = [];
@@ -335,7 +340,12 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.name = name;
     product.slug = slugify(name, { lower: true, strict: true });
   }
-  if (productType) product.productType = productType;
+  if (productType) {
+    if (!mongoose.Types.ObjectId.isValid(productType)) {
+      throw new ApiError(400, "Invalid Product Type ID");
+    }
+    product.productType = productType;
+  }
   if (rating !== undefined) product.rating = rating;
   if (reviews !== undefined) product.reviews = reviews;
   if (description) product.description = description;
