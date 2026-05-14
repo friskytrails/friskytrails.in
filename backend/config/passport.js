@@ -46,8 +46,9 @@ const configurePassport = () => {
               return done(null, user);
             }
 
-            // 2. Check if user exists by email
-            user = await User.findOne({ email });
+            // 2. Check if user exists by email (only if email is available)
+            // Skip linking if email is undefined to prevent matching users without email field
+            user = email ? await User.findOne({ email }) : null;
 
             if (user) {
               // Link google account
@@ -62,11 +63,13 @@ const configurePassport = () => {
               // Sync to sheet if this is first time linking Google account
               if (isNewUser) {
                 const config = sheetConfig.User;
-                await pushToSheet({
+                pushToSheet({
                   sheetName: config.sheetName,
                   columns: config.columns,
                   document: user,
-                });
+                }).catch((err) =>
+                  console.error("pushToSheet (link) failed:", err)
+                );
               }
               
               return done(null, user);
@@ -84,11 +87,13 @@ const configurePassport = () => {
 
             // Sync new Google OAuth user to sheet
             const config = sheetConfig.User;
-            await pushToSheet({
+            pushToSheet({
               sheetName: config.sheetName,
               columns: config.columns,
               document: user,
-            });
+            }).catch((err) =>
+              console.error("pushToSheet (new user) failed:", err)
+            );
 
             return done(null, user);
           } catch (error) {
