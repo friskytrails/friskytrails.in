@@ -21,8 +21,9 @@ const configurePassport = () => {
   console.log('Client Secret:', process.env.GOOGLE_CLIENT_SECRET ? 'SET' : 'NOT SET');
   console.log('===================================');
 
-  passport.use(
-    new GoogleStrategy(
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(
+      new GoogleStrategy(
         {
           clientID: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -98,8 +99,11 @@ const configurePassport = () => {
             return done(error, null);
           }
         }
-    )
-  );
+      )
+    );
+  } else {
+    console.warn('Google OAuth disabled: missing GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET');
+  }
 
   // Required for session login
   passport.serializeUser((user, done) => {
