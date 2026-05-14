@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Product } from "../models/product.model.js";
 import { ProductType } from "../models/productType.model.js";
 import { ApiResponse } from "../utils/apiResponse.js";
@@ -130,6 +131,9 @@ const updateProductType = asyncHandler(async (req, res) => {
 
     if (!id) {
       return res.status(400).json({ message: "ID is required" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid product type ID" });
     }
 
     const productType = await ProductType.findById(id);
