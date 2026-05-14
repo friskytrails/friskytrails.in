@@ -108,7 +108,7 @@ const AllBlogs = () => {
         <h2 className="text-2xl font-bold mb-4">Edit Blog</h2>
         <EditBlogForm
           blogId={selectedBlog._id} // ✅ pass ID, not full object
-          onUpdate={fetchBlogs}
+          onUpdate={() => fetchBlogs(currentPage)}
           onClose={() => setSelectedBlog(null)}
         />
       </div>
