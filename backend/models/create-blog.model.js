@@ -85,5 +85,9 @@ createBlogSchema.pre("save", function (next) {
   next();
 });
 
+// Index for efficient sort-based pagination. 
+// Prevents "Sort exceeded memory limit" error when fetching large numbers of blogs.
+createBlogSchema.index({ createdAt: -1});
+
 export const CreateBlog =
   mongoose.models.CreateBlog || mongoose.model("CreateBlog", createBlogSchema);

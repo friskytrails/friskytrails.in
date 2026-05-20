@@ -5,6 +5,17 @@ import { protect } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
+// Middleware to check if Google OAuth is configured
+const ensureGoogleOAuthEnabled = (req, res, next) => {
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    return res.status(503).json({
+      success: false,
+      message: "Google OAuth disabled"
+    });
+  }
+  next();
+};
+
 // Email/Password authentication
 router.post('/signup', signup);
 router.post('/login', login);
@@ -26,6 +37,7 @@ router.get('/google/debug', (req, res) => {
 // Google OAuth routes
 router.get(
   '/google',
+  ensureGoogleOAuthEnabled,
   passport.authenticate('google', {
     scope: ['profile', 'email'],
   })
@@ -33,6 +45,7 @@ router.get(
 
 router.get(
   '/google/callback',
+  ensureGoogleOAuthEnabled,
   passport.authenticate('google', {
     session: false,
     failureRedirect: '/auth?error=google_auth_failed',

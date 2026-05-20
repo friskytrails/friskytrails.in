@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getProducts, deleteProduct } from "../api/admin.api";
 import EditProductForm from "./EditProductForm";
 
@@ -7,24 +7,46 @@ const AllProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null); // Track product being edited
+  const sectionRef = useRef(null);
 
-  const fetchProducts = async () => {
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const fetchProducts = async (page = 1) => {
     try {
-      setLoading(true);
-      const res = await getProducts();
+      setIsFetching(true);
+      if (page === 1) setLoading(true);
+
+      const res = await getProducts({ page, limit: 12 });
       if (!res.status && !res.success) throw new Error(res.message || "Failed to fetch products");
-      
+
       // Handle both paginated ({ products: [] }) and direct array ([]) responses
-      const productList = Array.isArray(res.data) 
-        ? res.data 
+      const productList = Array.isArray(res.data)
+        ? res.data
         : (res.data?.products || []);
-        
+
       setProducts(productList);
+      if (res.data?.pagination) {
+        setTotalPages(res.data.pagination.totalPages);
+        setCurrentPage(res.data.pagination.currentPage);
+      }
     } catch (err) {
       console.error("Error fetching products:", err);
       setError(err.message);
     } finally {
       setLoading(false);
+      setIsFetching(false);
+    }
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages && !isFetching) {
+      fetchProducts(newPage);
+      setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     }
   };
 
@@ -37,7 +59,7 @@ const AllProducts = () => {
       const response = await deleteProduct(productSlug);
       if (response.status || response.success) {
         // Refresh the products list
-        await fetchProducts();
+        await fetchProducts(currentPage);
         alert("Product deleted successfully!");
       } else {
         throw new Error(response.message || "Failed to delete product");
@@ -49,7 +71,7 @@ const AllProducts = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1);
   }, []);
 
   if (loading) {
@@ -97,11 +119,11 @@ const AllProducts = () => {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
+    <section ref={sectionRef} className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">All Products</h2>
         <button
-          onClick={fetchProducts}
+          onClick={() => fetchProducts(currentPage)}
           className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm"
         >
           🔄 Refresh
@@ -184,6 +206,70 @@ const AllProducts = () => {
           </div>
         ))}
       </div>
+
+      {/* Pagination UI */}
+      {totalPages > 1 && (
+        <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || isFetching}
+              className={`px-4 py-2 rounded-md transition ${currentPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                }`}
+            >
+              Previous
+            </button>
+
+            <div className="flex items-center gap-1">
+              {[...Array(totalPages)].map((_, i) => {
+                const pageNum = i + 1;
+                if (
+                  totalPages <= 7 ||
+                  pageNum === 1 ||
+                  pageNum === totalPages ||
+                  (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-10 h-10 rounded-md transition ${currentPage === pageNum
+                          ? "bg-[rgb(255,99,33)] text-white shadow-md"
+                          : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                        }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                } else if (
+                  (pageNum === 2 && currentPage > 4) ||
+                  (pageNum === totalPages - 1 && currentPage < totalPages - 3)
+                ) {
+                  return <span key={pageNum} className="px-1 text-gray-400">...</span>;
+                }
+                return null;
+              })}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || isFetching}
+              className={`px-4 py-2 rounded-md transition ${currentPage === totalPages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                }`}
+            >
+              Next
+            </button>
+          </div>
+
+          <p className="text-sm text-gray-500">
+            Showing Page {currentPage} of {totalPages}
+          </p>
+        </div>
+      )}
     </section>
   );
 };
