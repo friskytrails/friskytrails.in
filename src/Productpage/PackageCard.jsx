@@ -115,8 +115,8 @@ const PackageCard = ({ package: pkg, isSelected = false, onSelect }) => {
           className="overflow-hidden transition-all duration-300 ease-in-out"
           style={{ maxHeight }}
         >
-          <div ref={contentRef} className="transition-all duration-300">
-            <div className="border-t border-gray-200 pt-4 mt-5 space-y-6 pb-4">
+          <div ref={contentRef} className="transition-all duration-300 pt-5 pb-2">
+            <div className="border-t border-gray-200 pt-4 space-y-6 pb-4">
               {/* Included */}
               <div>
                 <h4 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">

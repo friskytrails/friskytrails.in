@@ -4,18 +4,13 @@ import { createBlog, createCountry, getAllBlogs, getAllCountries, getAllStates, 
 import { upload } from "../middlewares/multer.middleware.js";
 import { createState, getStates, getStateWithBlogs } from "../controllers/state.controller.js";
 import { createCity, getCities, getCityWithBlogs } from "../controllers/city.controller.js";
-import { createProduct, deleteProduct, getProductById, getProductBySlug, getProducts, updateProduct } from "../controllers/product.controller.js";
+import { createProduct, deleteProduct, getProductById, getProductBySlug, getProducts, updateProduct, getBlogRecommendations } from "../controllers/product.controller.js";
 import { createBooking, getAllBookings, getBookingsByProduct } from "../controllers/booking.controller.js";
 import { createProductType, getAllProductTypes, getProductTypeById, getProductTypeBySlug, getProductTypeBySlugWithProduct } from "../controllers/productType.controller.js";
 import { verifyJWT } from "../middlewares/verifyJWT.js";
 const router = Router();
-console.log("🔥 LOADED:", import.meta.url);
-
-
-console.log("🔥 ROUTER FILE EXECUTED");
 
 router.route("/create-blog").post(upload.single("image"), verifyJWT, verifyAdmin, createBlog)
-console.log("Router file loaded");
 router.get("/blogs", getAllBlogs);
 router.route("/blog/:id").get(getBlogById);
 router.put("/blog/:id", upload.single("image"), verifyJWT, verifyAdmin, updateBlog);
@@ -103,6 +98,7 @@ router.post(
 );
 
 router.get("/products", getProducts);
+router.post("/products/recommendations", getBlogRecommendations);
 router.route("/product/id/:id").get(getProductById);
 router.get("/product/slug/:slug", getProductBySlug);
 router.put(

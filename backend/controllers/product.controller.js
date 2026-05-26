@@ -1,4 +1,6 @@
 import { Product } from "../models/product.model.js";
+import { State } from "../models/state.model.js";
+import { City } from "../models/city.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -402,4 +404,94 @@ export const deleteProduct = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, product, "Product deleted successfully"));
+});
+
+// ============================
+// Get Blog Recommendations (Optimized for Performance)
+// ============================
+export const getBlogRecommendations = asyncHandler(async (req, res) => {
+  const { blocks } = req.body;
+  if (!blocks || !Array.isArray(blocks)) {
+    return res.status(400).json(new ApiResponse(400, null, "Blocks array is required"));
+  }
+
+  // Fetch a lightweight version of all products (in-memory matching is extremely fast)
+  const allProducts = await Product.find()
+    .populate("state city", "name")
+    .select("name state city images packages slug")
+    .lean();
+
+  const assigned = {};
+  const usedIds = new Set();
+  const blockCounts = {};
+
+  const allPairs = [];
+
+  const getScore = (block, p) => {
+    const cleanHeading = block.heading?.replace(/<[^>]+>/g, "").toLowerCase() || "";
+    const cleanContent = block.content?.replace(/<[^>]+>/g, "").toLowerCase() || "";
+
+    let score = 0;
+
+    const cityName = p.city?.name?.toLowerCase() || "";
+    const stateName = p.state?.name?.toLowerCase() || "";
+    const pName = p.name?.toLowerCase() || "";
+
+    // Priority 1: Exact city.name match in the subsection heading
+    if (cityName && cleanHeading.includes(cityName)) score += 100;
+
+    // Priority 2: Exact state.name match in the subsection heading
+    if (stateName && cleanHeading.includes(stateName)) score += 50;
+
+    // Priority 3: Exact city.name match in the subsection content
+    if (cityName && cleanContent.includes(cityName)) score += 30;
+
+    // Priority 4: Exact state.name match in the subsection content
+    if (stateName && cleanContent.includes(stateName)) score += 10;
+
+    // Priority 5: Product name keyword overlap with heading
+    const genericWords = ["group", "trip", "tour", "tours", "package", "packages", "travel", "guide", "places", "best", "things", "visit", "with", "from", "india", "days", "nights"];
+
+    if (pName && (cleanHeading.includes(pName) || pName.includes(cleanHeading))) {
+      score += 5;
+    } else {
+      const pWords = pName.split(/\s+/).filter(word => word.length > 3 && !genericWords.includes(word));
+      if (pWords.some(word => cleanHeading.includes(word))) {
+        score += 5;
+      }
+    }
+
+    return score;
+  };
+
+  blocks.forEach(block => {
+    if (!block.heading) return;
+    blockCounts[block.order] = 0;
+
+    allProducts.forEach(product => {
+      const score = getScore(block, product);
+      if (score > 0) {
+        allPairs.push({ block, product, score });
+      }
+    });
+  });
+
+  allPairs.sort((a, b) => b.score - a.score);
+
+  for (const pair of allPairs) {
+    const { block, product } = pair;
+
+    if (blockCounts[block.order] >= 2) continue;
+    if (usedIds.has(product._id.toString())) continue;
+
+    if (!assigned[block.order]) {
+      assigned[block.order] = [];
+    }
+
+    assigned[block.order].push(product);
+    usedIds.add(product._id.toString());
+    blockCounts[block.order]++;
+  }
+
+  res.status(200).json(new ApiResponse(200, assigned, "Recommendations generated successfully"));
 });
