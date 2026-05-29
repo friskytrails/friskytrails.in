@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllProductTypes } from "../api/admin.api";
+import EditProductTypeForm from "./EditProductTypeForm";
 
 const AllProductTypes = () => {
   const [productTypes, setProductTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedProductTypeId, setSelectedProductTypeId] = useState(null);
 
   const fetchProductTypes = async () => {
     try {
@@ -53,6 +55,20 @@ const AllProductTypes = () => {
     );
   }
 
+  if (selectedProductTypeId) {
+    return (
+      <div className="py-6">
+        <EditProductTypeForm 
+          productTypeId={selectedProductTypeId} 
+          onBack={() => {
+            setSelectedProductTypeId(null);
+            fetchProductTypes();
+          }} 
+        />
+      </div>
+    );
+  }
+
   return (
     <section className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
       <div className="flex justify-between items-center mb-6">
@@ -88,12 +104,20 @@ const AllProductTypes = () => {
                 Slug: <span className="font-medium">{productType.slug}</span>
               </p>
 
-              <a
-                href={`/tags/${productType.slug}`}
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-              >
-                View Products →
-              </a>
+              <div className="flex justify-between items-center mt-2">
+                <a
+                  href={`/tags/${productType.slug}`}
+                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                >
+                  View Products →
+                </a>
+                <button
+                  onClick={() => setSelectedProductTypeId(productType._id)}
+                  className="text-sm text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md"
+                >
+                  ✏️ Edit
+                </button>
+              </div>
             </div>
           </div>
         ))}
