@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Plus, Minus, Star, MapPin, Sparkles, ChevronRight, Phone, MessageCircle } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { Plus, Minus, Star, ChevronRight } from "lucide-react";
 import Popupform from "../components/Popupform";
 import Promise from "../sections/Promise";
 import Choose from "../sections/Choose";
