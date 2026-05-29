@@ -203,7 +203,9 @@ const Reviews = () => {
   // Auto-advance carousel
   useEffect(() => {
     if (loading) return;
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % popularReviews.length);
+    }, 5000);
     return () => clearInterval(interval);
   }, [loading, popularReviews.length]);
 
