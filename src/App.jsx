@@ -28,6 +28,9 @@ const AllBlogs = lazy(() => import("./admin/AllBlogs"));
 const Unauthorized = lazy(() => import("./components/Unauthorized"));
 const NotFound = lazy(() => import("./components/NotFound"));
 const ComingSoon = lazy(() => import("./components/ComingSoon"));
+const Adventures = lazy(() => import("./pages/Adventures"));
+const AdventureDetail = lazy(() => import("./pages/AdventureDetail"));
+const Reviews = lazy(() => import("./pages/Reviews"));
 
 // Admin forms
 const Dashboard = lazy(() => import("./admin/Dashboard"));
@@ -78,10 +81,11 @@ const App = () => {
             <Route path="/get-blogs" element={<AllBlogs />} />
 
             {/* Coming Soon Routes */}
-            <Route path="/adventures" element={<ComingSoon />} />
+            <Route path="/adventures" element={<Adventures />} />
+            <Route path="/adventures/:slug" element={<AdventureDetail />} />
             <Route path="/partners" element={<ComingSoon />} />
             <Route path="/partner" element={<ComingSoon />} />
-            <Route path="/reviews" element={<ComingSoon />} />
+            <Route path="/reviews" element={<Reviews />} />
 
             {/* Protected Routes - SAME AS BEFORE */}
             <Route

@@ -322,35 +322,41 @@ const Navbar = () => {
               {showAdventures && (
                 <div className="mt-2 space-y-4 pl-6 border-l-2 border-amber-300">
                   <div>
-                    <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2">Aerial Activities</h3>
+                    <Link to="/adventures?category=aerial" onClick={handleNavigation}>
+                      <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2 hover:text-[#FF6321] transition-colors">Aerial Activities</h3>
+                    </Link>
                     <div className="space-y-2">
-                      <Link to="/services/aerial/paragliding" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Paragliding</Link>
-                      <Link to="/services/aerial/paramotoring" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Paramotoring</Link>
-                      <Link to="/services/aerial/hot-air-balloon" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Hot Air Balloon</Link>
-                      <Link to="/services/aerial/hummerchute-ride" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Hummerchute Ride</Link>
-                      <Link to="/services/aerial/skydiving" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Skydiving</Link>
+                      <Link to="/adventures?category=aerial" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Paragliding</Link>
+                      <Link to="/adventures?category=aerial" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Paramotoring</Link>
+                      <Link to="/adventures?category=aerial" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Hot Air Balloon</Link>
+                      <Link to="/adventures?category=aerial" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Hummerchute Ride</Link>
+                      <Link to="/adventures?category=aerial" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Skydiving</Link>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2">Water Activities</h3>
+                    <Link to="/adventures?category=water" onClick={handleNavigation}>
+                      <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2 hover:text-[#FF6321] transition-colors">Water Activities</h3>
+                    </Link>
                     <div className="space-y-2">
-                      <Link to="/services/water/scuba-diving" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Scuba Diving</Link>
-                      <Link to="/services/water/kayaking" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Kayaking</Link>
-                      <Link to="/services/water/boating" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Boating</Link>
-                      <Link to="/services/water/flyboarding" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Flyboarding</Link>
-                      <Link to="/services/water/surfing" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Surfing</Link>
+                      <Link to="/adventures?category=water" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Scuba Diving</Link>
+                      <Link to="/adventures?category=water" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Kayaking</Link>
+                      <Link to="/adventures?category=water" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Boating</Link>
+                      <Link to="/adventures?category=water" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Flyboarding</Link>
+                      <Link to="/adventures?category=water" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Surfing</Link>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2">Land Activities</h3>
+                    <Link to="/adventures?category=land" onClick={handleNavigation}>
+                      <h3 className="text-amber-600 font-bold mt-4 mb-2 px-2 hover:text-[#FF6321] transition-colors">Land Activities</h3>
+                    </Link>
                     <div className="space-y-2">
-                      <Link to="/services/land/trekking" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Trekking</Link>
-                      <Link to="/services/land/camping" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Camping</Link>
-                      <Link to="/services/land/bungee-jumping" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Bungee Jumping</Link>
-                      <Link to="/services/land/bike-trips" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Bike Trips</Link>
-                      <Link to="/services/land/atv-ride" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">ATV Ride</Link>
+                      <Link to="/adventures?category=land" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Trekking</Link>
+                      <Link to="/adventures?category=land" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Camping</Link>
+                      <Link to="/adventures?category=land" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Bungee Jumping</Link>
+                      <Link to="/adventures?category=land" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">Bike Trips</Link>
+                      <Link to="/adventures?category=land" onClick={handleNavigation} className="block p-3 text-sm hover:bg-amber-100 rounded-lg">ATV Ride</Link>
                     </div>
                   </div>
                 </div>

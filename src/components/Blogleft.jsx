@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { getBlogRecommendations } from "../api/admin.api";
@@ -9,6 +9,7 @@ const Blogleft = ({ blog }) => {
   const [blockProducts, setBlockProducts] = useState({});
 
   useEffect(() => {
+    let active = true;
     const fetchRecommendations = async () => {
       if (!blog || !blog.blocks || blog.blocks.length === 0) return;
       try {
@@ -20,14 +21,21 @@ const Blogleft = ({ blog }) => {
           content: (b.content || "").replace(/<[^>]+>/g, "").slice(0, 500),
         }));
         const res = await getBlogRecommendations(trimmedBlocks);
-        setBlockProducts(res?.data || {});
+        if (active) {
+          setBlockProducts(res?.data || {});
+        }
       } catch (err) {
-        console.error("Failed to load blog recommendations:", err);
+        if (active) {
+          console.error("Failed to load blog recommendations:", err);
+        }
       }
     };
     
     fetchRecommendations();
-  }, [blog?.blocks]);
+    return () => {
+      active = false;
+    };
+  }, [blog]);
 
   if (!blog || !blog.blocks) return null;
 

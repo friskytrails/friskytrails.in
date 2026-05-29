@@ -1,6 +1,4 @@
 import { Product } from "../models/product.model.js";
-import { State } from "../models/state.model.js";
-import { City } from "../models/city.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -413,6 +411,18 @@ export const getBlogRecommendations = asyncHandler(async (req, res) => {
   const { blocks } = req.body;
   if (!blocks || !Array.isArray(blocks)) {
     return res.status(400).json(new ApiResponse(400, null, "Blocks array is required"));
+  }
+
+  if (blocks.length === 0 || blocks.length > 30) {
+    return res.status(400).json(new ApiResponse(400, null, "Blocks must contain 1 to 30 items"));
+  }
+
+  for (const b of blocks) {
+    const heading = typeof b?.heading === "string" ? b.heading : "";
+    const content = typeof b?.content === "string" ? b.content : "";
+    if (heading.length > 300 || content.length > 2000) {
+      return res.status(400).json(new ApiResponse(400, null, "Block text exceeds allowed size"));
+    }
   }
 
   // Fetch a lightweight version of all products (in-memory matching is extremely fast)

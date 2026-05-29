@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const Popupform = ({ onClose }) => {
+const Popupform = ({ onClose, initialMessage = "" }) => {
   const modalRef = useRef();
 
   // Prevent body scroll when modal is open
@@ -23,7 +23,7 @@ const Popupform = ({ onClose }) => {
     date: "",
     guest: "",
     mobile: "",
-    message: "",
+    message: initialMessage,
   });
 
   const handleChange = (e) => {
