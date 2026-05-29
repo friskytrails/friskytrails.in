@@ -35,58 +35,58 @@ const AdventureDetail = () => {
   // 9 Hot Air Balloon packages with distinct locations and images
   const balloonPackages = [
     {
-      title: "Hot Air Balloon Jaipur",
-      img: "https://images.unsplash.com/photo-1566847438217-76e82d383f84?auto=format&fit=crop&w=600&q=80",
+      title: "Hot Air Balloons in Jaipur",
+      img: "/services/balloon_jaipur.png",
       price: "₹12,499",
       desc: "Fly high over the historic forts, amber palaces, and desert landscape of the Pink City."
     },
     {
-      title: "Hot Air Balloon Lonavala",
-      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
-      price: "₹13,999",
-      desc: "Experience panoramic views of the lush green Western Ghats, mist-covered hills, and lakes."
-    },
-    {
-      title: "Hot Air Balloon Rishikesh",
-      img: "https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?auto=format&fit=crop&w=600&q=80",
-      price: "₹11,500",
-      desc: "Enjoy serene flights over the sacred Ganges River and the foothills of the Himalayas."
-    },
-    {
-      title: "Hot Air Balloon Goa",
-      img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
-      price: "₹14,000",
-      desc: "Float above beautiful coastlines, palm-fringed rivers, and countryside landscapes."
-    },
-    {
-      title: "Hot Air Balloon Manali",
-      img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80",
+      title: "Hot Air Balloons in Manali",
+      img: "/services/balloon_manali.png",
       price: "₹8,999",
       desc: "Marvel at snow-capped Himalayan ranges and the lush Solang Valley from high above."
     },
     {
-      title: "Hot Air Balloon Hampi",
-      img: "https://images.unsplash.com/photo-1580835239846-5bb9ce03c8c3?auto=format&fit=crop&w=600&q=80",
-      price: "₹13,500",
-      desc: "Soar over the ancient ruins, unique boulder terrains, and temples of Hampi's heritage site."
+      title: "Hot Air Balloons in Pushkar",
+      img: "/services/balloon_pushkar.png",
+      price: "₹11,500",
+      desc: "Experience the magical camel fair city, sacred lakes, and scenic desert landscape of Pushkar."
     },
     {
-      title: "Hot Air Balloon Udaipur",
-      img: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80",
+      title: "Hot Air Balloons in Jaisalmer",
+      img: "/services/balloon_jaisalmer.png",
+      price: "₹11,000",
+      desc: "Fly over the golden sand dunes of the Thar desert and the historical Jaisalmer Fort."
+    },
+    {
+      title: "Hot Air Balloons in Udaipur",
+      img: "/services/balloon_udaipur.png",
       price: "₹12,000",
       desc: "Take in the stunning views of pristine lakes, marble palaces, and Aravali mountain range."
     },
     {
-      title: "Hot Air Balloon Agra",
-      img: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80",
-      price: "₹15,500",
-      desc: "Float close to the Taj Mahal at sunrise for an unforgettable view of the monument of love."
+      title: "Hot Air Balloons in Lonavla",
+      img: "/services/balloon_lonavla.png",
+      price: "₹13,999",
+      desc: "Experience panoramic views of the lush green Western Ghats, mist-covered hills, and lakes."
     },
     {
-      title: "Hot Air Balloon Jaisalmer",
-      img: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=600&q=80",
-      price: "₹11,000",
-      desc: "Fly over the golden sand dunes of the Thar desert and the historical Jaisalmer Fort."
+      title: "Hot Air Balloons in Goa",
+      img: "/services/balloon_goa.png",
+      price: "₹14,000",
+      desc: "Float above beautiful coastlines, palm-fringed rivers, and countryside landscapes."
+    },
+    {
+      title: "Hot Air Balloons in Chandigarh",
+      img: "/services/balloon_chandigarh.png",
+      price: "₹13,500",
+      desc: "Soar over the beautiful Sukhna Lake, rock gardens, and modern layout of the city of Chandigarh."
+    },
+    {
+      title: "Hot Air Balloons in Munnar",
+      img: "/services/balloon_munnar.png",
+      price: "₹15,500",
+      desc: "Soar high above the endless green tea plantations, misty valleys, and hills of Munnar."
     }
   ];
 
@@ -290,8 +290,8 @@ const AdventureDetail = () => {
           {/* Grid of 9 Packages */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-[1098.5px] mx-auto w-full">
             {balloonPackages.map((pkg, i) => (
-              <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
-                <div className="relative w-full h-[230px] shrink-0 overflow-hidden">
+              <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-[#FF4F14] hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
+                <div className="relative w-full h-[230px] shrink-0 overflow-hidden border-b border-[#FF4F14]">
                   <img
                     src={pkg.img}
                     alt={pkg.title}

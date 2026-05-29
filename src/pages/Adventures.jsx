@@ -160,7 +160,7 @@ const Adventures = () => {
         />
         <div className="max-w-[1274px] mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="max-w-2xl text-left flex flex-col justify-center py-12 md:py-20 md:pl-[111px]">
-            <h1 
+            <h1
               className="text-4xl sm:text-5xl md:text-[52px] lg:text-[65px] font-normal text-[#FFFAF6] tracking-tight leading-[1.2] md:leading-[65px] lg:leading-[117px] font-['Konkhmer_Sleokchher'] max-w-[407px]"
               style={{ fontFamily: "'Konkhmer Sleokchher', sans-serif" }}
             >
@@ -184,7 +184,7 @@ const Adventures = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-10">
 
         {/* 2. DESCRIPTION BLOCK (Rectangle 94) */}
-        <div 
+        <div
           className="mx-auto w-full max-w-[1139px] rounded-[32px] p-6 sm:p-8 md:p-12 lg:p-16 shadow-xl border border-gray-100/30"
           style={{
             background: "rgba(217, 217, 217, 0.52)",
@@ -195,7 +195,7 @@ const Adventures = () => {
           </h2>
           <p className="text-xs sm:text-lg md:text-xl text-gray-700 leading-relaxed font-normal">
             <span className="sm:hidden">
-              {descExpanded 
+              {descExpanded
                 ? "Adventure awaits those who dare to explore beyond the ordinary. From soaring high in hot air balloons and paragliding above breathtaking landscapes to trekking through rugged mountains, river rafting in wild waters, and experiencing the thrill of skydiving, adventure activities offer unforgettable moments filled with excitement and discovery. Whether you're seeking adrenaline-pumping challenges or scenic outdoor experiences, every adventure creates lasting memories, pushes your limits, and connects you with the beauty of nature in the most thrilling way possible."
                 : "Adventure awaits those who dare to explore beyond the ordinary. From soaring high in hot air balloons and paragliding above breathtaking landscapes to trekking through rugged mountains..."
               }
@@ -204,7 +204,7 @@ const Adventures = () => {
               Adventure awaits those who dare to explore beyond the ordinary. From soaring high in hot air balloons and paragliding above breathtaking landscapes to trekking through rugged mountains, river rafting in wild waters, and experiencing the thrill of skydiving, adventure activities offer unforgettable moments filled with excitement and discovery. Whether you're seeking adrenaline-pumping challenges or scenic outdoor experiences, every adventure creates lasting memories, pushes your limits, and connects you with the beauty of nature in the most thrilling way possible.
             </span>
           </p>
-          <button 
+          <button
             onClick={() => setDescExpanded(!descExpanded)}
             className="sm:hidden mt-3 text-xs font-bold text-[#FF6321] hover:underline focus:outline-none"
           >
@@ -267,8 +267,8 @@ const Adventures = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-[1098.5px] mx-auto w-full">
                 {landActivities.map((act, i) => (
-                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
-                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden">
+                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-[#FF4F14] hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
+                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden border-b border-[#FF4F14]">
                       <img
                         src={act.img}
                         alt={act.title}
@@ -308,8 +308,8 @@ const Adventures = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-[1098.5px] mx-auto w-full">
                 {waterActivities.map((act, i) => (
-                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
-                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden">
+                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-[#FF4F14] hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
+                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden border-b border-[#FF4F14]">
                       <img
                         src={act.img}
                         alt={act.title}
@@ -349,8 +349,8 @@ const Adventures = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center max-w-[1098.5px] mx-auto w-full">
                 {airActivities.map((act, i) => (
-                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
-                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden">
+                  <div key={i} className="w-full max-w-[320px] bg-white rounded-[6px] overflow-hidden border border-[#FF4F14] hover:shadow-2xl transition-all duration-300 flex flex-col group pb-5">
+                    <div className="relative w-full h-[230px] shrink-0 overflow-hidden border-b border-[#FF4F14]">
                       <img
                         src={act.img}
                         alt={act.title}
@@ -381,7 +381,7 @@ const Adventures = () => {
               </div>
             </div>
           )}
-        </div> 
+        </div>
 
         {/* 4. POPULAR ACTIVITIES IN INDIA */}
         <div className="mt-24">
@@ -597,9 +597,9 @@ const Adventures = () => {
             <div className="relative group shrink-0 active:scale-95 transition-transform duration-200 flex items-center justify-center">
               <div className="absolute inset-0 bg-orange-500 rounded-full blur-lg opacity-50 group-hover:opacity-80 transition-opacity"></div>
               <div className="relative w-28 h-28 flex items-center justify-center rotate-[-12deg] group-hover:rotate-0 transition-transform duration-500">
-                <img 
-                  src="/services/discount_sticker.png" 
-                  alt="Discount Sticker" 
+                <img
+                  src="/services/discount_sticker.png"
+                  alt="Discount Sticker"
                   className="absolute inset-0 w-full h-full object-contain shadow-2xl"
                 />
                 <div className="relative flex flex-col items-center justify-center text-white text-center pointer-events-none select-none">
