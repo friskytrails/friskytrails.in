@@ -210,28 +210,6 @@ const Reviews = () => {
   }, [loading, popularReviews.length]);
 
   // Rating stars renderer
-  const renderStars = (rating, size = "w-4 h-4") => {
-    const fullStars = Math.floor(rating);
-    const hasHalf = rating % 1 >= 0.5;
-    return (
-      <div className="flex items-center gap-0.5">
-        {[...Array(fullStars)].map((_, i) => (
-          <Star key={i} className={`${size} fill-amber-400 text-amber-400`} />
-        ))}
-        {hasHalf && (
-          <div className="relative">
-            <Star className={`${size} text-gray-200`} />
-            <div className="absolute inset-0 overflow-hidden w-1/2">
-              <Star className={`${size} fill-amber-400 text-amber-400`} />
-            </div>
-          </div>
-        )}
-        {[...Array(5 - fullStars - (hasHalf ? 1 : 0))].map((_, i) => (
-          <Star key={`e-${i}`} className={`${size} text-gray-200`} />
-        ))}
-      </div>
-    );
-  };
 
   if (loading) {
     return (
