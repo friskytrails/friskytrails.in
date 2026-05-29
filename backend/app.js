@@ -56,8 +56,8 @@ app.use(cors(corsOptions));
 /* =======================
    BODY / COOKIE
 ======================= */
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 
 /* =======================
