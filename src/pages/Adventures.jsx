@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Plus, Minus, Star, MapPin, Sliders } from "lucide-react";
 import Popupform from "../components/Popupform";
