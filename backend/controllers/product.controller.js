@@ -415,6 +415,18 @@ export const getBlogRecommendations = asyncHandler(async (req, res) => {
     return res.status(400).json(new ApiResponse(400, null, "Blocks array is required"));
   }
 
+  if (blocks.length === 0 || blocks.length > 30) {
+    return res.status(400).json(new ApiResponse(400, null, "Blocks must contain 1 to 30 items"));
+  }
+
+  for (const b of blocks) {
+    const heading = typeof b?.heading === "string" ? b.heading : "";
+    const content = typeof b?.content === "string" ? b.content : "";
+    if (heading.length > 300 || content.length > 2000) {
+      return res.status(400).json(new ApiResponse(400, null, "Block text exceeds allowed size"));
+    }
+  }
+
   // Fetch a lightweight version of all products (in-memory matching is extremely fast)
   const allProducts = await Product.find()
     .populate("state city", "name")
