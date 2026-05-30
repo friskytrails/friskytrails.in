@@ -72,10 +72,21 @@ const authLimiter = rateLimit({
   },
 });
 
+// Protect expensive/compute-heavy endpoints
+const recommendationsLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 15, // Limit each IP to 15 requests per minute
+  message: {
+    success: false,
+    message: "Too many recommendation requests, please try again later",
+  },
+});
+
 // Apply strict limiter to auth routes
 app.use("/api/auth", authLimiter);
 app.use("/api/v1/user/login", authLimiter);
 app.use("/api/v1/user/signup", authLimiter);
+app.use("/api/v1/admin/products/recommendations", recommendationsLimiter);
 
 /* =======================
    BODY / COOKIE
