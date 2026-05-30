@@ -6,7 +6,7 @@ import { createState, getStates, getStateWithBlogs } from "../controllers/state.
 import { createCity, getCities, getCityWithBlogs } from "../controllers/city.controller.js";
 import { createProduct, deleteProduct, getProductById, getProductBySlug, getProducts, updateProduct, getBlogRecommendations } from "../controllers/product.controller.js";
 import { createBooking, getAllBookings, getBookingsByProduct } from "../controllers/booking.controller.js";
-import { createProductType, getAllProductTypes, getProductTypeById, getProductTypeBySlug, getProductTypeBySlugWithProduct } from "../controllers/productType.controller.js";
+import { createProductType, getAllProductTypes, getProductTypeById, getProductTypeBySlug, getProductTypeBySlugWithProduct, updateProductType } from "../controllers/productType.controller.js";
 import { verifyJWT } from "../middlewares/verifyJWT.js";
 const router = Router();
 
@@ -121,6 +121,13 @@ router.post("/create-productType", upload.single("image"), verifyJWT, verifyAdmi
 router.get("/tags/:slug", getProductTypeBySlug);
 router.get("/tags/:slug/product", getProductTypeBySlugWithProduct);
 router.get("/productType/:id", getProductTypeById);
+router.put(
+  "/productType/:id",
+  verifyJWT,
+  verifyAdmin,
+  upload.single("image"),
+  updateProductType
+);
 router.get("/all-productTypes", getAllProductTypes);
 
 
