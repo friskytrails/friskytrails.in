@@ -96,7 +96,7 @@ const CountryPage = () => {
         <img
           src={country.image}
           alt={country.name}
-          className="w-full h-64 sm:h-80 md:h-96 object-cover object-right sm:object-center"
+          className="w-full h-auto object-contain md:h-[400px] lg:h-[500px] md:object-cover md:object-center shadow-md"
         />
       </div>
 

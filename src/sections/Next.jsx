@@ -62,10 +62,10 @@ const Next = () => {
                 className="relative w-full h-full bg-cover bg-center bg-no-repeat rounded-3xl shadow-xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2"
                 style={{ backgroundImage: `url(${item.image})` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-all duration-700"></div>
 
                 <div className="absolute inset-0 flex items-end p-6 pb-12 justify-center">
-                  <div className="text-center transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200">
+                  <div className="text-center transition-all duration-700">
                     <h2 className="text-xl md:text-2xl font-bold text-white">
                       {item.name}
                     </h2>
@@ -89,10 +89,10 @@ const Next = () => {
                 className="relative w-full h-full bg-cover bg-center bg-no-repeat rounded-3xl shadow-xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-2"
                 style={{ backgroundImage: `url(${item.image})` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-all duration-700"></div>
 
                 <div className="absolute inset-0 flex items-end p-6 lg:p-8 pb-12 lg:pb-16 justify-center">
-                  <div className="text-center transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200">
+                  <div className="text-center transition-all duration-700">
                     <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold text-white">
                       {item.name}
                     </h2>

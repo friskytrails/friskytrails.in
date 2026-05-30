@@ -240,11 +240,11 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
           <option value="">Select Country</option>
           {countries.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
         </select>
-        <select name="state" value={formData.state} onChange={handleChange} required className="p-2 border rounded" disabled={!states.length}>
+        <select name="state" value={formData.state} onChange={handleChange} className="p-2 border rounded" disabled={!states.length}>
           <option value="">Select State</option>
           {states.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
         </select>
-        <select name="city" value={formData.city} onChange={handleChange} required className="p-2 border rounded" disabled={!cities.length}>
+        <select name="city" value={formData.city} onChange={handleChange} className="p-2 border rounded" disabled={!cities.length}>
           <option value="">Select City</option>
           {cities.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
         </select>

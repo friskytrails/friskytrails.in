@@ -1,10 +1,7 @@
-import connectDB from "./db/index.js";
-import dotenv from "dotenv";
-import app  from "./app.js";
+import "./config/env.js"; // MUST be first — loads .env before any other module
 
-dotenv.config({
-    path: './.env'
-})
+import connectDB from "./db/index.js";
+import app  from "./app.js";
 
 connectDB()
 .then(() => {

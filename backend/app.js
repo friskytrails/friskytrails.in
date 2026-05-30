@@ -1,5 +1,4 @@
 import express from "express"; // Security hardened build
-import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import passport from "passport";
@@ -22,7 +21,6 @@ import connectDB from "./db/index.js";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
-dotenv.config();
 
 const app = express();
 

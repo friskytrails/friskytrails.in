@@ -396,9 +396,9 @@ const updateBlog = asyncHandler(async (req, res) => {
     blog.conclusion = conclusion || blog.conclusion;
     blog.authorName = authorName || blog.authorName;
     blog.country = country || blog.country;
-    blog.state = state || blog.state;
+    blog.state = state !== undefined ? (state === "" ? null : state) : blog.state;
     blog.faq = faq || blog.faq;
-    blog.city = city || blog.city;
+    blog.city = city !== undefined ? (city === "" ? null : city) : blog.city;
 
     // Update blocks
     if (blocks) {

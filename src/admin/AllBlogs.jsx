@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import EditBlogForm from "./EditBlogForm";
 import { getAllBlogs, deleteBlog } from "../api/admin.api";
 
@@ -7,6 +7,7 @@ const AllBlogs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const sectionRef = useRef(null);
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,9 @@ const AllBlogs = () => {
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && !isFetching) {
       fetchBlogs(newPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     }
   };
 
@@ -105,7 +108,7 @@ const AllBlogs = () => {
         <h2 className="text-2xl font-bold mb-4">Edit Blog</h2>
         <EditBlogForm
           blogId={selectedBlog._id} // ✅ pass ID, not full object
-          onUpdate={fetchBlogs}
+          onUpdate={() => fetchBlogs(currentPage)}
           onClose={() => setSelectedBlog(null)}
         />
       </div>
@@ -113,7 +116,7 @@ const AllBlogs = () => {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
+    <section ref={sectionRef} className="max-w-6xl mx-auto px-2 sm:px-4 py-4">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">All Blogs</h2>
         <button
