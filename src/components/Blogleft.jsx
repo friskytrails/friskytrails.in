@@ -9,6 +9,7 @@ const Blogleft = ({ blog }) => {
   const [blockProducts, setBlockProducts] = useState({});
 
   useEffect(() => {
+    let active = true;
     const fetchRecommendations = async () => {
       if (!blog || !blog.blocks || blog.blocks.length === 0) return;
       try {
@@ -20,13 +21,18 @@ const Blogleft = ({ blog }) => {
           content: (b.content || "").replace(/<[^>]+>/g, "").slice(0, 500),
         }));
         const res = await getBlogRecommendations(trimmedBlocks);
-        setBlockProducts(res?.data || {});
+        if (active) {
+          setBlockProducts(res?.data || {});
+        }
       } catch (err) {
         console.error("Failed to load blog recommendations:", err);
       }
     };
     
     fetchRecommendations();
+    return () => {
+      active = false;
+    };
   }, [blog?.blocks]);
 
   if (!blog || !blog.blocks) return null;
