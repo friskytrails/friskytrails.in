@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { getBlogRecommendations } from "../api/admin.api";
