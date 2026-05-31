@@ -321,9 +321,9 @@ const getBlogById = asyncHandler(async (req, res) => {
       intro: blog.intro,
       conclusion: blog.conclusion,
       authorName: blog.authorName,
-      country: blog.country?.name || "",
-      state: blog.state?.name || "",
-      city: blog.city?.name || "",
+      country: blog.country || null,
+      state: blog.state || null,
+      city: blog.city || null,
       faq: blog.faq || "",
       coverImage: blog.coverImage,
       blocks: blog.blocks.map((block) => ({
