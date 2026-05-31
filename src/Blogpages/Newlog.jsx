@@ -100,8 +100,8 @@ const Newlog = () => {
         )}
         
         {/* Blog Section */}
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 pt-0 md:pt-10 px-4 sm:px-6 lg:px-8">
-          <div className="lg:col-span-2 pt-3 w-full px-4">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 pt-0 md:pt-10 px-0 sm:px-6 lg:px-8">
+          <div className="lg:col-span-2 pt-3 w-full px-0 md:px-4">
             {loading ? (
               <div className="space-y-4">
                 <Skeleton height="1.5rem" width="100%" />

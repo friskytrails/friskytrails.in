@@ -18,18 +18,27 @@ const ExploreMoreProducts = ({ currentProduct }) => {
       try {
         setLoading(true);
         const res = await getProducts();
-        const allProducts = Array.isArray(res?.data) ? res.data : [];
+        const allProducts = Array.isArray(res?.data?.products) ? res.data.products : [];
 
-        const filtered = allProducts
-          .filter((item) => item?._id !== currentProduct?._id)
-          .filter((item) => {
-            const itemStateId =
-              typeof item?.state === "string" ? item.state : item?.state?._id;
-            return Boolean(stateId) && itemStateId === stateId;
-          })
-          .slice(0, 8);
+        // Exclude the current product
+        const otherProducts = allProducts.filter(
+          (item) => item?._id !== currentProduct?._id
+        );
 
-        setProducts(filtered);
+        // Try to find products in the same state
+        let filtered = otherProducts.filter((item) => {
+          if (!stateId) return false;
+          const itemStateId =
+            typeof item?.state === "string" ? item.state : item?.state?._id;
+          return itemStateId === stateId;
+        });
+
+        // Fallback: If no products in the same state, show ANY other products
+        if (filtered.length === 0) {
+          filtered = otherProducts;
+        }
+
+        setProducts(filtered.slice(0, 8));
       } catch (error) {
         console.error("Failed to fetch explore-more products:", error);
         setProducts([]);
@@ -38,7 +47,7 @@ const ExploreMoreProducts = ({ currentProduct }) => {
       }
     };
 
-    if (!currentProduct?._id || !stateId) {
+    if (!currentProduct?._id) {
       setProducts([]);
       setLoading(false);
       return;

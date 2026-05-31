@@ -58,7 +58,7 @@ const App = () => {
 
       <Toaster position="top-center" gutter={12} containerStyle={{ margin: '16px' }} />
       {/*  MAIN CONTENT AREA - flex-1 pushes footer down */}
-      <main className="flex-1"> 
+      <main className="flex-1">
         <Scrolltotop />
         <Suspense fallback={<div className="p-4 md:p-10"><Skeleton height="80vh" width="100%" borderRadius="1rem" /></div>}>
           <Routes>
@@ -87,18 +87,18 @@ const App = () => {
             <Route
               path="/services/*"
               element={
-              
-                  <Routes>
-                    <Route path="holidays" element={<Holidays />} />
-                    <Route path="flights" element={<Flights />} />
-                    <Route path="offers" element={<Offers />} />
-                    <Route path="rail-tickets" element={<RailTickets />} />
-                    <Route path="hotels" element={<Hotels />} />
-                    <Route path="transport" element={<Transport />} />
-                    <Route path="activities" element={<Activities />} />
-                    <Route path="bus-tickets" element={<BusTickets />} />
-                  </Routes>
-        
+
+                <Routes>
+                  <Route path="holidays" element={<Holidays />} />
+                  <Route path="flights" element={<Flights />} />
+                  <Route path="offers" element={<Offers />} />
+                  <Route path="rail-tickets" element={<RailTickets />} />
+                  <Route path="hotels" element={<Hotels />} />
+                  <Route path="transport" element={<Transport />} />
+                  <Route path="activities" element={<Activities />} />
+                  <Route path="bus-tickets" element={<BusTickets />} />
+                </Routes>
+
               }
             />
 
@@ -117,7 +117,7 @@ const App = () => {
                     <Route path="create-product" element={<CreateProductPage />} />
                     <Route path="create-productType" element={<CreateProductType />} />
                   </Routes>
-              </ProtectedRoute>
+                </ProtectedRoute>
               }
             />
 
@@ -125,7 +125,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </main>
-      
+
       <Suspense fallback={null}>
         <End />
         <Last />

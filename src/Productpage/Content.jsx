@@ -147,9 +147,9 @@ const Content = ({
                   {product.name}{" "}
                 </span>
               )}
-              <span className="text-xl sm:text-2xl font-bold text-gray-900 whitespace-nowrap">
-                {title}
-              </span>
+               <span className="text-xl sm:text-2xl font-bold text-gray-900">
+                 {title}
+               </span>
             </h2>
           )}
 
@@ -179,16 +179,13 @@ const Content = ({
       {product.productOverview &&
         renderSection("overview", "Overview", product.productOverview)}
 
-      {/* Things to Carry */}
-      {thingsToCarry && (
-        <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
+       {/* Things to Carry */}
+       {thingsToCarry && (!Array.isArray(thingsToCarry) || thingsToCarry.length > 0) && (
+         <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
           <div className="blog-content bg-white p-4 sm:p-6 rounded-xl border border-gray-100 shadow-sm mt-1 max-w-none">
             <h2 className="mb-4 sm:mb-6 not-prose leading-[1.1] sm:leading-tight">
               <span className="text-xl sm:text-2xl font-bold text-gray-900">
-                {product.name}{" "}
-              </span>
-              <span className="text-xl sm:text-2xl font-bold text-gray-900 whitespace-nowrap">
-                Things to Carry
+                Things to Carry for {product.name}
               </span>
             </h2>
             {Array.isArray(thingsToCarry) ? (
@@ -239,9 +236,15 @@ const Content = ({
       </div>
 
       {product.additionalInfo &&
-        renderSection("additionalInfo", "Know Before You Book", product.additionalInfo, true, false)}
+        renderSection("additionalInfo", `Know Before You Book ${product.name}`, product.additionalInfo, true, false)}
       
-      {howToReach && howToReach.trim() !== "" && renderSection("howToReach", "How to Reach", howToReach)}
+      {howToReach && howToReach.trim() !== "" && renderSection(
+        "howToReach", 
+        product.city?.name ? `How to Reach ${product.city.name}` : "How to Reach", 
+        howToReach, 
+        true, 
+        false
+      )}
       
       {product.faq && (
         <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
@@ -257,7 +260,7 @@ const Content = ({
       
       {Array.isArray(product.packages) && product.packages.length > 0 && (
         <div className="w-full mx-auto mb-6 md:mb-8 lg:mb-10">
-          <PackageShowcase packages={product.packages} selectedIndex={selectedPackageIndex} onSelectPackage={onSelectPackage} />
+          <PackageShowcase packages={product.packages} productName={product.name} selectedIndex={selectedPackageIndex} onSelectPackage={onSelectPackage} />
         </div>
       )}
 

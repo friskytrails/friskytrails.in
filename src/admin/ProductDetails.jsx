@@ -129,6 +129,11 @@ const ProductDetails = () => {
     fetchProductData();
   }, [slug]);
 
+  // Scroll to top when the product slug changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   const openBookingModal = useCallback(() => setShowBooking(true), []);
   const closeBookingModal = useCallback(() => setShowBooking(false), []);
 

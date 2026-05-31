@@ -2,10 +2,16 @@ import PackageCard from "./PackageCard";
 
 const PackageShowcase = ({
   packages,
-  title = "Available Packages",
+  productName = "",
   selectedIndex = 0,
   onSelectPackage,
 }) => {
+  const hasPackages = /package/i.test(productName);
+  const title = productName
+    ? hasPackages
+      ? productName
+      : `${productName} Packages`
+    : "Available Packages";
   return (
     <div className="w-full flex justify-center mt-8">
       <div className="w-full max-w-5xl bg-white rounded-xl shadow-sm px-4 py-6 md:px-6 md:py-8">

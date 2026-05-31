@@ -97,24 +97,57 @@ html,body{
 
 /* ✅ Heading styles for blog content */
 .blog-content h1,
-.blog-heading h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+.blog-heading h1,
+.blog-content h1 *,
+.blog-heading h1 * {
+  font-size: 1.375rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.75rem !important;
+}
+@media (min-width: 768px) {
+  .blog-content h1,
+  .blog-heading h1,
+  .blog-content h1 *,
+  .blog-heading h1 * {
+    font-size: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
 }
 
 .blog-content h2,
-.blog-heading h2 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
+.blog-heading h2,
+.blog-content h2 *,
+.blog-heading h2 * {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+@media (min-width: 768px) {
+  .blog-content h2,
+  .blog-heading h2,
+  .blog-content h2 *,
+  .blog-heading h2 * {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
 }
 
 .blog-content h3,
-.blog-heading h3 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+.blog-heading h3,
+.blog-content h3 *,
+.blog-heading h3 * {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 0.5rem !important;
+}
+@media (min-width: 768px) {
+  .blog-content h3,
+  .blog-heading h3,
+  .blog-content h3 *,
+  .blog-heading h3 * {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
 }
 
 .blog-content strong,
@@ -125,6 +158,110 @@ html,body{
 .blog-content u,
 .blog-heading u {
   text-decoration: underline;
+}
+
+/* ✅ Serial Number Styles matching Heading Levels exactly */
+.blog-serial-1 {
+  font-size: 1.375rem !important;
+  font-weight: 700 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-1 {
+    font-size: 2rem !important;
+  }
+}
+
+.blog-serial-2 {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-2 {
+    font-size: 1.75rem !important;
+  }
+}
+
+.blog-serial-3 {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-3 {
+    font-size: 1.5rem !important;
+  }
+}
+
+.blog-serial-4 {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-4 {
+    font-size: 1.25rem !important;
+  }
+}
+
+.blog-serial-5 {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-5 {
+    font-size: 1rem !important;
+  }
+}
+
+.blog-serial-6 {
+  font-size: 0.625rem !important;
+  font-weight: 500 !important;
+  color: inherit;
+}
+@media (min-width: 768px) {
+  .blog-serial-6 {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* ✅ Mobile adjustments for blog content spacing and typography */
+@media (max-width: 767px) {
+  /* Tighten spacing for all elements inside blog content on mobile */
+  .blog-content > *,
+  .prose > * {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .blog-content p,
+  .prose p {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .blog-content img,
+  .prose img,
+  .blog-content figure,
+  .prose figure {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* Hide empty paragraphs/lines to prevent double gaps */
+  .blog-content p:empty,
+  .prose p:empty,
+  .blog-content p:has(> br:only-child),
+  .prose p:has(> br:only-child) {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 .ql-editor h1 {

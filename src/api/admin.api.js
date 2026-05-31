@@ -188,6 +188,15 @@ const getProducts = async (params = { page: 1, limit: 12 }) => {
   }
 };
 
+const getBlogRecommendations = async (blocks) => {
+  try {
+    const response = await axiosInstance.post("/api/v1/admin/products/recommendations", { blocks });
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
 // Get single product by slug
 const getProductBySlug = async (slug) => {
   try {
@@ -447,4 +456,4 @@ const updateCity = async (id, data) => {
 };
 
 
-export {updateState, getAllCountries, getCountryById, updateCountry, getStateById,getAllStates, createProduct, updateBlog, deleteBlog, getBlogById,getProducts, getProductBySlug, updateProduct, deleteProduct, createBlog, createCountry, getCountries, createState, createCity, getStates, getCities, getCountryBySlug, getCountryWithBlogs, createProductType, getProductTypeBySlug, getProductTypeBySlugWithProduct, getAllProductTypes, uploadEditorImage, getAllBlogs, getProductTypeById, getAllCities, updateCity, updateProductType };
+export {updateState, getAllCountries, getCountryById, updateCountry, getStateById,getAllStates, createProduct, updateBlog, deleteBlog, getBlogById,getProducts, getBlogRecommendations, getProductBySlug, updateProduct, deleteProduct, createBlog, createCountry, getCountries, createState, createCity, getStates, getCities, getCountryBySlug, getCountryWithBlogs, createProductType, getProductTypeBySlug, getProductTypeBySlugWithProduct, getAllProductTypes, uploadEditorImage, getAllBlogs, getProductTypeById, getAllCities, updateCity, updateProductType };
