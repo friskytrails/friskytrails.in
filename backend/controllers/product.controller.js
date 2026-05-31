@@ -38,6 +38,11 @@ export const createProduct = asyncHandler(async (req, res) => {
     );
   }
 
+  // Validate productType is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(productType)) {
+    throw new ApiError(400, "Invalid Product Type ID");
+  }
+
   // Upload images to Cloudinary
   let images = [];
   let sliderImages = [];
@@ -140,23 +145,25 @@ export const getProducts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 12;
   const skip = (page - 1) * limit;
 
-  const totalProducts = await Product.countDocuments();
+  const [totalProducts, products] = await Promise.all([
+    Product.countDocuments(),
+    Product.find()
+      .populate("country state city productType", "name slug")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select(
+        "name slug productType rating reviews images city packages createdAt"
+      )
+      .lean()
+  ]);
+
   const totalPages = Math.ceil(totalProducts / limit);
 
-  const products = await Product.find()
-    .populate("country state city", "name slug")
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit)
-    .select(
-      "name slug productType rating reviews images city packages createdAt"
-    )
-    .lean();
-
-  res.status(200).json(
-    new ApiResponse(
-      200,
-      {
+  res.status(200).json({
+    status: true,
+    success: true,
+    data: {
         products,
         pagination: {
           totalItems: totalProducts,
@@ -165,9 +172,8 @@ export const getProducts = asyncHandler(async (req, res) => {
           limit,
         },
       },
-      "Products fetched successfully"
-    )
-  );
+    message: "Products fetched successfully"
+  });
 });
 
 // ============================
@@ -334,7 +340,12 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.name = name;
     product.slug = slugify(name, { lower: true, strict: true });
   }
-  if (productType) product.productType = productType;
+  if (productType) {
+    if (!mongoose.Types.ObjectId.isValid(productType)) {
+      throw new ApiError(400, "Invalid Product Type ID");
+    }
+    product.productType = productType;
+  }
   if (rating !== undefined) product.rating = rating;
   if (reviews !== undefined) product.reviews = reviews;
   if (description) product.description = description;

@@ -101,18 +101,20 @@ const getAllBlogs = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 12;
     const skip = (page - 1) * limit;
 
-    const totalBlogs = await CreateBlog.countDocuments();
-    const totalPages = Math.ceil(totalBlogs / limit);
+    const [totalBlogs, blogs] = await Promise.all([
+      CreateBlog.countDocuments(),
+      CreateBlog.find()
+        .populate("country", "name _id")
+        .populate("state", "name _id")
+        .populate("city", "name _id")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select("title slug authorName coverImage country state city intro createdAt")
+        .lean()
+    ]);
 
-    const blogs = await CreateBlog.find()
-      .populate("country", "name _id")
-      .populate("state", "name _id")
-      .populate("city", "name _id")
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .select("title slug authorName coverImage country state city intro createdAt")
-      .lean();
+    const totalPages = Math.ceil(totalBlogs / limit);
 
     res.status(200).json({
       status: true,
@@ -236,15 +238,18 @@ export const getPublicBlogs = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 12;
     const skip = (page - 1) * limit;
 
-    const totalBlogs = await CreateBlog.countDocuments();
-    const totalPages = Math.ceil(totalBlogs / limit);
+    const [totalBlogs, blogs] = await Promise.all([
+      CreateBlog.countDocuments(),
+      CreateBlog.find()
+        .populate("country state city", "name slug")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select("title slug authorName coverImage country state city intro createdAt")
+        .lean()
+    ]);
 
-    const blogs = await CreateBlog.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .select("title slug authorName coverImage country state city intro createdAt")
-      .lean();
+    const totalPages = Math.ceil(totalBlogs / limit);
 
     return res.status(200).json({
       status: true,
@@ -457,18 +462,37 @@ const deleteBlog = asyncHandler(async (req, res) => {
 // controllers/stateController.ts (ya .js)
 // path apne hisaab se change karein
 
- const getAllStates = async (req, res) => {
+const getAllStates = async (req, res) => {
   try {
-    const states = await State.find({})
-      .populate("country", "name _id slug") 
+    const page = parseInt(req.query.page) || 1;
+    const rawLimit = parseInt(req.query.limit) || 0;
+    const limit = rawLimit > 0 ? Math.min(rawLimit, 1000) : 1000; // Cap at 1000, default to 1000
+    const skip = (page - 1) * limit;
+
+    let query = State.find({})
+      .populate("country", "name _id slug")
       .select("name slug image country createdAt")
       .sort({ createdAt: -1 })
-      .lean();
+      .skip(skip)
+      .limit(limit);
+
+    const [totalStates, states] = await Promise.all([
+      State.countDocuments(),
+      query.lean()
+    ]);
+
+    const totalPages = Math.ceil(totalStates / limit);
 
     return res.status(200).json({
       success: true,
       count: states.length,
       data: states,
+      pagination: {
+        totalItems: totalStates,
+        totalPages,
+        currentPage: page,
+        limit,
+      }
     });
   } catch (error) {
     console.error("Error in getAllStates:", error);
@@ -668,17 +692,36 @@ const updateCountry = async (req, res) => {
 
 const getAllCities = async (req, res) => {
   try {
-    const cities = await City.find({})
+    const page = parseInt(req.query.page) || 1;
+    const rawLimit = parseInt(req.query.limit) || 0;
+    const limit = rawLimit > 0 ? Math.min(rawLimit, 1000) : 1000; // Cap at 1000
+    const skip = (page - 1) * limit;
+
+    let query = City.find({})
       .populate("country", "_id name slug")
       .populate("state", "_id name slug")
       .select("name slug image country state createdAt")
       .sort({ createdAt: -1 })
-      .lean();
+      .skip(skip)
+      .limit(limit);
+
+    const [totalCities, cities] = await Promise.all([
+      City.countDocuments(),
+      query.lean()
+    ]);
+
+    const totalPages = Math.ceil(totalCities / limit);
 
     return res.status(200).json({
       success: true,
       count: cities.length,
       data: cities,
+      pagination: {
+        totalItems: totalCities,
+        totalPages,
+        currentPage: page,
+        limit,
+      }
     });
   } catch (error) {
     console.error("Error in getAllCities:", error);

@@ -9,17 +9,24 @@ const AllStates = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 12;
 
-  const fetchStates = async () => {
+  const fetchStates = async (page = 1) => {
     try {
       setLoading(true);
-      const result = await getAllStates();
+      const result = await getAllStates({ page, limit });
 
       if (!result.data) {
         throw new Error(result.message || "Failed to fetch states");
       }
 
       setStates(result.data || []);
+      if (result.pagination) {
+        setTotalPages(result.pagination.totalPages);
+        setCurrentPage(result.pagination.currentPage);
+      }
     } catch (err) {
       console.error("Error fetching states:", err);
       setError(err.message);
@@ -28,9 +35,16 @@ const AllStates = () => {
     }
   };
 
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages && !loading) {
+      setCurrentPage(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
-    fetchStates();
-  }, []);
+    fetchStates(currentPage);
+  }, [currentPage]);
 
   /* -------------------- STATES -------------------- */
 
@@ -88,7 +102,7 @@ const AllStates = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">All States</h2>
         <button
-          onClick={fetchStates}
+          onClick={() => fetchStates(currentPage)}
           className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm"
         >
           🔄 Refresh
@@ -143,6 +157,73 @@ const AllStates = () => {
           </div>
         ))}
       </div>
+
+      {/* Pagination UI */}
+      {totalPages > 1 && (
+        <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || loading}
+              className={`px-4 py-2 rounded-md transition ${
+                currentPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+              }`}
+            >
+              Previous
+            </button>
+            
+            <div className="flex items-center gap-1">
+              {[...Array(totalPages)].map((_, i) => {
+                const pageNum = i + 1;
+                if (
+                  totalPages <= 7 ||
+                  pageNum === 1 ||
+                  pageNum === totalPages ||
+                  (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`w-10 h-10 rounded-md transition ${
+                        currentPage === pageNum
+                          ? "bg-[rgb(255,99,33)] text-white shadow-md"
+                          : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                } else if (
+                  (pageNum === 2 && currentPage > 4) ||
+                  (pageNum === totalPages - 1 && currentPage < totalPages - 3)
+                ) {
+                  return <span key={pageNum} className="px-1 text-gray-400">...</span>;
+                }
+                return null;
+              })}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || loading}
+              className={`px-4 py-2 rounded-md transition ${
+                currentPage === totalPages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm"
+              }`}
+            >
+              Next
+            </button>
+          </div>
+          
+          <p className="text-sm text-gray-500">
+            Showing Page {currentPage} of {totalPages}
+          </p>
+        </div>
+      )}
     </section>
   );
 };
