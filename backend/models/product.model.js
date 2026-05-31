@@ -44,7 +44,12 @@ const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true, trim: true },
     slug: { type: String, required: true, unique: true },
-    productType: { type: String, required: true, trim: true, index: true },
+    productType: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductType",
+      required: true,
+      index: true,
+    },
     rating: { type: Number, default: 0, min: 0, max: 5 },
     reviews: { type: Number, default: 0, min: 0 },
 

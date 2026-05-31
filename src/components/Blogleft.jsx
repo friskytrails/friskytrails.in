@@ -17,7 +17,7 @@ const Blogleft = ({ blog }) => {
         // Full blocks contain rich HTML that can exceed Express's 16kb body limit.
         const trimmedBlocks = blog.blocks.map(b => ({
           order: b.order,
-          heading: b.heading || "",
+          heading: (b.heading || "").replace(/<[^>]+>/g, "").slice(0, 300),
           content: (b.content || "").replace(/<[^>]+>/g, "").slice(0, 500),
         }));
         const res = await getBlogRecommendations(trimmedBlocks);
@@ -35,7 +35,7 @@ const Blogleft = ({ blog }) => {
     return () => {
       active = false;
     };
-  }, [blog]);
+  }, [blog?.blocks]);
 
   if (!blog || !blog.blocks) return null;
 

@@ -43,7 +43,7 @@ const BookingModal = ({ productSlug, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 overflow-y-auto flex justify-center items-start sm:items-center z-[9999] p-4 backdrop-blur-sm bg-black/30"
+      className="fixed inset-0 overflow-y-auto flex justify-center items-start sm:items-center z-[1000] p-4 backdrop-blur-sm bg-black/30"
       onClick={(e) => e.target === e.currentTarget && onClose()}
       role="dialog"
       aria-modal="true"

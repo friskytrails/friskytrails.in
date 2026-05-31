@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Editor from "../components/Editor";
 import NotFound from "../components/NotFound";
 import { getBlogById, updateBlog, getCountries, getStates, getCities } from "../api/admin.api";
@@ -50,18 +50,44 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
         const res = await getBlogById(blogId);
         const blog = res.data;
 
+        const getFieldId = (field) => {
+          if (!field) return "";
+          return typeof field === "object" ? (field._id || "") : field;
+        };
+
+        const countryId = getFieldId(blog.country);
+        const stateId = getFieldId(blog.state);
+        const cityId = getFieldId(blog.city);
+
+        // Pre-fetch dropdown options for the blog's existing values
+        const [countriesRes] = await Promise.all([getCountries()]);
+        setCountries(countriesRes.data);
+
+        if (countryId) {
+          try {
+            const statesRes = await getStates(countryId);
+            setStates(statesRes.data);
+          } catch { /* ignore */ }
+        }
+        if (stateId) {
+          try {
+            const citiesRes = await getCities(stateId);
+            setCities(citiesRes.data);
+          } catch { /* ignore */ }
+        }
+
         setFormData({
           title: blog.title,
           slug: blog.slug,
           intro: blog.intro,
           conclusion: blog.conclusion,
           authorName: blog.authorName,
-          country: blog.country?._id || "",
-          state: blog.state?._id || "",
-          city: blog.city?._id || "",
+          country: countryId,
+          state: stateId,
+          city: cityId,
           faq: blog.faq || "",
         });
-        
+
         setBlocks(
           blog.blocks.map((b) => ({
             id: b._id || Date.now() + Math.random(),
@@ -72,7 +98,6 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
         );
 
         setCoverImagePreview(blog.coverImage || "");
-
       } catch {
         // Error handled silently
       } finally {
@@ -82,49 +107,34 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
     if (blogId) fetchBlog();
   }, [blogId]);
 
-  // Fetch countries
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const res = await getCountries();
-        setCountries(res.data);
-      } catch {
-        // Error handled silently
-      }
-    };
-    fetchCountries();
-  }, []);
+  // Handle cascading dropdown changes for country
+  const handleCountryChange = async (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, country: value, state: "", city: "" }));
+    setStates([]);
+    setCities([]);
+    if (!value) return;
+    try {
+      const res = await getStates(value);
+      setStates(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  // Fetch states when country changes
-  useEffect(() => {
-    const fetchStates = async () => {
-      if (!formData.country) return;
-      try {
-        const res = await getStates(formData.country);
-        setStates(res.data);
-        setFormData((prev) => ({ ...prev, state: "", city: "" }));
-        setCities([]);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchStates();
-  }, [formData.country]);
-
-  // Fetch cities when state changes
-  useEffect(() => {
-    const fetchCities = async () => {
-      if (!formData.state) return;
-      try {
-        const res = await getCities(formData.state);
-        setCities(res.data);
-        setFormData((prev) => ({ ...prev, city: "" }));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchCities();
-  }, [formData.state]);
+  // Handle cascading dropdown changes for state
+  const handleStateChange = async (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, state: value, city: "" }));
+    setCities([]);
+    if (!value) return;
+    try {
+      const res = await getCities(value);
+      setCities(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Handle input changes
   const handleChange = (e) => {
@@ -194,34 +204,34 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
 
         {/* Dynamic Blocks */}
         {blocks.map((block, idx) => (
-  <div key={block.id} className="p-4 border rounded space-y-4 bg-gray-50">
-    <h3 className="font-semibold">Block {idx + 1}</h3>
+          <div key={block.id} className="p-4 border rounded space-y-4 bg-gray-50">
+            <h3 className="font-semibold">Block {idx + 1}</h3>
 
-    <label className="block mb-2 font-medium">Heading</label>
-    <Editor
-      key={`editor-heading-${block.id}`} // unique per block + field
-      content={block.heading}
-      onChange={(val) => handleBlockChange(block.id, "heading", val)}
-    />
+            <label className="block mb-2 font-medium">Heading</label>
+            <Editor
+              key={`editor-heading-${block.id}`} // unique per block + field
+              content={block.heading}
+              onChange={(val) => handleBlockChange(block.id, "heading", val)}
+            />
 
-    <label className="block mb-2 font-medium">Content</label>
-    <Editor
-      key={`editor-content-${block.id}`} // unique per block + field
-      content={block.content}
-      onChange={(val) => handleBlockChange(block.id, "content", val)}
-    />
+            <label className="block mb-2 font-medium">Content</label>
+            <Editor
+              key={`editor-content-${block.id}`} // unique per block + field
+              content={block.content}
+              onChange={(val) => handleBlockChange(block.id, "content", val)}
+            />
 
-    {blocks.length > 1 && (
-      <button
-        type="button"
-        onClick={() => removeBlock(block.id)}
-        className="text-red-500 underline"
-      >
-        Remove Block
-      </button>
-    )}
-  </div>
-))}
+            {blocks.length > 1 && (
+              <button
+                type="button"
+                onClick={() => removeBlock(block.id)}
+                className="text-red-500 underline"
+              >
+                Remove Block
+              </button>
+            )}
+          </div>
+        ))}
 
         <button type="button" onClick={addBlock} className="px-4 py-2 bg-blue-600 text-white rounded">+ Add Block</button>
 
@@ -236,15 +246,15 @@ const EditBlogForm = ({ blogId, onClose, onUpdate }) => {
         <input type="text" name="authorName" value={formData.authorName} onChange={handleChange} required className="p-2 border rounded" />
 
         {/* Country / State / City */}
-        <select name="country" value={formData.country} onChange={handleChange} required className="p-2 border rounded">
+        <select name="country" value={formData.country} onChange={handleCountryChange} required className="p-2 border rounded">
           <option value="">Select Country</option>
           {countries.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
         </select>
-        <select name="state" value={formData.state} onChange={handleChange} required className="p-2 border rounded" disabled={!states.length}>
+        <select name="state" value={formData.state} onChange={handleStateChange} className="p-2 border rounded" disabled={!states.length}>
           <option value="">Select State</option>
           {states.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
         </select>
-        <select name="city" value={formData.city} onChange={handleChange} required className="p-2 border rounded" disabled={!cities.length}>
+        <select name="city" value={formData.city} onChange={handleChange} className="p-2 border rounded" disabled={!cities.length}>
           <option value="">Select City</option>
           {cities.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
         </select>
