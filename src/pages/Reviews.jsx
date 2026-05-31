@@ -209,7 +209,6 @@ const Reviews = () => {
     return () => clearInterval(interval);
   }, [loading, popularReviews.length]);
 
-  // Rating stars renderer
 
   if (loading) {
     return (
