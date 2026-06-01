@@ -8,7 +8,18 @@ import { createProduct, deleteProduct, getProductById, getProductBySlug, getProd
 import { createBooking, getAllBookings, getBookingsByProduct } from "../controllers/booking.controller.js";
 import { createProductType, getAllProductTypes, getProductTypeById, getProductTypeBySlug, getProductTypeBySlugWithProduct, updateProductType } from "../controllers/productType.controller.js";
 import { verifyJWT } from "../middlewares/verifyJWT.js";
+import rateLimit from "express-rate-limit";
+
 const router = Router();
+
+const recommendationsLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: {
+    success: false,
+    message: "Too many requests from this IP, please try again after 15 minutes",
+  },
+});
 
 router.route("/create-blog").post(upload.single("image"), verifyJWT, verifyAdmin, createBlog)
 router.get("/blogs", getAllBlogs);
@@ -98,7 +109,7 @@ router.post(
 );
 
 router.get("/products", getProducts);
-router.post("/products/recommendations", getBlogRecommendations);
+router.post("/products/recommendations", recommendationsLimiter, getBlogRecommendations);
 router.route("/product/id/:id").get(getProductById);
 router.get("/product/slug/:slug", getProductBySlug);
 router.put(

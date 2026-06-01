@@ -1,6 +1,4 @@
 import { Product } from "../models/product.model.js";
-import { State } from "../models/state.model.js";
-import { City } from "../models/city.model.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";

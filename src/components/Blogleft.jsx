@@ -17,7 +17,7 @@ const Blogleft = ({ blog }) => {
         // Full blocks contain rich HTML that can exceed Express's 16kb body limit.
         const trimmedBlocks = blog.blocks.map(b => ({
           order: b.order,
-          heading: b.heading || "",
+          heading: (b.heading || "").replace(/<[^>]+>/g, "").slice(0, 300),
           content: (b.content || "").replace(/<[^>]+>/g, "").slice(0, 500),
         }));
         const res = await getBlogRecommendations(trimmedBlocks);
@@ -25,7 +25,9 @@ const Blogleft = ({ blog }) => {
           setBlockProducts(res?.data || {});
         }
       } catch (err) {
-        console.error("Failed to load blog recommendations:", err);
+        if (active) {
+          console.error("Failed to load blog recommendations:", err);
+        }
       }
     };
     
