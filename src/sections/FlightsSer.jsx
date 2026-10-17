@@ -13,7 +13,7 @@ const FlightsSer = () => {
       <div className="min-h-screen w-full">
         {/* Banner Section */}
         <div
-          className="h-[40vh] sm:h-[50vh] md:h-[60vh] w-full"
+          className="hidden h-[40vh] w-full md:block md:h-[60vh]"
           style={{
             backgroundImage: `url(/flight.webp)`,
             backgroundSize: "cover",
