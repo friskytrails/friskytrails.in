@@ -32,7 +32,7 @@ const PaymentCancellation = () => (
           <h1 className="max-w-xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-7xl">Payment &amp;<span className="block text-orange-400">cancellation policy</span></h1>
           <p className="mt-6 max-w-lg text-base leading-7 text-white/75 sm:text-lg">Everything you need to know before confirming your next FriskyTrails adventure.</p>
         </div>
-        <div className="absolute right-10 top-1/2 hidden w-[290px] -translate-y-1/2 lg:block">
+        <div className="absolute right-28 top-[36%] hidden w-[270px] -translate-y-1/2 lg:block">
           <div className="rounded-[1.75rem] border border-white/15 bg-white/[0.08] p-6 shadow-2xl shadow-black/20 backdrop-blur-md">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-400 text-[rgb(10,3,34)]">
@@ -60,7 +60,7 @@ const PaymentCancellation = () => (
           </div>
           <div className="absolute -bottom-8 -left-8 rounded-full border border-orange-300/20 bg-orange-400/10 px-4 py-2 text-xs font-semibold text-orange-200 backdrop-blur-sm">Plan clearly · Travel freely</div>
         </div>
-
+        <img src="/logo.webp" alt="" aria-hidden="true" className="absolute bottom-6 right-6 hidden h-24 w-24 rounded-full bg-white/95 p-2 object-contain opacity-90 sm:block md:bottom-10 md:right-12 md:h-32 md:w-32" />
       </div>
     </section>
     <section className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 md:pt-16 lg:px-8">
