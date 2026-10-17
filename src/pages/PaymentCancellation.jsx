@@ -40,7 +40,7 @@ const PaymentCancellation = () => (
         <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl">A smoother journey starts with clarity.</h2>
         <p className="mt-3 text-base leading-7 text-gray-600 sm:mt-4 md:text-lg">Please review the payment milestones and cancellation timelines below. Our team is always happy to help you plan with confidence.</p>
       </div>
-      <div className="mt-7 grid gap-4 sm:mt-10 md:grid-cols-3 md:gap-6">
+      <div className="mx-auto mt-7 grid max-w-5xl gap-4 sm:mt-10 md:grid-cols-3 md:gap-6">
         {policyHighlights.map(({ icon: Icon, title, copy }) => (
           <div key={title} className="rounded-3xl border border-orange-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-lg md:p-7">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200"><Icon size={23} strokeWidth={2.2} /></div>
