@@ -42,8 +42,8 @@ const PaymentCancellation = () => (
       </div>
       <div className="mx-auto mt-7 grid max-w-5xl gap-4 sm:mt-10 md:grid-cols-3 md:gap-6">
         {policyHighlights.map(({ icon: Icon, title, copy }) => (
-          <div key={title} className="rounded-3xl border border-orange-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-lg md:p-7">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200"><Icon size={23} strokeWidth={2.2} /></div>
+          <div key={title} className="rounded-3xl border border-orange-100 bg-white p-5 text-left shadow-sm transition-shadow hover:shadow-lg md:p-7 md:text-center">
+            <div className="mx-0 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br md:mx-auto from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200"><Icon size={23} strokeWidth={2.2} /></div>
             <h3 className="mt-4 text-lg font-bold md:mt-5 md:text-xl">{title}</h3>
             <p className="mt-2 text-sm leading-6 text-gray-600">{copy}</p>
           </div>
