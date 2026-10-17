@@ -23,42 +23,13 @@ const PaymentCancellation = () => (
   <main className="min-h-screen overflow-hidden bg-[rgb(247,241,231)] pb-16 text-gray-900 md:pb-24">
     <section className="relative mx-auto max-w-7xl px-4 pt-6 sm:px-6 md:pt-10 lg:px-8">
       <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] bg-[rgb(10,3,34)] shadow-xl md:min-h-[430px]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(255,145,55,0.22),transparent_28%),radial-gradient(circle_at_92%_85%,rgba(84,97,157,0.42),transparent_36%),linear-gradient(120deg,#0a0322_0%,#120936_54%,#202847_100%)]" />
-        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.11)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.11)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_right,transparent,black_55%,transparent)]" />
-        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border border-white/10 bg-white/[0.03] shadow-[0_0_120px_rgba(255,150,70,0.12)]" />
-        <div className="absolute -bottom-40 right-24 h-96 w-96 rounded-full border border-orange-300/10" />
+        <img src="/flight.webp" alt="Airplane ready for a journey" className="absolute inset-0 h-full w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(10,3,34)] via-[rgb(10,3,34)]/80 to-[rgb(10,3,34)]/35" />
+        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(10,3,34,0.25),transparent_60%,rgba(10,3,34,0.3))]" />
         <div className="relative flex min-h-[360px] max-w-2xl flex-col justify-center px-6 py-12 sm:px-10 md:min-h-[430px] md:px-16">
           <div className="mb-5 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-orange-300"><span className="h-px w-10 bg-orange-300" />Travel with clarity</div>
           <h1 className="max-w-xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-7xl">Payment &amp;<span className="block text-orange-400">cancellation policy</span></h1>
           <p className="mt-6 max-w-lg text-base leading-7 text-white/75 sm:text-lg">Everything you need to know before confirming your next FriskyTrails adventure.</p>
-        </div>
-        <div className="absolute right-28 top-[36%] hidden w-[270px] -translate-y-1/2 lg:block">
-          <div className="rounded-[1.75rem] border border-white/15 bg-white/[0.08] p-6 shadow-2xl shadow-black/20 backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-400 text-[rgb(10,3,34)]">
-                <ShieldCheck size={23} strokeWidth={2.4} />
-              </div>
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Our promise</p>
-                <p className="mt-1 text-lg font-bold text-white">Travel with confidence</p>
-              </div>
-            </div>
-            <div className="mt-6 space-y-4 border-t border-white/10 pt-5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-white/65">Payment milestones</span>
-                <span className="font-semibold text-white">Clear</span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-white/65">Cancellation terms</span>
-                <span className="font-semibold text-orange-300">Flexible</span>
-              </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-white/65">Support from our team</span>
-                <span className="font-semibold text-white">Always</span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute -bottom-8 -left-8 rounded-full border border-orange-300/20 bg-orange-400/10 px-4 py-2 text-xs font-semibold text-orange-200 backdrop-blur-sm">Plan clearly · Travel freely</div>
         </div>
         <img src="/logo.webp" alt="" aria-hidden="true" className="absolute bottom-6 right-6 hidden h-24 w-24 rounded-full bg-white/95 p-2 object-contain opacity-90 sm:block md:bottom-10 md:right-12 md:h-32 md:w-32" />
       </div>
