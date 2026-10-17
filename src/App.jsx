@@ -31,6 +31,7 @@ const ComingSoon = lazy(() => import("./components/ComingSoon"));
 const Adventures = lazy(() => import("./pages/Adventures"));
 const AdventureDetail = lazy(() => import("./pages/AdventureDetail"));
 const Reviews = lazy(() => import("./pages/Reviews"));
+const PaymentCancellation = lazy(() => import("./pages/PaymentCancellation"));
 
 // Admin forms
 const Dashboard = lazy(() => import("./admin/Dashboard"));
@@ -86,6 +87,7 @@ const App = () => {
             <Route path="/partners" element={<ComingSoon />} />
             <Route path="/partner" element={<ComingSoon />} />
             <Route path="/reviews" element={<Reviews />} />
+            <Route path="/payment-cancellation" element={<PaymentCancellation />} />
 
             {/* Protected Routes - SAME AS BEFORE */}
             <Route
