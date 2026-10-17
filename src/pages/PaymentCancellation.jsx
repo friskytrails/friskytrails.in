@@ -23,8 +23,10 @@ const PaymentCancellation = () => (
   <main className="min-h-screen overflow-hidden bg-[rgb(247,241,231)] pb-16 text-gray-900 md:pb-24">
     <section className="relative mx-auto max-w-7xl px-4 pt-6 sm:px-6 md:pt-10 lg:px-8">
       <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] bg-[rgb(10,3,34)] shadow-xl md:min-h-[430px]">
-        <img src="/about.webp" alt="A scenic destination from FriskyTrails" className="absolute inset-0 h-full w-full object-cover opacity-45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(10,3,34)] via-[rgb(10,3,34)]/80 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(255,145,55,0.22),transparent_28%),radial-gradient(circle_at_92%_85%,rgba(84,97,157,0.42),transparent_36%),linear-gradient(120deg,#0a0322_0%,#120936_54%,#202847_100%)]" />
+        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.11)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.11)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_right,transparent,black_55%,transparent)]" />
+        <div className="absolute -right-24 -top-28 h-80 w-80 rounded-full border border-white/10 bg-white/[0.03] shadow-[0_0_120px_rgba(255,150,70,0.12)]" />
+        <div className="absolute -bottom-40 right-24 h-96 w-96 rounded-full border border-orange-300/10" />
         <div className="relative flex min-h-[360px] max-w-2xl flex-col justify-center px-6 py-12 sm:px-10 md:min-h-[430px] md:px-16">
           <div className="mb-5 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-orange-300"><span className="h-px w-10 bg-orange-300" />Travel with clarity</div>
           <h1 className="max-w-xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-7xl">Payment &amp;<span className="block text-orange-400">cancellation policy</span></h1>
