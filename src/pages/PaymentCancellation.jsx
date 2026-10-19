@@ -83,9 +83,8 @@ const PaymentCancellation = () => (
           </div>
         </div>
       </div>
-      <section className="mx-auto mt-14 max-w-5xl rounded-3xl border border-orange-100 bg-white p-5 shadow-lg shadow-orange-950/5 sm:p-8">
-        <div className="mb-6 flex items-center gap-4 border-b border-orange-100 pb-5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-xl font-black text-white shadow-md shadow-orange-200">↗</div>
+      <section className="mx-auto mt-14 max-w-5xl rounded-3xl border border-orange-100 border-l-4 border-l-yellow-300 bg-white p-5 shadow-lg shadow-orange-950/5 sm:p-8">
+        <div className="mb-6 border-b border-orange-100 pb-5">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Refund &amp; rescheduling policy</h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
