@@ -19,6 +19,19 @@ const policyHighlights = [
   { icon: ShieldCheck, title: "Simple & secure", copy: "We’ll share UPI or account details for your online payment." },
 ];
 
+const refundPolicySections = [
+  ["Credit Note", "Credit notes are valid for 3 years from the date of issue and can be used towards eligible future trips, subject to availability and applicable terms. They are non-transferable and non-refundable."],
+  ["GST", "Taxes will be handled as per applicable laws. Non-refundable tax components will be excluded from refunds wherever legally applicable."],
+  ["Refund Processing", "Approved refunds will be processed to the original payment method within 5–7 working days. Actual crediting time may vary depending on the bank & provider."],
+  ["Cancellation & Partial Refunds", "Refunds will be calculated after deducting applicable cancellation charges, booking fees, and non-recoverable third-party expenses, as per the cancellation policy communicated."],
+  ["Rescheduling", "Rescheduling is subject to availability and company approval. Additional charges may apply based on the timing of the request made, revised travel dates, supplier terms, and price differences."],
+  ["No-Show & Late Arrival", "Missing the scheduled departure or failing to report on time may result in cancellation without a refund, subject to the applicable booking terms."],
+  ["Third-Party Services", "Hotel, transport, airline, and activity refunds are subject to the respective providers’ cancellation policies and recoverable amounts."],
+  ["Emergency & Force Majeure", "In cases of war, pandemics, natural disasters, government restrictions, severe weather, or other extraordinary circumstances, special cancellation or rescheduling terms may apply, subject to applicable law."],
+  ["Company-Initiated Cancellation", "If FriskyTrails cancels a trip, customers will be informed of the refund, credit note, or rescheduling options, in accordance with the booking terms."],
+  ["Policy Amendments", "FriskyTrails reserves the right to modify, update, or revise this policy at any time. Changes will generally apply to future bookings. Existing confirmed bookings will remain subject to the terms communicated at the time of booking, except where changes are required by applicable law or otherwise lawfully agreed."],
+  ["Policy Acceptance", "By confirming a booking, customers acknowledge the applicable refund, cancellation, and rescheduling terms communicated at the time of booking. Nothing in this policy limits statutory consumer rights."],
+];
 const PaymentCancellation = () => (
   <main className="min-h-screen overflow-hidden bg-[rgb(247,241,231)] pb-16 text-gray-900 md:pb-24">
     <section className="relative mx-auto max-w-7xl px-4 pt-6 sm:px-6 md:pt-10 lg:px-8">
@@ -70,6 +83,14 @@ const PaymentCancellation = () => (
           </div>
         </div>
       </div>
+      <section className="mx-auto mt-14 max-w-5xl rounded-3xl border border-orange-100 bg-white p-5 shadow-lg shadow-orange-950/5 sm:p-8">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Refund &amp; rescheduling policy</h2>
+        <div className="mt-6 space-y-5 text-sm leading-7 text-gray-600 sm:text-base">
+          {refundPolicySections.map(([title, copy], index) => (
+            <p key={title}><strong className="text-gray-900">{index + 1}. {title}:</strong> {copy}</p>
+          ))}
+        </div>
+      </section>
       <div className="relative mt-14 overflow-hidden rounded-[2rem] bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-9 text-white shadow-xl sm:px-10 md:mt-20 md:flex md:items-center md:justify-between md:px-14 md:py-11">
         <div className="relative z-10 max-w-2xl"><h2 className="text-2xl font-bold sm:text-3xl">Need help with your booking?</h2><p className="mt-2 text-sm leading-6 text-white/85 sm:text-base">Our travel experts are here to make your next adventure easy from the first payment to the final trail.</p></div>
         <a href="/contact" className="relative z-10 mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[rgb(10,3,34)] px-5 py-3 text-sm font-bold text-white transition-transform hover:scale-105 md:mt-0">Contact our team <ArrowRight size={17} /></a>

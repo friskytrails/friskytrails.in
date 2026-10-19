@@ -87,6 +87,7 @@ const App = () => {
             <Route path="/partners" element={<ComingSoon />} />
             <Route path="/partner" element={<ComingSoon />} />
             <Route path="/reviews" element={<Reviews />} />
+            <Route path="/payment-and-cancellation-policy" element={<PaymentCancellation />} />
             <Route path="/payment-cancellation" element={<PaymentCancellation />} />
 
             {/* Protected Routes - SAME AS BEFORE */}

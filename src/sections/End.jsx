@@ -62,7 +62,7 @@ const End = () => {
                         { text: "Adventures", path: "/adventures" },
                         { text: "Services", path: "/services/holidays" },
                         { text: "Reviews", path: "/reviews" },
-                        { text: "Payment & Cancellation", path: "/payment-cancellation" },
+                        { text: "Payment & Cancellation", path: "/payment-and-cancellation-policy" },
                       ].map((item, i) => (
                         <div key={i} className="flex items-center gap-2">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="gray">
